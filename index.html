@@ -399,7 +399,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar">📢【LINE限定】自取享９折 ‼️ 如需外送服務請提前告知 🙏</div>
+  <div class="announce" id="announce-bar">📢老闆出國充充電，5/23 - 5/30 公休８日。我們約好 5/31 再見！🔋</div>
   <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：05/23 (六)～05/30 (六)</div>
   <div id="menu-content"></div>
 
@@ -412,10 +412,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- 公休遮罩 -->
-<div class="closed-overlay" id="closed-overlay">
+<div class="closed-overlay open" id="closed-overlay">
   <div class="closed-icon">🔒</div>
   <div class="closed-title">目前為公休時間</div>
-  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span><span id="closed-range-note" style="font-size:.8125rem;opacity:.65;margin-top:.25rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw"></span></div>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size:.875rem;opacity:.7;margin-top:.5rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw">公休時段：2026-05-23 00:00 ～ 2026-05-30 23:59</span><span id="closed-range-note" style="font-size:.8125rem;opacity:.65;margin-top:.25rem;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90vw">老闆出國充充電，5/23 - 5/30 公休８日。我們約好 5/31 再見！🔋</span></div>
   <button class="closed-adm-btn" onclick="admOpenPw()" title="">⚙️</button>
 </div>
 
@@ -559,7 +559,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$33</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
-    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="">確認下單</button>
+    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="opacity: 0.45; cursor: not-allowed;" disabled="">確認下單</button>
   </div>
 </div>
 
@@ -2521,8 +2521,8 @@ const MENU_DATA = [
 // ║    留空 '' → 關閉自動更新偵測                                        ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260520-01';
-const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/XiangPinKitchen/pos/refs/heads/main/index.html';
+const VER = '20260530-01';
+const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 
 // ════════════════════════════════════════════════════════════════
 //  🔄 自動更新邏輯（不需修改以下程式碼）
