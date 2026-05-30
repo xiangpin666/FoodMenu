@@ -400,7 +400,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   </div>
 
   <div class="announce" id="announce-bar">📢老闆出國充充電，5/23 - 5/30 公休８日。我們約好 5/31 再見！🔋</div>
-  <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：05/23 (六)～05/30 (六)</div>
+  <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：05/23 (六)～05/30 (六)、05/31 (日)</div>
   <div id="menu-content"></div>
 
   <div class="bottom-bar" id="bottom-bar" style="display: none;">
@@ -645,16 +645,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-05-23">
+        <input type="date" class="cr-start-d" value="2026-05-31">
         <input type="time" class="cr-start-t" value="00:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-05-30">
+        <input type="date" class="cr-end-d" value="2026-05-31">
         <input type="time" class="cr-end-t" value="23:59">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="老闆出國充充電，5/23 - 5/30 公休８日。我們約好 5/31 再見！🔋" style="width:100%">
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="5/31 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div><div class="closed-range-row">
@@ -675,26 +675,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
       <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/8-8/9 公休兩天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
-  </div><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-05-30">
-        <input type="time" class="cr-start-t" value="00:00">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-05-30">
-        <input type="time" class="cr-end-t" value="23:59">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
@@ -2380,11 +2360,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 const STORE_CONFIG = {
   isOpen: true,
   closedRanges: [
-  {
-    "start": "2026-05-23T00:00",
-    "end": "2026-05-30T23:59",
-    "note": "老闆出國充充電，5/23 - 5/30 公休８日。我們約好 5/31 再見！🔋"
-  },
   {
     "start": "2026-05-31T00:00",
     "end": "2026-05-31T23:59",
