@@ -2365,37 +2365,58 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🏪【區塊 A】店家設定                                               ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  ⚠️  建議用管理後台修改，不要直接改這裡                            ║
-// ║  📱 後台入口：營業中連按 Logo 3 下 / 公休中點右下角 ⚙️            ║
-// ║  💾 改完後：點【💾 存檔】→ 下載 HTML → 上傳 GitHub                ║
-// ╠══════════════════════════════════════════════════════════════════════╣
-// ║  【營業設定】                                                        ║
-// ║  isOpen            → true=營業中 / false=全日公休                   ║
-// ║  closedRanges      → 指定公休時段，每筆格式：                       ║
-// ║                       { start:"YYYY-MM-DDTHH:MM",                   ║
-// ║                         end:"YYYY-MM-DDTHH:MM", note:"備註" }       ║
-// ║  【前台文字】                                                        ║
-// ║  announcementText  → 頂部橫幅公告文字                               ║
+// ║  ✅ 建議從「管理後台」修改（連按 Logo 3 下進入）                   ║
+// ║     改完後點【💾 存檔】→ 下載 HTML → 上傳到 GitHub                 ║
+// ║                                                                      ║
+// ║  📌 若要直接改這裡，各欄位說明如下：                                ║
+// ║                                                                      ║
+// ║  ── 🔴 營業狀態 ────────────────────────────────────────────────── ║
+// ║  isOpen                                                              ║
+// ║    true  = 正常營業（客人可點餐）                                    ║
+// ║    false = 全日公休（強制鎖單，客人看到公休遮罩）                   ║
+// ║                                                                      ║
+// ║  closedRanges  ← 指定公休時段（可設多筆，自動到時間切換）          ║
+// ║    每筆格式：                                                        ║
+// ║      { start:"YYYY-MM-DDTHH:MM",                                    ║
+// ║        end:  "YYYY-MM-DDTHH:MM",                                    ║
+// ║        note: "備註（選填，顯示在公休遮罩下方）" }                   ║
+// ║                                                                      ║
+// ║    ▶ 整日公休：start T00:00，end T23:59                             ║
+// ║      範例：start:"2026-06-03T00:00", end:"2026-06-03T23:59"         ║
+// ║    ▶ 只休下午：start T16:00，end T23:59                             ║
+// ║      範例：start:"2026-06-04T16:00", end:"2026-06-04T23:59"         ║
+// ║    ▶ 跨日公休：日期不同的 start / end                               ║
+// ║      範例：start:"2026-06-05T22:00", end:"2026-06-06T10:00"         ║
+// ║    ⚠️ 所有時間皆為台灣時間（GMT+8），不需換算                      ║
+// ║                                                                      ║
+// ║  ── 📢 前台文字 ────────────────────────────────────────────────── ║
+// ║  announcementText  → 頂部黃色橫幅文字                               ║
 // ║  popupLines        → 進頁面彈窗文字（陣列，每行一個字串）           ║
-// ║  defaultNote       → 備註欄位的灰色提示文字                         ║
+// ║  defaultNote       → 備註欄的灰色提示文字                           ║
 // ║  deliveryHintLine1 → 選「外送」後粉框第一行說明                     ║
 // ║  deliveryHintLine2 → 選「外送」後粉框第二行（紅字）                 ║
-// ║  【訂單設定】                                                        ║
-// ║  waitSmall         → 1–2 項時最早候餐分鐘（預設 15）                ║
-// ║  waitMedium        → 3–5 項時最早候餐分鐘（預設 25）                ║
-// ║  waitLarge         → 6 項以上最早候餐分鐘（預設 35）                ║
-// ║  slotInterval      → 今日取餐時段按鈕間隔分鐘（預設 15）            ║
-// ║  pickupTimeHint    → 取餐時間下方橘色小字                           ║
-// ║  takeoutLabel      → 外帶按鈕文字（例：外帶自取 9折）               ║
-// ║  deliveryLabel     → 外送按鈕文字（例：外送）                       ║
-// ║  takeoutDiscount   → 外帶折扣（0.9=九折 / 1.0=不打折）              ║
-// ║  【LINE 訊息】                                                       ║
-// ║  lineNotifyHeader  → LINE 訊息第一行標題                             ║
-// ║  lineLabelPickupTime   → 今日取餐時間標籤                           ║
-// ║  lineLabelDeliveryTime → 外送送達時間標籤                           ║
-// ║  lineLabelReserveTime  → 預約取餐時間標籤                           ║
-// ║  lineTodayCustomNote   → 選「其他時間」時的底部提醒（空=不顯示）   ║
-// ║  lineReserveNote       → 預約訂單時的底部提醒                       ║
+// ║                                                                      ║
+// ║  ── ⏰ 候餐時間（分鐘）─────────────────────────────────────────── ║
+// ║  waitSmall    → 購物車 1–2 項時，最早可選的取餐分鐘數（預設 20）    ║
+// ║  waitMedium   → 購物車 3–5 項時，最早可選的取餐分鐘數（預設 35）    ║
+// ║  waitLarge    → 購物車 6 項以上，最早可選的取餐分鐘數（預設 50）    ║
+// ║  slotInterval → 今日取餐時段按鈕的間隔分鐘（預設 15）               ║
+// ║                 例：15 → 顯示「12:30、12:45、13:00、其他時間」      ║
+// ║                                                                      ║
+// ║  ── 🏷️  外帶折扣與文字 ──────────────────────────────────────────  ║
+// ║  takeoutLabel    → 外帶自取按鈕文字（例："外帶自取 9折"）           ║
+// ║  deliveryLabel   → 外送按鈕文字（例："外送"）                       ║
+// ║  takeoutDiscount → 外帶折扣數字                                      ║
+// ║    0.9 = 九折 / 0.85 = 八五折 / 1.0 = 不打折                       ║
+// ║  pickupTimeHint  → 取餐時間下方橘色小提示文字                       ║
+// ║                                                                      ║
+// ║  ── 📨 LINE 訊息文字 ────────────────────────────────────────────── ║
+// ║  lineNotifyHeader      → LINE 通知第一行標題                        ║
+// ║  lineLabelPickupTime   → 今日取餐時間標籤文字                       ║
+// ║  lineLabelDeliveryTime → 外送送達時間標籤文字                       ║
+// ║  lineLabelReserveTime  → 預約取餐時間標籤文字                       ║
+// ║  lineTodayCustomNote   → 今日選「其他時間」時的底部提醒（空=不顯示）║
+// ║  lineReserveNote       → 預約訂單底部提醒文字                       ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
   isOpen: true,
@@ -2456,15 +2477,16 @@ const STORE_CONFIG = {
 
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🍽️【區塊 B】菜單資料                                              ║
-// ║  ★ 建議用管理後台修改，不要直接改這裡                              ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  每一行 { } 是一個品項，欄位說明：                                  ║
+// ║  ✅ 建議從「管理後台 → 菜單」新增／編輯，不要直接改這裡            ║
 // ║                                                                      ║
-// ║  id        → 品項唯一編號（不可重複，系統自動產生，勿手動更改）    ║
-// ║  cat       → 分類名稱（必須與 ALL_CATS 裡的名稱完全一樣）           ║
+// ║  📌 若要直接改這裡，每行 { } 是一個品項，欄位說明：                ║
+// ║                                                                      ║
+// ║  id        → 品項唯一編號（系統自動產生，切勿手動修改或重複）      ║
+// ║  cat       → 分類名稱（必須與下方 ALL_CATS 裡的名稱完全一樣）      ║
 // ║  name      → 菜名                                                   ║
 // ║  price     → 售價（純數字，不含 $）                                 ║
-// ║  emoji     → 圖示（一個 emoji，例：🍳🥬🟡）                        ║
+// ║  emoji     → 圖示（一個 emoji，例：🍳 🥬 🟡 🍚 🍝 🥣）           ║
 // ║  popular   → true = 顯示橘色「熱銷」標籤 + 橘框                    ║
 // ║  isNew     → true = 顯示藍色「新品」標籤                            ║
 // ║  isSoldOut → true = 顯示「已售完」，客人無法加入購物車              ║
@@ -2562,13 +2584,19 @@ const MENU_DATA = [
 
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🔑【區塊 C】系統識別碼                                             ║
-// ║  ★ 以下三個值由後台【💾 存檔】自動寫入，不需手動修改              ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  LIFF_ID        → LINE 登入用識別碼（後台「進階設定」可修改）       ║
-// ║  VER            → 版本號，格式 YYYYMMDD-NN，每次存檔自動遞增        ║
+// ║  ⚠️ 以下三個值由後台【💾 存檔】自動寫入，通常不需手動修改          ║
+// ║                                                                      ║
+// ║  LIFF_ID        → LINE 登入用識別碼                                 ║
+// ║    取得方式：LINE Developers → 你的 Channel → LIFF → 複製 LIFF ID  ║
+// ║                                                                      ║
+// ║  VER            → 版本號，格式 YYYYMMDD-NN（每次存檔自動遞增）      ║
+// ║    例：20260601-01 表示 2026/06/01 的第 1 次存檔                    ║
+// ║                                                                      ║
 // ║  GITHUB_RAW_URL → 你的 GitHub Raw 網址，用來偵測是否有新版本        ║
-// ║    取得方法：GitHub repo → 點進 HTML 檔 → 點右上角「Raw」→ 複製網址 ║
-// ║    留空 '' → 關閉自動更新偵測                                        ║
+// ║    取得方式：GitHub repo → 點進 HTML 檔 → 點右上角「Raw」→ 複製網址║
+// ║    格式：https://raw.githubusercontent.com/帳號/repo/main/檔名.html ║
+// ║    留空 '' = 關閉自動更新偵測                                        ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
 const VER = '20260601-01';
@@ -2677,12 +2705,14 @@ function dismissUpdate(remoteVer){
 
 const menu = MENU_DATA.filter(i => !i.isHidden);
 let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '全部';
-// 📂 分類順序（可在管理後台「菜單分類」區塊修改）
+
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🗂️【區塊 C-1】分類順序                                            ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  ★ 建議用後台「菜單」頁的「分類列表」拖曳調整，不要直接改這裡     ║
-// ║  ★ 分類名稱必須與 MENU_DATA 每筆品項的 cat 欄位完全一致            ║
+// ║  ✅ 建議從「管理後台 → 菜單 → 分類列表」拖曳調整，不要直接改這裡  ║
+// ║                                                                      ║
+// ║  ⚠️ 分類名稱必須與 MENU_DATA 每筆品項的 cat 欄位完全一致           ║
+// ║     如果這裡的名稱和品項裡的 cat 不一樣，該分類不會顯示             ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const ALL_CATS = ["✨新品上市","🍳熱炒類","🥬時蔬類","🟡酥炸類","🍚炒飯","🍝炒麵","🍝炒烏龍麵","🍝烏龍湯麵","🥣粥品","🥣湯品"];
 
@@ -2949,15 +2979,18 @@ function getMinWaitMinutes() {
   return STORE_CONFIG.waitLarge || 35;
 }
 
-// isTomorrowClosed → 已由 isDateClosed(dateStr) 取代，請直接呼叫 isDateClosed
-
-// ── 檢查某日期（YYYY-MM-DD）是否整日公休 ──
+// ── 檢查某日期（YYYY-MM-DD）是否整日公休（以營業時間 09:00–23:59 為基準）──
+// 只有當公休時段完整覆蓋「09:00 到 23:59」，才算整日公休
+// → 上午公休（00:00–13:00）不會誤判為整日公休
+// → 下午公休（16:00–23:59）也不會誤判為整日公休
 function isDateClosed(dateStr) {
   if (!STORE_CONFIG.isOpen) return true;
-  const s = twTimeToUTCms(dateStr + 'T00:00');
-  const e = twTimeToUTCms(dateStr + 'T23:59');
+  const openMs  = twTimeToUTCms(dateStr + 'T09:00'); // 營業開始
+  const closeMs = twTimeToUTCms(dateStr + 'T23:59'); // 營業結束
   return (STORE_CONFIG.closedRanges || []).some(r =>
-    r.start && r.end && twTimeToUTCms(r.start) <= s && twTimeToUTCms(r.end) >= e
+    r.start && r.end &&
+    twTimeToUTCms(r.start) <= openMs &&
+    twTimeToUTCms(r.end)   >= closeMs
   );
 }
 
@@ -3180,7 +3213,7 @@ function onCustomTimeChange(inp) {
 function onReserveTimeChange(inp) {
   reserveTime = inp.value || '12:00';
   inp.classList.remove('error');
-  if (!isTomorrowClosed(reserveDate)) pickupTime = reserveTime;
+  if (!isDateClosed(reserveDate)) pickupTime = reserveTime;
 }
 
 // 取得顯示用時間字串（LINE 訊息 / 確認單）
@@ -3512,6 +3545,8 @@ renderTabs(); renderMenu();
       // 直接從字串取台灣本地日期，避免 UTC 往返換算造成跨日誤差
       const sDatePart = r.start.split('T')[0]; // "YYYY-MM-DD"
       const eDatePart = r.end.split('T')[0];
+      const sTimePart = (r.start.split('T')[1] || '00:00').slice(0,5); // "HH:MM"
+      const eTimePart = (r.end.split('T')[1]   || '23:59').slice(0,5);
       const [sY,sMo,sD] = sDatePart.split('-').map(Number);
       const [eY,eMo,eD] = eDatePart.split('-').map(Number);
       const wd = ['日','一','二','三','四','五','六'];
@@ -3520,7 +3555,22 @@ renderTabs(); renderMenu();
         return `${String(mo).padStart(2,'0')}/${String(d).padStart(2,'0')} (${wd[dt.getDay()]})`;
       }
       const isSameDay = sY===eY && sMo===eMo && sD===eD;
-      return isSameDay ? fmtLocal(sY,sMo,sD) : `${fmtLocal(sY,sMo,sD)}～${fmtLocal(eY,eMo,eD)}`;
+      // 是否為整日公休（開始 00:00 且結束 23:59）
+      const isFullDay = sTimePart === '00:00' && eTimePart === '23:59';
+
+      if (isSameDay) {
+        // 同一天：整日不加時段，非整日加上「幾點後」或「幾點～幾點」
+        if (isFullDay) return fmtLocal(sY,sMo,sD);
+        // 只有下半段公休（如 16:00–23:59）→ 顯示「幾點後」
+        if (eTimePart === '23:59') return `${fmtLocal(sY,sMo,sD)} ${sTimePart}後`;
+        // 只有上半段公休（如 00:00–13:00）→ 顯示「幾點前」
+        if (sTimePart === '00:00') return `${fmtLocal(sY,sMo,sD)} ${eTimePart}前`;
+        // 中間某段公休 → 顯示「幾點～幾點」
+        return `${fmtLocal(sY,sMo,sD)} ${sTimePart}～${eTimePart}`;
+      } else {
+        // 跨天：只顯示日期範圍（整日跨天）
+        return `${fmtLocal(sY,sMo,sD)}～${fmtLocal(eY,eMo,eD)}`;
+      }
     });
     if (closedBar) {
       closedBar.textContent = `⚠️ 預告公休日：${parts.join('、')}`;
@@ -3561,17 +3611,16 @@ liff.init({liffId:LIFF_ID})
   .catch(e=>console.warn('LIFF init failed (非 LINE 環境，可正常使用管理後台):',e));
 
 // ════════════════════════════════════════════════════════════════
-//  ✏️  管理後台邏輯
-// ────────────────────────────────────────────────────────────────
-//  🔑 後台密碼在這裡修改 → 改 ADM_PW 的值即可
-//     目前密碼：233009
+//  ✏️  管理後台邏輯（以下程式碼不需修改）
 // ════════════════════════════════════════════════════════════════
+
 // ╔══════════════════════════════════════════════════════════════════════╗
 // ║  🔑 後台登入密碼                                                    ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  ★ 建議用後台「系統設定」→「🔒 後台登入密碼」欄位修改             ║
-// ║  ★ 若忘記密碼，直接在這裡改 ADM_PW 的值，然後存檔上傳             ║
-// ║  ★ 密碼至少 4 位，改完後記得點【💾 存檔】                         ║
+// ║  正常情況：從後台「系統設定 → 🔒 後台登入密碼」修改                ║
+// ║  忘記密碼：直接改下面 ADM_PW = '233009' 裡的值                     ║
+// ║            改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub             ║
+// ║  ⚠️ 密碼至少 4 位                                                   ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const ADM_PW = '233009';
 let admCatFilter = '全部', admEditingId = null;
