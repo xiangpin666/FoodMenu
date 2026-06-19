@@ -373,7 +373,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
 .sum-disc-row.show { display: flex; }
 
-</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
+</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
 <body>
 <!-- ════════════════════════════════════════
      點餐系統主體（客人看到的部分）
@@ -400,7 +400,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   </div>
 
   <div class="announce" id="announce-bar">📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</div>
-  <div class="announce-closed-bar" id="announce-closed-bar" style="display: none;">⚠️ 預告公休日：06/04 (四) 16:00後、06/06 (六)</div>
+  <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：06/20 (六) 18:00後</div>
   <div id="menu-content"></div>
 
   <div class="bottom-bar" id="bottom-bar" style="display: none;">
@@ -645,16 +645,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-06-19">
-        <input type="time" class="cr-start-t" value="00:00">
+        <input type="date" class="cr-start-d" value="2026-06-20">
+        <input type="time" class="cr-start-t" value="18:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-06-19">
+        <input type="date" class="cr-end-d" value="2026-06-20">
         <input type="time" class="cr-end-t" value="23:59">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="6/19(五) 本日公休，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="6/20(六) 上午 9:00-18:00 公休，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div><div class="closed-range-row">
@@ -674,7 +674,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <input type="time" class="cr-end-t" value="23:59">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/8-8/9 公休兩天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/8(六) - 8/9(日) 公休兩天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
@@ -2382,8 +2382,8 @@ const STORE_CONFIG = {
   isOpen: true,
   closedRanges: [
   {
-    "start": "2026-06-20T18:00",
-    "end": "2026-06-20T23:59",
+    "start": "2026-06-20T00:00",
+    "end": "2026-06-20T18:00",
     "note": "6/20(六) 上午 9:00-18:00 公休，造成不便敬請見諒。期待下次為您服務！☕️✨"
   },
   {
