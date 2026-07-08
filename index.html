@@ -2862,6 +2862,7 @@ function selPickup(val, btn){
   // 取餐方式改變 → 重置時間狀態並重新產生時段按鈕
   pickupTime     = '';
   pickupIsCustom = false;
+  pickupIsFirstSlot = true;
   if (!isReserveMode) renderTimeSlotBtns();
   updateSummary();
 }
@@ -2881,6 +2882,7 @@ function selPickup(val, btn){
 let orderMode      = 'today'; // 目前模式：'today' | 'reserve'
 let pickupTime     = '';      // 最終取餐時間 HH:MM
 let pickupIsCustom = false;   // 今日模式下是否選了自訂
+let pickupIsFirstSlot = true; // 今日模式下是否選了「第一個」時段（唯一不加提醒的情況）
 let isReserveMode  = false;   // 快捷別名（等於 orderMode==='reserve'）
 let reserveDate    = '';      // 預約隔日日期 YYYY-MM-DD
 let reserveTime    = '12:00'; // 預約時間 HH:MM
@@ -3076,12 +3078,13 @@ function renderTimeSlotBtns() {
   if (!pickupIsCustom && !validValues.includes(pickupTime)) {
     pickupTime     = slots[0].value;
     pickupIsCustom = false;
+    pickupIsFirstSlot = true;
   }
 
   // 渲染時段按鈕
-  btnsEl.innerHTML = slots.map(s => {
+  btnsEl.innerHTML = slots.map((s, idx) => {
     const isActive = (!pickupIsCustom && pickupTime === s.value);
-    return `<button class="time-slot-btn${isActive?' active':''}" onclick="selectTimeSlot('${s.value}',this)">${s.label}</button>`;
+    return `<button class="time-slot-btn${isActive?' active':''}" onclick="selectTimeSlot('${s.value}',this,${idx===0})">${s.label}</button>`;
   }).join('') +
   `<button class="time-slot-btn custom-btn${pickupIsCustom?' active':''}" onclick="selectTimeSlotCustom(this)">其他時間</button>`;
 
@@ -3104,9 +3107,10 @@ function renderTimeSlotBtns() {
 }
 
 // 點固定時段按鈕
-function selectTimeSlot(val, btn) {
+function selectTimeSlot(val, btn, isFirst) {
   pickupTime     = val;
   pickupIsCustom = false;
+  pickupIsFirstSlot = !!isFirst;
   // 更新按鈕樣式
   btn.closest('.time-slot-btns').querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -3120,6 +3124,7 @@ function selectTimeSlot(val, btn) {
 // 點「自訂…」按鈕
 function selectTimeSlotCustom(btn) {
   pickupIsCustom = true;
+  pickupIsFirstSlot = false;
   // 更新按鈕樣式：取消其他時段、自訂高亮
   const btnsEl = document.getElementById('time-slot-btns');
   if (btnsEl) btnsEl.querySelectorAll('.time-slot-btn').forEach(b => b.classList.remove('active'));
@@ -3332,11 +3337,17 @@ function submitOrder(){
   ml.push('─────────────',...il,'',`📦 共 ${items.reduce((s,i)=>s+i.qty,0)} 項`,tl,'─────────────',`🥢 免洗餐具：${cutlery}`,`🧾 收據：${receipt}`);
   if(tid) ml.push(`🏢 統一編號：${tid}`);
   ml.push(`💬 備註：${note||'無'}`);
-  // ── 底部提醒（今日自訂時間 / 預約訂單）：備註後空一行再顯示 ──
-  if (isReserveMode && SC.lineReserveNote) ml.push('', SC.lineReserveNote);
-  else if (!isReserveMode && pickupIsCustom && SC.lineTodayCustomNote) ml.push('', SC.lineTodayCustomNote);
+  // ── 底部提醒（今日非第一時段 / 預約訂單）：備註後空一行再顯示 ──
+  // 今日取餐選第2、第3個時段或「其他時間」時，一律加上與預約訂單相同的提醒文字
+  // （若「其他時間」有另外設定 lineTodayCustomNote，則優先使用該設定）
+  if (isReserveMode && SC.lineReserveNote) {
+    ml.push('', SC.lineReserveNote);
+  } else if (!isReserveMode && !pickupIsFirstSlot) {
+    const bottomNote = (pickupIsCustom && SC.lineTodayCustomNote) ? SC.lineTodayCustomNote : SC.lineReserveNote;
+    if (bottomNote) ml.push('', bottomNote);
+  }
   // 重置所有狀態
-  cart={}; pickupTime=''; pickupIsCustom=false;
+  cart={}; pickupTime=''; pickupIsCustom=false; pickupIsFirstSlot=true;
   orderMode='today'; isReserveMode=false; reserveDate=''; reserveTime='12:00';
   // 恢復今日取餐模式 UI
   const modeTodayBtn = document.getElementById('mode-btn-today');
