@@ -19,7 +19,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .header{background:#1a2455;color:white;padding:.875rem 1rem .625rem;position:sticky;top:0;z-index:100}
 .header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:.625rem;gap:.5rem}
 .logo-area{display:flex;align-items:center;gap:.5rem;min-width:0;flex:1}
-.shop-name{font-size:1.125rem;font-weight:700;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cart-btn{position:relative;background:rgba(255,255,255,0.15);border:none;border-radius:1.25rem;padding:.5rem .875rem;color:white;cursor:pointer;font-size:.9375rem;display:flex;align-items:center;gap:.375rem;font-family:'Noto Sans TC',sans-serif;min-height:2.5rem;flex-shrink:0}
 .cart-btn:active{background:rgba(255,255,255,0.3)}
 .cart-badge{position:absolute;top:-4px;right:-4px;background:#e8a020;color:white;border-radius:.625rem;font-size:.75rem;font-weight:700;padding:2px 6px;min-width:1.25rem;text-align:center}
@@ -34,8 +33,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
 /* 公告 */
 .announce{background:#fef3d0;border-left:3px solid #e8a020;margin:.75rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#7a5200;line-height:1.5;word-break:break-all}
-/* 公告欄內的公休預告：獨立粉紅底框，與外送地址同色系，更顯眼 */
-.announce-closed-warn{background:#fff0f0;border:1.5px solid #e8b4b8;border-radius:.375rem;padding:.375rem .625rem;margin-top:.375rem;font-size:.8125rem;color:#c4390a;font-weight:700;line-height:1.6;word-break:break-all}
 /* 公休預告獨立欄位（無公休時自動隱藏） */
 .announce-closed-bar{background:#fff0f0;border-left:3px solid #c4390a;margin:.375rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#c4390a;font-weight:700;line-height:1.5;word-break:break-all}
 /* 必填欄位包覆框（聯絡電話等）：同外送地址 #fff0f0 背景 */
@@ -203,9 +200,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* ── 預約訂單模式 ── */
 .reserve-wrap{display:none;background:#eef2ff;border-radius:.625rem;padding:.75rem;border:1.5px solid #c8d4f0;margin-bottom:.5rem;overflow:hidden;box-sizing:border-box}
 .reserve-wrap.show{display:block;overflow:hidden}
-.reserve-date-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.625rem}
 .reserve-date-label{font-size:.8125rem;color:#555;font-weight:600;white-space:nowrap}
-.reserve-date-val{font-size:.9375rem;color:#1a2455;font-weight:700;background:white;border:1.5px solid #1a2455;border-radius:.5rem;padding:.3rem .625rem;display:inline-block}
 .reserve-time-label{font-size:.8125rem;color:#555;font-weight:600;margin-bottom:.375rem}
 .reserve-time-input{display:block;width:100%;max-width:100%;box-sizing:border-box;border:1.5px solid #1a2455;border-radius:.5rem;padding:.375rem .5rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#1a2455;font-weight:700;min-height:2.5rem;background:white;-webkit-appearance:none;appearance:none;overflow:hidden;clip-path:inset(0)}
 .reserve-time-input:focus{outline:none;border-color:#e8a020}
@@ -451,7 +446,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <span class="cart-title">我的訂單</span>
       <button class="clear-btn" onclick="clearCart()">清空</button>
     </div>
-    <div class="cart-body" id="cart-body-scroll">
+    <div class="cart-body">
       <div class="cart-items" id="cart-items"><div class="empty-cart">🍜<br>還沒有選任何品項</div></div>
       <div class="cart-options">
         <div class="opt-title">訂單選項</div>
@@ -783,10 +778,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div style="height:1px;background:#f0f0f0;margin:.25rem 0 .75rem"></div>
         <div style="font-size:.75rem;color:#888;margin-bottom:.5rem">📝 底部提醒（顯示在訊息最後一行）</div>
 
-        <label class="adm-label">今日選「其他時間」時的提醒 <span class="sub">（空白=不顯示）</span></label>
-        <input class="adm-input" type="text" id="f-lineTodayCustomNote" placeholder="留空則不顯示">
+        <label class="adm-label">今日選「其他時間」的專屬提醒 <span class="sub">（留空 = 套用下方「預約訂單底部提醒」）</span></label>
+        <input class="adm-input" type="text" id="f-lineTodayCustomNote" placeholder="留空則套用下方預約訂單提醒">
 
-        <label class="adm-label">預約訂單底部提醒</label>
+        <label class="adm-label">預約訂單底部提醒 <span class="sub">（也會用在：今日取餐選第2、3個時段時）</span></label>
         <input class="adm-input" type="text" id="f-lineReserveNote">
       </div>
 
@@ -2375,8 +2370,12 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  lineLabelPickupTime   → 今日取餐時間標籤文字                       ║
 // ║  lineLabelDeliveryTime → 外送送達時間標籤文字                       ║
 // ║  lineLabelReserveTime  → 預約取餐時間標籤文字                       ║
-// ║  lineTodayCustomNote   → 今日選「其他時間」時的底部提醒（空=不顯示）║
-// ║  lineReserveNote       → 預約訂單底部提醒文字                       ║
+// ║  lineReserveNote       → LINE 訊息底部提醒文字，用於：              ║
+// ║    ① 預約訂單（一定顯示）                                          ║
+// ║    ② 今日取餐選第2、3個時段，或選「其他時間」（非最早時段）        ║
+// ║  lineTodayCustomNote   → 今日選「其他時間」的專屬底部提醒（選填）   ║
+// ║    留空 = 直接使用上面的 lineReserveNote                            ║
+// ║    有填 = 只有選「其他時間」時改顯示這行，取代 lineReserveNote      ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
   isOpen: true,
@@ -2887,24 +2886,6 @@ let isReserveMode  = false;   // 快捷別名（等於 orderMode==='reserve'）
 let reserveDate    = '';      // 預約隔日日期 YYYY-MM-DD
 let reserveTime    = '12:00'; // 預約時間 HH:MM
 
-// ── 電話09前綴防呆 ──
-function enforcePhonePrefix(inp) {
-  // 確保開頭永遠是 09
-  if (!inp.value.startsWith('09')) {
-    // 只保留數字，強制補 09 開頭
-    const digits = inp.value.replace(/\D/g, '');
-    if (digits.startsWith('09')) {
-      inp.value = digits.slice(0, 10);
-    } else if (digits.startsWith('9')) {
-      inp.value = ('0' + digits).slice(0, 10);
-    } else {
-      inp.value = ('09' + digits).slice(0, 10);
-    }
-  }
-  // 移除錯誤樣式（改正中）
-  inp.classList.remove('error');
-}
-
 // ── 台灣時間工具 ──
 function getTaiwanNow() {
   const now = new Date();
@@ -2912,11 +2893,6 @@ function getTaiwanNow() {
 }
 function toHHMM(d) {
   return String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
-}
-function getTomorrowTWDateStr() {
-  const now = getTaiwanNow();
-  const tom = new Date(now.getTime() + 24 * 3600000);
-  return `${tom.getFullYear()}-${String(tom.getMonth()+1).padStart(2,'0')}-${String(tom.getDate()).padStart(2,'0')}`;
 }
 function fmtDateChinese(str) {
   const [y, mo, d] = str.split('-').map(Number);
@@ -3466,8 +3442,6 @@ renderTabs(); renderMenu();
   const nowMs       = Date.now();
   // 7 天後的毫秒上限
   const sevenDaysMs = nowMs + 7 * 24 * 3600000;
-  // 星期中文對照
-  const weekDay = ['日','一','二','三','四','五','六'];
 
   // 「YYYY-MM-DDTHH:MM」（台灣時間）→ UTC Date
   function twStrToDate(str) {
@@ -3475,15 +3449,6 @@ renderTabs(); renderMenu();
     const [y, mo, d] = datePart.split('-').map(Number);
     const [h, mi]    = (timePart || '00:00').split(':').map(Number);
     return new Date(Date.UTC(y, mo - 1, d, h - 8, mi, 0)); // 台灣 -8h = UTC
-  }
-
-  // UTC Date → 台灣時間的「MM/DD（週）」
-  function fmtDate(utcDate) {
-    const tw = new Date(utcDate.getTime() + 8 * 3600000); // UTC→台灣
-    const mm = String(tw.getUTCMonth() + 1).padStart(2, '0');
-    const dd = String(tw.getUTCDate()).padStart(2, '0');
-    const wd = weekDay[tw.getUTCDay()];
-    return `${mm}/${dd} (${wd})`;
   }
 
   // 篩選「尚未結束」且「start 在 7日內」的所有公休，按 start 排序
