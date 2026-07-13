@@ -46,6 +46,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 日期＋時間並排 */
 .cr-dt-row{display:flex;gap:.375rem;align-items:center}
 .cr-dt-row input[type=date],.cr-dt-row input[type=time]{flex:1;min-width:0;border:1.5px solid #ddd;border-radius:.5rem;padding:.4rem .5rem;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white}
+/* 每日固定營業時間：時間輸入框（與 .cr-dt-row input 共用同一組樣式，避免重複寫 inline style）*/
+.bh-time-input{width:100%;border:1.5px solid #ddd;border-radius:.5rem;padding:.4rem .5rem;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white}
 
 /* 分類標題 */
 .section-title{padding:.875rem .875rem .375rem;font-size:.9375rem;font-weight:700;color:#1a2455}
@@ -368,7 +370,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
 .sum-disc-row.show { display: flex; }
 
-</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
+</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
 <body>
 <!-- ════════════════════════════════════════
      點餐系統主體（客人看到的部分）
@@ -394,7 +396,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar">📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</div>
+  <div class="announce" id="announce-bar"><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
   <div class="announce-closed-bar" id="announce-closed-bar" style="display: none;">⚠️ 預告公休日：06/20 (六) 18:00前</div>
   <div id="menu-content"></div>
 
@@ -502,9 +504,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="reserve-wrap" id="reserve-wrap">
           <div class="reserve-date-label" style="margin-bottom:.375rem">📆 選擇取餐日期 <span style="font-size:.75rem;color:#888;font-weight:400">（僅受理3日內預約）</span></div>
           <div class="reserve-date-btns" id="reserve-date-btns"></div>
-          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400">（09:00–00:00）</span></div>
+          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400" id="reserve-hours-hint">（09:30–14:00、16:00–翌日03:00）</span></div>
           <div style="width:100%;overflow:hidden;box-sizing:border-box;">
-          <input type="time" class="reserve-time-input" id="reserve-time-input" min="09:00" max="23:59" value="12:00" onchange="onReserveTimeChange(this)">
+          <input type="time" class="reserve-time-input" id="reserve-time-input" min="00:00" max="23:59" value="12:00" onchange="onReserveTimeChange(this)">
           </div>
           <div class="reserve-closed-warn" id="reserve-closed-warn">⚠️ 此日為公休日，無法預約。請選擇其他日期。</div>
         </div>
@@ -626,11 +628,70 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
 
       <div class="adm-card">
+        <div class="adm-card-title">⏰ 每日固定營業時間 <span class="adm-card-sub">（每天自動套用）</span></div>
+        <div class="adm-tip">
+          ✏️ 設定每天固定的營業時段，<strong>空班時段（例：14:00–16:00 或凌晨 03:00–09:30）會自動屏蔽點餐</strong>，效果與公休日相同，不需另外設定。<br>
+          若結束時間小於開始時間（例：16:00 → 03:00），會自動視為<strong>營業到隔天凌晨</strong>。<br>
+          ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>。
+        </div>
+        <div id="adm-business-hours-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row business-hour-row">
+    <div class="closed-range-row-title">
+      ⏰ 營業時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="cr-dt-row" style="align-items:flex-start">
+        <div style="flex:1">
+          <div class="closed-range-label">開始</div>
+          <input type="time" class="bh-start-t bh-time-input" value="09:30">
+        </div>
+        <div style="flex:1">
+          <div class="closed-range-label">結束</div>
+          <input type="time" class="bh-end-t bh-time-input" value="14:00">
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
+  </div><div class="closed-range-row business-hour-row">
+    <div class="closed-range-row-title">
+      ⏰ 營業時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="cr-dt-row" style="align-items:flex-start">
+        <div style="flex:1">
+          <div class="closed-range-label">開始</div>
+          <input type="time" class="bh-start-t bh-time-input" value="16:00">
+        </div>
+        <div style="flex:1">
+          <div class="closed-range-label">結束</div>
+          <input type="time" class="bh-end-t bh-time-input" value="03:00">
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
+  </div></div>
+        <button class="adm-add-row-btn" onclick="admAddBusinessHourRow()">＋ 新增營業時段</button>
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
+        <div class="adm-card-title" style="font-size:.875rem">📝 空班時段公告文字 <span class="adm-card-sub">（非公休，客人看到的提示）</span></div>
+        <label class="adm-label">遮罩標題</label>
+        <input class="adm-input" type="text" id="f-outsideHoursTitle" placeholder="目前非營業時間">
+        <label class="adm-label">遮罩備註 <span class="sub">（留空 = 自動顯示營業時間文字）</span></label>
+        <input class="adm-input" type="text" id="f-outsideHoursNote" placeholder="留空則自動顯示「營業時間：09:30–14:00、16:00–翌日03:00」">
+      </div>
+
+      <div class="adm-card">
         <div class="adm-card-title">📅 指定公休時段 <span class="adm-card-sub">（自動停止接單）</span></div>
         <div class="adm-tip">
           ✏️ 新增後，頁面每秒自動比對台灣時間，進入時段立即顯示「公休」遮罩並鎖定結帳。<br>
           支援<strong>跨日設定</strong>，例如：5/5 22:00 ～ 5/6 10:00。<br>
           ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>，無需手動換算。
+        </div>
+        <div class="adm-tip" style="background:#fff8e6;border-left:3px solid #e8a020">
+          ⭐ <strong>本店固定口訣</strong>（營業時間 09:30–14:00、16:00–翌日03:00）：<br>
+          公休某一天 → 開始時間填「<strong>該日 03:00</strong>」、結束時間填「<strong>隔日 03:00</strong>」。<br>
+          例：7/14 公休 → 開始 2026-07-14 03:00　結束 2026-07-15 03:00<br>
+          連續公休多天 → 結束時間改填「最後一天的隔日 03:00」即可，開始時間不變。
         </div>
         <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row">
     <div class="closed-range-row-title">
@@ -640,36 +701,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-08-08">
+        <input type="date" class="cr-start-d" value="2026-08-09">
         <input type="time" class="cr-start-t" value="00:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
       <div class="cr-dt-row">
         <input type="date" class="cr-end-d" value="2026-08-09">
-        <input type="time" class="cr-end-t" value="23:59">
+        <input type="time" class="cr-end-t" value="15:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/8(六) - 8/9(日) 公休兩天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
-  </div><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-06-30">
-        <input type="time" class="cr-start-t" value="00:00">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-06-30">
-        <input type="time" class="cr-end-t" value="23:59">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
@@ -681,9 +722,9 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
       <div class="adm-card">
         <div class="adm-card-title">📢 頂部黃色公告橫幅</div>
-        <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的跑馬燈文字。</div>
-        <label class="adm-label">公告文字</label>
-        <input class="adm-input" type="text" id="f-announcementText">
+        <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的公告文字，可新增第2、3、4行，多行會自動換行顯示。</div>
+        <div id="adm-announce-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <button class="adm-add-row-btn" onclick="admAddAnnounceLine('')">＋ 新增一行</button>
       </div>
 
       <div class="adm-card">
@@ -831,10 +872,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-card-title">📋 菜單品項</div>
         <div class="adm-tip">
           ✏️ 點「編輯」可修改所有欄位。快速操作按鈕可一鍵切換狀態，不用進入編輯頁。<br>
-          🖐 <strong>拖曳排序</strong>：按住左側 <strong>⠿</strong> 圖示上下拖曳即可調整品項順序（手機也支援）。<br>
+          🖐 <strong>拖曳排序</strong>：按住左側 <strong>⠿</strong> 圖示，拖到想要的位置放開即可（手機也支援）。<br>
+          📌 拖曳為「<strong>插入式</strong>」：放開後該品項會直接插入目標位置，其他品項自動往前/往後遞補，<u>不會</u>跟目標互換位置，符合一般排序習慣。<br>
           <strong>隱藏</strong>：菜單上完全看不到。<strong>售完</strong>：顯示「已售完」無法加入購物車。
         </div>
-        <div class="adm-filter-row" id="adm-cat-filter-row"><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn" onclick="admSetCatFilter('✨新品上市')">✨新品上市</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍳熱炒類')">🍳熱炒類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥬時蔬類')">🥬時蔬類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🟡酥炸類')">🟡酥炸類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍚炒飯')">🍚炒飯</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝炒麵')">🍝炒麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝炒烏龍麵')">🍝炒烏龍麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝烏龍湯麵')">🍝烏龍湯麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥣粥品')">🥣粥品</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥣湯品')">🥣湯品</button></div>
+        <div class="adm-filter-row" id="adm-cat-filter-row"><button class="adm-filter-btn active" onclick="admSetCatFilter('全部')">全部</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍳熱炒類')">🍳熱炒類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥬時蔬類')">🥬時蔬類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🟡酥炸類')">🟡酥炸類</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍚炒飯')">🍚炒飯</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝炒麵')">🍝炒麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝炒烏龍麵')">🍝炒烏龍麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🍝烏龍湯麵')">🍝烏龍湯麵</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥣粥品')">🥣粥品</button><button class="adm-filter-btn" onclick="admSetCatFilter('🥣湯品')">🥣湯品</button><button class="adm-filter-btn" onclick="admSetCatFilter('✨新品上市')">✨新品上市</button></div>
         <button class="adm-btn-save" style="width:100%;margin-bottom:.875rem;border-radius:.625rem;padding:.625rem;font-size:.9375rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif" onclick="admOpenAddModal()">＋ 新增品項</button>
         <div id="adm-menu-list"><div class="adm-item-card" draggable="true" data-id="1">
       <div class="adm-item-hd">
@@ -1940,6 +1982,22 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <button class="adm-act-btn adm-btn-new" onclick="admToggle(68,'isNew')">✨ 新品</button>
         <button class="adm-act-btn adm-btn-del" onclick="admDelete(68)">🗑 刪除</button>
       </div>
+    </div><div class="adm-item-card" draggable="true" data-id="101">
+      <div class="adm-item-hd">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <div class="adm-item-emoji">🟡</div>
+        <div class="adm-item-name">椒鹽秋刀魚</div>
+        <div class="adm-item-price">$180</div>
+        <div class="adm-item-tags"></div>
+      </div>
+      <div class="adm-item-actions">
+        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(101)">✏️ 編輯</button>
+        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(101,'isHidden')">🙈 隱藏</button>
+        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(101,'isSoldOut')">❌ 售完</button>
+        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(101,'popular')">🔥 熱銷</button>
+        <button class="adm-act-btn adm-btn-new" onclick="admToggle(101,'isNew')">✨ 新品</button>
+        <button class="adm-act-btn adm-btn-del" onclick="admDelete(101)">🗑 刪除</button>
+      </div>
     </div><div class="adm-item-card" draggable="true" data-id="69">
       <div class="adm-item-hd">
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
@@ -2035,22 +2093,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <button class="adm-act-btn adm-btn-pop" onclick="admToggle(74,'popular')">🔥 熱銷</button>
         <button class="adm-act-btn adm-btn-new" onclick="admToggle(74,'isNew')">✨ 新品</button>
         <button class="adm-act-btn adm-btn-del" onclick="admDelete(74)">🗑 刪除</button>
-      </div>
-    </div><div class="adm-item-card" draggable="true" data-id="75">
-      <div class="adm-item-hd">
-        <span class="drag-handle" title="按住拖曳排序">⠿</span>
-        <div class="adm-item-emoji">🟡</div>
-        <div class="adm-item-name">鳳梨蝦球</div>
-        <div class="adm-item-price">$200</div>
-        <div class="adm-item-tags"></div>
-      </div>
-      <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(75)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(75,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(75,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(75,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(75,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(75)">🗑 刪除</button>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="76">
       <div class="adm-item-hd">
@@ -2148,28 +2190,29 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <button class="adm-act-btn adm-btn-new" onclick="admToggle(81,'isNew')">✨ 新品</button>
         <button class="adm-act-btn adm-btn-del" onclick="admDelete(81)">🗑 刪除</button>
       </div>
-    </div><div class="adm-item-card" draggable="true" data-id="101">
+    </div><div class="adm-item-card" draggable="true" data-id="75">
       <div class="adm-item-hd">
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🟡</div>
-        <div class="adm-item-name">椒鹽秋刀魚</div>
-        <div class="adm-item-price">$180</div>
-        <div class="adm-item-tags"><span class="adm-tag adm-tag-new">新品</span></div>
+        <div class="adm-item-name">鳳梨蝦球</div>
+        <div class="adm-item-price">$200</div>
+        <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(101)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(101,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(101,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(101,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(101,'isNew')">✨取消新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(101)">🗑 刪除</button>
+        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(75)">✏️ 編輯</button>
+        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(75,'isHidden')">🙈 隱藏</button>
+        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(75,'isSoldOut')">❌ 售完</button>
+        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(75,'popular')">🔥 熱銷</button>
+        <button class="adm-act-btn adm-btn-new" onclick="admToggle(75,'isNew')">✨ 新品</button>
+        <button class="adm-act-btn adm-btn-del" onclick="admDelete(75)">🗑 刪除</button>
       </div>
     </div></div>
 
       <div class="adm-card">
         <div class="adm-card-title">🗂 分類列表順序 <span class="adm-card-sub">（排序・新增・改名）</span></div>
         <div class="adm-tip">
-          🖐 <strong>拖曳排序</strong>：按住左側 <strong>⠿</strong> 圖示上下拖曳即可調整分類順序（手機也支援）。<br>
+          🖐 <strong>拖曳排序</strong>：按住左側 <strong>⠿</strong> 圖示，拖到想要的位置放開即可（手機也支援）。<br>
+          📌 拖曳為「<strong>插入式</strong>」：放開後直接插入目標位置，其他分類自動遞補，<u>不會</u>跟目標互換位置。<br>
           ✏️ <strong>修改名稱</strong>：點分類名稱旁的「改名」按鈕直接編輯。<br>
           ➕ <strong>新增分類</strong>：填入名稱後點「新增」按鈕。<br>
           ⚠️ 品項的「分類」欄位必須與此處名稱<strong>完全相同</strong>才會顯示。<br>
@@ -2183,61 +2226,61 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div id="adm-cats-list" style="display:flex;flex-direction:column;gap:.375rem;margin-bottom:.75rem">
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="0">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">✨新品上市</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍳熱炒類</span>
       <button onclick="admRenameCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="1">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍳熱炒類</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥬時蔬類</span>
       <button onclick="admRenameCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="2">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥬時蔬類</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🟡酥炸類</span>
       <button onclick="admRenameCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="3">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🟡酥炸類</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍚炒飯</span>
       <button onclick="admRenameCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="4">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍚炒飯</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒麵</span>
       <button onclick="admRenameCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="5">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒麵</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒烏龍麵</span>
       <button onclick="admRenameCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="6">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒烏龍麵</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝烏龍湯麵</span>
       <button onclick="admRenameCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="7">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝烏龍湯麵</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣粥品</span>
       <button onclick="admRenameCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="8">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣粥品</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣湯品</span>
       <button onclick="admRenameCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div>
     <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="9">
       <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣湯品</span>
+      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">✨新品上市</span>
       <button onclick="admRenameCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
       <button onclick="admDeleteCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
     </div></div>
@@ -2251,10 +2294,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <!-- 品項編輯 Modal -->
 <div class="adm-modal-overlay" id="adm-item-modal">
   <div class="adm-modal-card">
-    <div class="adm-modal-title" id="adm-modal-title"><!-- 由 JS 動態填入 --></div>
+    <div class="adm-modal-title" id="adm-modal-title">✏️ 編輯：椒鹽秋刀魚</div>
 
     <label class="adm-label">分類 <span class="sub">（必須與分類列表名稱完全一致）</span></label>
-    <select class="adm-select" id="ef-cat"><option value="✨新品上市">✨新品上市</option><option value="🍳熱炒類">🍳熱炒類</option><option value="🥬時蔬類">🥬時蔬類</option><option value="🟡酥炸類">🟡酥炸類</option><option value="🍚炒飯">🍚炒飯</option><option value="🍝炒麵">🍝炒麵</option><option value="🍝炒烏龍麵">🍝炒烏龍麵</option><option value="🍝烏龍湯麵">🍝烏龍湯麵</option><option value="🥣粥品">🥣粥品</option><option value="🥣湯品">🥣湯品</option></select>
+    <select class="adm-select" id="ef-cat"><option value="🍳熱炒類">🍳熱炒類</option><option value="🥬時蔬類">🥬時蔬類</option><option value="🟡酥炸類">🟡酥炸類</option><option value="🍚炒飯">🍚炒飯</option><option value="🍝炒麵">🍝炒麵</option><option value="🍝炒烏龍麵">🍝炒烏龍麵</option><option value="🍝烏龍湯麵">🍝烏龍湯麵</option><option value="🥣粥品">🥣粥品</option><option value="🥣湯品">🥣湯品</option><option value="✨新品上市">✨新品上市</option></select>
 
     <label class="adm-label">菜名</label>
     <input class="adm-input" type="text" id="ef-name" placeholder="例：蒜泥白肉">
@@ -2268,7 +2311,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="adm-tip">常用 Emoji：🍚炒飯 🍝炒/烏龍麵 🍜湯麵 🥣粥/湯品 🍳熱炒 🥬時蔬 🟡酥炸</div>
 
     <label class="adm-label">加購選項 <span class="sub">（勾選式，免費加購填 0）</span></label>
-    <div id="ef-extras-wrap"><!-- 由 JS 動態填入 --></div>
+    <div id="ef-extras-wrap"><div class="extra-row"><input type="text" class="adm-input ef-extra-label" placeholder="選項名稱（例：加飯）" value="加辣🌶️"><input type="number" class="adm-input ef-extra-price" placeholder="加價" value="0" min="0" style="max-width:90px"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
     <button class="adm-inline-add-btn" onclick="admAddExtraRow('','0')">＋ 新增加購選項</button>
 
     <label class="adm-label">醬料選擇 <span class="sub">（單選，例：醬油芥末、蒜蓉醬）</span></label>
@@ -2301,7 +2344,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- Toast -->
-<div class="adm-toast" id="adm-toast">✅ 咖哩海鮮炒麵 已更新</div>
+<div class="adm-toast" id="adm-toast">✅ 已更新「椒鹽秋刀魚」！</div>
 
 <!-- ════════════════════════════════════════
      JavaScript
@@ -2330,11 +2373,30 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║    true  = 正常營業（客人可點餐）                                    ║
 // ║    false = 全日公休（強制鎖單，客人看到公休遮罩）                   ║
 // ║                                                                      ║
+// ║  businessHours  ← 每日固定營業時間（每天自動重複套用）              ║
+// ║    每筆格式：{ start:"HH:MM", end:"HH:MM" }                         ║
+// ║    ▶ 一般時段：start < end，例如 09:30–14:00                        ║
+// ║    ▶ 跨日時段：start > end 代表營業到隔天凌晨，                     ║
+// ║      例如 16:00–03:00 = 每天 16:00 開始營業，直到隔天 03:00         ║
+// ║    ▶ 未列在任何時段內的時間（空班時段，例：14:00–16:00、            ║
+// ║      03:00–09:30）會自動顯示「非營業時間」遮罩、鎖定點餐，          ║
+// ║      效果與公休日設定相同，不需另外手動設定 closedRanges            ║
+// ║    ▶ 陣列留空 [] = 不限制每日時段（僅受 isOpen / closedRanges 控制）║
+// ║    ⚠️ 所有時間皆為台灣時間（GMT+8）                                 ║
+// ║                                                                      ║
 // ║  closedRanges  ← 指定公休時段（可設多筆，自動到時間切換）          ║
 // ║    每筆格式：                                                        ║
 // ║      { start:"YYYY-MM-DDTHH:MM",                                    ║
 // ║        end:  "YYYY-MM-DDTHH:MM",                                    ║
 // ║        note: "備註（選填，顯示在公休遮罩下方）" }                   ║
+// ║                                                                      ║
+// ║    ⭐ 本店固定口訣（營業時間 09:30–14:00、16:00–翌日03:00）：       ║
+// ║      公休某一天 = 該日 T03:00 ～ 隔日 T03:00                        ║
+// ║      例：7/14 公休 → start:"2026-07-14T03:00"                       ║
+// ║                       end:  "2026-07-15T03:00"                      ║
+// ║      為什麼是 03:00：因為 03:00–09:30 本來就是每天的空班時段，      ║
+// ║      公休起訖點卡在這裡才不會誤傷到前一晚或隔天的營業時段。         ║
+// ║      連續公休 N 天 → end 改成「最後一天+1」的 T03:00 即可           ║
 // ║                                                                      ║
 // ║    ▶ 整日公休：start T00:00，end T23:59                             ║
 // ║      範例：start:"2026-06-03T00:00", end:"2026-06-03T23:59"         ║
@@ -2345,11 +2407,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║    ⚠️ 所有時間皆為台灣時間（GMT+8），不需換算                      ║
 // ║                                                                      ║
 // ║  ── 📢 前台文字 ────────────────────────────────────────────────── ║
-// ║  announcementText  → 頂部黃色橫幅文字                               ║
+// ║  announcementLines → 頂部黃色橫幅文字（陣列，每行一個字串，可1~多行）║
 // ║  popupLines        → 進頁面彈窗文字（陣列，每行一個字串）           ║
 // ║  defaultNote       → 備註欄的灰色提示文字                           ║
 // ║  deliveryHintLine1 → 選「外送」後粉框第一行說明                     ║
 // ║  deliveryHintLine2 → 選「外送」後粉框第二行（紅字）                 ║
+// ║  outsideHoursTitle → 空班時段（非公休）遮罩標題文字                 ║
+// ║  outsideHoursNote  → 空班時段（非公休）遮罩備註文字                 ║
+// ║    留空 = 自動顯示「營業時間：09:30–14:00、16:00–翌日03:00」        ║
+// ║    有填 = 改顯示這行自訂文字，取代自動產生的營業時間文字            ║
 // ║                                                                      ║
 // ║  ── ⏰ 候餐時間（分鐘）─────────────────────────────────────────── ║
 // ║  waitSmall    → 購物車 1–2 項時，最早可選的取餐分鐘數（預設 20）    ║
@@ -2379,19 +2445,28 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
   isOpen: true,
-  closedRanges: [
+  // ── 每日固定營業時間（每天自動重複套用，空班時段自動鎖單，見上方說明）──
+  businessHours: [
   {
-    "start": "2026-07-01T00:00",
-    "end": "2026-07-01T23:59",
-    "note": "7/1(三) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
+    "start": "09:30",
+    "end": "14:00"
   },
   {
+    "start": "16:00",
+    "end": "03:00"
+  }
+],
+  closedRanges: [
+  {
     "start": "2026-08-09T00:00",
-    "end": "2026-08-09T23:59",
+    "end": "2026-08-09T15:00",
     "note": "8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
   }
 ],
-  announcementText: "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)",
+  announcementLines: [
+  "⏰營業時間調整公告：上午09:30–下午14:00、下午16:00–翌日03:00",
+  "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"
+],
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
   "堅持現點現做，完美滋味值得您耐心等待⏳",
@@ -2403,12 +2478,15 @@ const STORE_CONFIG = {
   defaultNote: "例：口味調整、其他需求...",
   deliveryHintLine1: "🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）",
   deliveryHintLine2: "*請於下方填入外送地址與聯絡電話",
+  // ── 空班時段（非公休）遮罩文字：留空 outsideHoursNote = 自動顯示營業時間 ──
+  outsideHoursTitle: "目前非營業時間",
+  outsideHoursNote: "⏰營業時間：09:30–14:00、16:00–翌日03:00",
   // ── 候餐時間（分鐘）：外帶選單顯示 3 個時段（N、2N、3N）──
   // 外送固定 +60 分鐘，不受以下設定影響
   waitSmall: 20,    // 1–2 項時最早候餐分鐘
-  waitMedium: 35,   // 3–5 項時最早候餐分鐘
-  waitLarge: 50,    // 6 項以上時最早候餐分鐘
-  slotInterval: 15, // 今日取餐按鈕時間間隔（分鐘）
+  waitMedium: 40,   // 3–5 項時最早候餐分鐘
+  waitLarge: 60,    // 6 項以上時最早候餐分鐘
+  slotInterval: 20, // 今日取餐按鈕時間間隔（分鐘）
   // ── 文字與折扣設定 ──
   pickupTimeHint: "⏱ 備餐時間僅供參考，如有變動將主動通知 🙏",
   takeoutLabel: "外帶自取 9折",
@@ -2515,20 +2593,20 @@ const MENU_DATA = [
   { id:66, cat:"🥬時蔬類", name:"肉絲水蓮", price:150, emoji:"🥬", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:67, cat:"🥬時蔬類", name:"地瓜葉皮蛋", price:150, emoji:"🥬", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:68, cat:"🟡酥炸類", name:"招牌黃金豆腐", price:170, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:101, cat:"🟡酥炸類", name:"椒鹽秋刀魚", price:180, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:69, cat:"🟡酥炸類", name:"招牌紅糟鰻", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:70, cat:"🟡酥炸類", name:"鹽酥鮮蚵", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:71, cat:"🟡酥炸類", name:"月亮蝦餅", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:72, cat:"🟡酥炸類", name:"椒鹽排骨", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:73, cat:"🟡酥炸類", name:"鹽酥蝦", price:190, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:74, cat:"🟡酥炸類", name:"椒鹽中卷", price:200, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:75, cat:"🟡酥炸類", name:"鳳梨蝦球", price:200, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:76, cat:"🥣湯品", name:"紫菜蛋花湯", price:50, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:77, cat:"🥣湯品", name:"貢丸湯", price:55, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:78, cat:"🥣湯品", name:"魚丸湯", price:55, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:79, cat:"🥣湯品", name:"番茄蛋花湯", price:65, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:80, cat:"🥣湯品", name:"薑絲蛤蜊湯", price:65, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:81, cat:"🥣湯品", name:"薑絲鮮蚵湯", price:70, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
-  { id:101, cat:"✨新品上市", name:"椒鹽秋刀魚", price:180, emoji:"🟡", popular:false, isSoldOut:false, isNew:true, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:75, cat:"🟡酥炸類", name:"鳳梨蝦球", price:200, emoji:"🟡", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
 ];
 
 // ╔══════════════════════════════════════════════════════════════════════╗
@@ -2548,7 +2626,7 @@ const MENU_DATA = [
 // ║    留空 '' = 關閉自動更新偵測                                        ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260630-01';
+const VER = '20260713-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 
 // ════════════════════════════════════════════════════════════════
@@ -2663,7 +2741,7 @@ let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '
 // ║  ⚠️ 分類名稱必須與 MENU_DATA 每筆品項的 cat 欄位完全一致           ║
 // ║     如果這裡的名稱和品項裡的 cat 不一樣，該分類不會顯示             ║
 // ╚══════════════════════════════════════════════════════════════════════╝
-const ALL_CATS = ["✨新品上市","🍳熱炒類","🥬時蔬類","🟡酥炸類","🍚炒飯","🍝炒麵","🍝炒烏龍麵","🍝烏龍湯麵","🥣粥品","🥣湯品"];
+const ALL_CATS = ["🍳熱炒類","🥬時蔬類","🟡酥炸類","🍚炒飯","🍝炒麵","🍝炒烏龍麵","🍝烏龍湯麵","🥣粥品","🥣湯品","✨新品上市"];
 
 function renderTabs(){
   document.getElementById('cat-tabs').innerHTML = ['全部',...ALL_CATS].map(c =>
@@ -3210,10 +3288,11 @@ function placeOrder(){
       alert('請填入預約取餐時間！');
       return;
     }
-    // 限制時間 09:00 ~ 23:59
-    if (timeInp.value < '09:00') {
+    // 限制時間須落在每日固定營業時間內（避免預約到空班時段）
+    if (!isTimeInBusinessHours(timeInp.value)) {
       timeInp.classList.add('error');
-      alert('預約取餐時間須在 09:00 之後（營業時間內）。');
+      const hrs = formatBusinessHoursText();
+      alert(`預約取餐時間須在營業時間內。${hrs ? '\n目前營業時間：' + hrs : ''}`);
       return;
     }
     reserveTime = timeInp.value;
@@ -3358,10 +3437,44 @@ function twTimeToUTCms(str) {
   return Date.UTC(y, mo - 1, d, h - 8, mi, 0);
 }
 
+// ── 每日固定營業時間判斷（每天自動重複套用）──
+// businessHours 為 [{start:"HH:MM", end:"HH:MM"}, ...]
+// start < end：一般時段（例：09:30–14:00）
+// start > end：跨日時段，代表營業到隔天凌晨（例：16:00–03:00）
+function isTimeInBusinessHours(hhmm) {
+  const ranges = STORE_CONFIG.businessHours || [];
+  if (!ranges.length) return true; // 未設定 = 不限制每日時段
+  return ranges.some(r => {
+    if (!r.start || !r.end) return false;
+    if (r.start <= r.end) {
+      return hhmm >= r.start && hhmm < r.end;
+    } else {
+      // 跨日時段（例：16:00–03:00）
+      return hhmm >= r.start || hhmm < r.end;
+    }
+  });
+}
+// ── 判斷「現在」是否為每日固定營業時間之外的空班時段 ──
+function isOutsideBusinessHours() {
+  const now  = getTaiwanNow();
+  const hhmm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+  return !isTimeInBusinessHours(hhmm);
+}
+// ── 將 businessHours 組成人類可讀文字，例："09:30–14:00、16:00–翌日03:00" ──
+function formatBusinessHoursText() {
+  const ranges = STORE_CONFIG.businessHours || [];
+  if (!ranges.length) return '';
+  return ranges.map(r => {
+    if (!r.start || !r.end) return '';
+    return r.start <= r.end ? `${r.start}–${r.end}` : `${r.start}–翌日${r.end}`;
+  }).filter(Boolean).join('、');
+}
+
 // ── 判斷「現在」是否落在任一公休區間內 ──
 // 全程使用真實 UTC 毫秒（Date.now()），與客戶端時區設定完全無關
 function isInClosedRange() {
   if (!STORE_CONFIG.isOpen) return true; // 強制全日公休
+  if (isOutsideBusinessHours()) return true; // 非每日固定營業時間（空班時段），依公休設定屏蔽
 
   const ranges = STORE_CONFIG.closedRanges || [];
   if (!ranges.length) return false;
@@ -3401,11 +3514,36 @@ function checkClosedStatus() {
       if (active) {
         const fmt = s => s.replace('T',' ').slice(0,16);
         rangeHint.style.whiteSpace = 'nowrap';
+        rangeHint.style.overflow = 'hidden';
+        rangeHint.style.textOverflow = 'ellipsis';
         rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}`;
-        if (rangeNote) { rangeNote.style.whiteSpace = 'nowrap'; rangeNote.textContent = active.note ? active.note : ''; }
+        if (rangeNote) {
+          rangeNote.style.whiteSpace = 'nowrap';
+          rangeNote.style.overflow = 'hidden';
+          rangeNote.style.textOverflow = 'ellipsis';
+          rangeNote.textContent = active.note ? active.note : '';
+        }
       } else if (!STORE_CONFIG.isOpen) {
         rangeHint.textContent = '（店家設定全日公休）';
         if (rangeNote) rangeNote.textContent = '';
+      } else if (isOutsideBusinessHours()) {
+        // ── 非公休日，但落在每日固定營業時間之外的空班時段（文字可從後台修改）──
+        rangeHint.style.whiteSpace = 'normal';
+        rangeHint.style.overflow = 'visible';
+        rangeHint.style.textOverflow = 'clip';
+        rangeHint.textContent = STORE_CONFIG.outsideHoursTitle || '目前非營業時間';
+        if (rangeNote) {
+          rangeNote.style.whiteSpace = 'normal';
+          rangeNote.style.overflow = 'visible';
+          rangeNote.style.textOverflow = 'clip';
+          const customNote = (STORE_CONFIG.outsideHoursNote || '').trim();
+          if (customNote) {
+            rangeNote.textContent = customNote;
+          } else {
+            const hrs = formatBusinessHoursText();
+            rangeNote.textContent = hrs ? `營業時間：${hrs}` : '';
+          }
+        }
       } else {
         rangeHint.textContent = '';
         if (rangeNote) rangeNote.textContent = '';
@@ -3432,11 +3570,18 @@ function isClosedOnSubmit() {
 
 // 初始化
 renderTabs(); renderMenu();
+// ── 依 STORE_CONFIG.businessHours 更新預約取餐時間提示文字 ──
+(function renderReserveHoursHint(){
+  const el = document.getElementById('reserve-hours-hint');
+  if (!el) return;
+  const hrs = formatBusinessHoursText();
+  el.textContent = hrs ? `（${hrs}）` : '';
+})();
 // ── 公告橫幅：公告文字 + 公休預告各自獨立欄位（無公休時公休欄自動消失）──
 (function renderAnnounceBar(){
   const bar       = document.getElementById('announce-bar');
   const closedBar = document.getElementById('announce-closed-bar');
-  const line1 = STORE_CONFIG.announcementText || '';
+  const annLines = (STORE_CONFIG.announcementLines || []).filter(l => l !== '');
 
   // 台灣當下時間（UTC 毫秒）
   const nowMs       = Date.now();
@@ -3462,8 +3607,8 @@ renderTabs(); renderMenu();
     })
     .sort((a, b) => twStrToDate(a.start) - twStrToDate(b.start));
 
-  // 公告欄：固定顯示公告文字
-  bar.textContent = line1;
+  // 公告欄：固定顯示公告文字（支援多行）
+  bar.innerHTML = annLines.map(l => `<span>${esc(l)}</span>`).join('<br>');
 
   // 公休預告欄：有公休才顯示，否則完全隱藏
   if (list.length) {
@@ -3631,10 +3776,13 @@ function admToast(msg='✅ 已更新！改完所有設定後點【💾 存檔】
 // ── 店家設定 ──
 function admInitStore(){
   document.getElementById('f-isOpen').checked = STORE_CONFIG.isOpen;
-  document.getElementById('f-announcementText').value = STORE_CONFIG.announcementText;
+  const annWrap=document.getElementById('adm-announce-lines-wrap'); annWrap.innerHTML='';
+  (STORE_CONFIG.announcementLines && STORE_CONFIG.announcementLines.length ? STORE_CONFIG.announcementLines : ['']).forEach(l=>admAddAnnounceLine(l,false));
   document.getElementById('f-defaultNote').value = STORE_CONFIG.defaultNote;
   document.getElementById('f-deliveryHintLine1').value = STORE_CONFIG.deliveryHintLine1;
   document.getElementById('f-deliveryHintLine2').value = STORE_CONFIG.deliveryHintLine2;
+  document.getElementById('f-outsideHoursTitle').value = STORE_CONFIG.outsideHoursTitle || '目前非營業時間';
+  document.getElementById('f-outsideHoursNote').value  = STORE_CONFIG.outsideHoursNote  || '';
   // ── 候餐時間 ──
   document.getElementById('f-wait-sm').value  = STORE_CONFIG.waitSmall  || 15;
   document.getElementById('f-wait-md').value  = STORE_CONFIG.waitMedium || 25;
@@ -3660,13 +3808,19 @@ function admInitStore(){
   // ── 載入公休時段 ──
   const cdWrap=document.getElementById('adm-closed-dates-wrap'); cdWrap.innerHTML='';
   (STORE_CONFIG.closedRanges||[]).slice().sort((a,b)=>a.start.localeCompare(b.start)).forEach(r=>admAddClosedDateRow(r,false));
+  // ── 載入每日固定營業時間 ──
+  const bhWrap=document.getElementById('adm-business-hours-wrap'); bhWrap.innerHTML='';
+  (STORE_CONFIG.businessHours||[]).forEach(r=>admAddBusinessHourRow(r,false));
 }
 function admReadStore(){
   STORE_CONFIG.isOpen = document.getElementById('f-isOpen').checked;
-  STORE_CONFIG.announcementText = document.getElementById('f-announcementText').value;
+  STORE_CONFIG.announcementLines = [];
+  document.querySelectorAll('.adm-announce-line-input').forEach(inp=>STORE_CONFIG.announcementLines.push(inp.value));
   STORE_CONFIG.defaultNote = document.getElementById('f-defaultNote').value;
   STORE_CONFIG.deliveryHintLine1 = document.getElementById('f-deliveryHintLine1').value;
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
+  STORE_CONFIG.outsideHoursTitle = document.getElementById('f-outsideHoursTitle').value.trim().replace(/\n/g,'') || '目前非營業時間';
+  STORE_CONFIG.outsideHoursNote  = document.getElementById('f-outsideHoursNote').value.trim().replace(/\n/g,'');
   // ── 候餐時間 ──
   STORE_CONFIG.waitSmall  = parseInt(document.getElementById('f-wait-sm').value)  || 15;
   STORE_CONFIG.waitMedium = parseInt(document.getElementById('f-wait-md').value)  || 25;
@@ -3698,6 +3852,13 @@ function admReadStore(){
   });
   // 依開始日期自動排序（早的在前）
   STORE_CONFIG.closedRanges.sort((a, b) => a.start.localeCompare(b.start));
+  // ── 讀取每日固定營業時間 ──
+  STORE_CONFIG.businessHours = [];
+  document.querySelectorAll('.business-hour-row').forEach(row=>{
+    const st = row.querySelector('.bh-start-t')?.value.trim();
+    const et = row.querySelector('.bh-end-t')?.value.trim();
+    if(st && et) STORE_CONFIG.businessHours.push({ start: st, end: et });
+  });
 }
 // ── 新增公休時段 Row（支援跨日、開始/結束時間、備註）──
 // r = { start:"YYYY-MM-DDTHH:MM", end:"YYYY-MM-DDTHH:MM", note:"..." } 或 undefined（新增空白列）
@@ -3739,6 +3900,47 @@ function admAddClosedDateRow(r, save=true){
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   `;
+  wrap.appendChild(row);
+}
+
+// ── 新增每日固定營業時間 Row（每天自動重複套用，僅時間、無日期）──
+// r = { start:"HH:MM", end:"HH:MM" } 或 undefined（新增空白列）
+function admAddBusinessHourRow(r, save=true){
+  if(save) admReadStore();
+  const wrap = document.getElementById('adm-business-hours-wrap');
+  const row  = document.createElement('div');
+  row.className = 'closed-range-row business-hour-row';
+
+  const defST = (r && r.start) ? r.start : '09:00';
+  const defET = (r && r.end)   ? r.end   : '18:00';
+
+  row.innerHTML = `
+    <div class="closed-range-row-title">
+      ⏰ 營業時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="cr-dt-row" style="align-items:flex-start">
+        <div style="flex:1">
+          <div class="closed-range-label">開始</div>
+          <input type="time" class="bh-start-t bh-time-input" value="${esc(defST)}">
+        </div>
+        <div style="flex:1">
+          <div class="closed-range-label">結束</div>
+          <input type="time" class="bh-end-t bh-time-input" value="${esc(defET)}">
+        </div>
+      </div>
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
+  `;
+  wrap.appendChild(row);
+}
+
+function admAddAnnounceLine(v='', save=true){
+  if(save) admReadStore();
+  const wrap=document.getElementById('adm-announce-lines-wrap');
+  const row=document.createElement('div'); row.className='popup-line-row';
+  row.innerHTML=`<input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="${esc(v)}"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button>`;
   wrap.appendChild(row);
 }
 
@@ -3807,7 +4009,7 @@ function initItemDrag(){
       e.preventDefault();
       const targetId = parseInt(card.dataset.id);
       if(dragSrcId === targetId) return;
-      _swapItemsByFilter(dragSrcId, targetId);
+      _insertItemByFilter(dragSrcId, targetId);
     });
 
     // 手機觸控拖曳
@@ -3844,22 +4046,52 @@ function initItemDrag(){
       if(target && target !== touchCard){
         const srcId = parseInt(touchCard.dataset.id);
         const dstId = parseInt(target.dataset.id);
-        _swapItemsByFilter(srcId, dstId);
+        _insertItemByFilter(srcId, dstId);
       }
       touchCard = null;
     });
   });
 }
 
-// 依目前篩選分類，在 MENU_DATA 內交換兩個品項的位置
-function _swapItemsByFilter(srcId, dstId){
-  const items = admCatFilter==='全部' ? MENU_DATA : MENU_DATA.filter(i=>i.cat===admCatFilter);
-  const srcLocal = items.findIndex(i=>i.id===srcId);
-  const dstLocal = items.findIndex(i=>i.id===dstId);
-  if(srcLocal<0 || dstLocal<0) return;
-  const srcGlobal = MENU_DATA.findIndex(i=>i.id===srcId);
-  const dstGlobal = MENU_DATA.findIndex(i=>i.id===dstId);
-  const tmp = MENU_DATA[srcGlobal]; MENU_DATA[srcGlobal]=MENU_DATA[dstGlobal]; MENU_DATA[dstGlobal]=tmp;
+// ════════════════════════════════════════════════════════════════
+//  🧩 通用「插入式」排序工具（拖曳來源會插入目標位置，不是跟目標互換）
+//  ─────────────────────────────────────────────────────────────
+//  例：原順序 [A,B,C,D]，把 A 拖到 C 上面（由上往下拖）
+//    交換式（舊）→ [C,B,A,D]　　A、C 互換，B、D 不受影響但順序被打亂
+//    插入式（新）→ [B,C,A,D]　　A 抽出來插到 C 後面，B 自動遞補，符合直覺
+// ════════════════════════════════════════════════════════════════
+// arr：要重新排序的陣列（會直接修改原陣列）
+// srcIdx：來源項目目前的位置
+// dstIdx：目標項目「移動前」的原始位置
+// after：true = 插入到目標之後／false = 插入到目標之前
+function _insertArrayItem(arr, srcIdx, dstIdx, after){
+  if (srcIdx<0 || dstIdx<0 || srcIdx>=arr.length || dstIdx>=arr.length || srcIdx===dstIdx) return;
+  const [moved] = arr.splice(srcIdx, 1); // 先抽出來源項目（後面項目自動往前遞補）
+  // 抽出後，若目標原本在來源後面，目標的位置要往前移 1 格
+  const adjustedDst = dstIdx > srcIdx ? dstIdx - 1 : dstIdx;
+  const insertAt = after ? adjustedDst + 1 : adjustedDst;
+  arr.splice(insertAt, 0, moved); // 插入到目標旁邊
+}
+
+// 依目前篩選分類，把來源品項「插入」目標品項旁邊（不是交換位置）
+// 由上往下拖（srcLocal < dstLocal）→ 插入目標下方；由下往上拖 → 插入目標上方
+function _insertItemByFilter(srcId, dstId){
+  const filtered = admCatFilter==='全部' ? MENU_DATA : MENU_DATA.filter(i=>i.cat===admCatFilter);
+  const srcLocal = filtered.findIndex(i=>i.id===srcId);
+  const dstLocal = filtered.findIndex(i=>i.id===dstId);
+  if (srcLocal<0 || dstLocal<0 || srcLocal===dstLocal) return;
+  const after = srcLocal < dstLocal; // 判斷拖曳方向，決定插入目標的上方或下方
+
+  // 在篩選後的清單裡先算出新順序
+  const localCopy = filtered.slice();
+  _insertArrayItem(localCopy, srcLocal, dstLocal, after);
+
+  // 把新順序寫回 MENU_DATA：只調整「符合目前篩選條件」的那幾個位置，
+  // 其他分類的品項完全不受影響、位置維持原樣
+  const globalIdxList = [];
+  MENU_DATA.forEach((it, idx) => { if (admCatFilter==='全部' || it.cat===admCatFilter) globalIdxList.push(idx); });
+  globalIdxList.forEach((gIdx, i) => { MENU_DATA[gIdx] = localCopy[i]; });
+
   admRenderMenuList();
 }
 function admRenderCatsTextarea(){
@@ -3888,7 +4120,7 @@ function initCatDrag(){
     row.addEventListener('dragstart', e=>{ dragSrcIdx = idx; row.style.opacity='.4'; e.dataTransfer.effectAllowed='move'; });
     row.addEventListener('dragend', ()=>{ row.style.opacity=''; list.querySelectorAll('[data-cat-idx]').forEach(r=>r.style.background=''); });
     row.addEventListener('dragover', e=>{ e.preventDefault(); list.querySelectorAll('[data-cat-idx]').forEach(r=>r.style.background=''); row.style.background='#fffbf0'; });
-    row.addEventListener('drop', e=>{ e.preventDefault(); const dstIdx=parseInt(row.dataset.catIdx); if(dragSrcIdx===dstIdx) return; _swapCats(dragSrcIdx, dstIdx); });
+    row.addEventListener('drop', e=>{ e.preventDefault(); const dstIdx=parseInt(row.dataset.catIdx); if(dragSrcIdx===dstIdx) return; _insertCat(dragSrcIdx, dstIdx); });
 
     // 手機觸控
     const handle = row.querySelector('.drag-handle');
@@ -3917,16 +4149,17 @@ function initCatDrag(){
       const el = document.elementFromPoint(e.changedTouches[0].clientX, e.changedTouches[0].clientY);
       const target = el && el.closest('[data-cat-idx]');
       if(target && target !== touchRow){
-        _swapCats(parseInt(touchRow.dataset.catIdx), parseInt(target.dataset.catIdx));
+        _insertCat(parseInt(touchRow.dataset.catIdx), parseInt(target.dataset.catIdx));
       }
       touchRow=null;
     });
   });
 }
 
-function _swapCats(a, b){
-  if(a<0||b<0||a>=ALL_CATS.length||b>=ALL_CATS.length) return;
-  const tmp=ALL_CATS[a]; ALL_CATS[a]=ALL_CATS[b]; ALL_CATS[b]=tmp;
+// 分類「插入」排序：把來源分類插入目標分類旁邊（不是交換位置）
+function _insertCat(srcIdx, dstIdx){
+  const after = srcIdx < dstIdx; // 由上往下拖 → 插入目標下方；由下往上拖 → 插入目標上方
+  _insertArrayItem(ALL_CATS, srcIdx, dstIdx, after);
   admRenderCatsTextarea();
   admRenderCatFilter();
 }
@@ -4091,8 +4324,10 @@ function admDownload(){
   }).join('\n');
 
   const allCatsOnly = JSON.stringify(ALL_CATS);
+  const announceStr = JSON.stringify(STORE_CONFIG.announcementLines, null, 2);
   const popupStr = JSON.stringify(STORE_CONFIG.popupLines, null, 2);
   const closedRangesStr = JSON.stringify(STORE_CONFIG.closedRanges||[], null, 2);
+  const businessHoursStr = JSON.stringify(STORE_CONFIG.businessHours||[], null, 2);
 
   // 下載前先把後台、密碼框關掉，讓 DOM 回到純前台點餐狀態
   const admEl    = document.getElementById('adm-overlay');
@@ -4114,12 +4349,17 @@ function admDownload(){
   const SC2 = STORE_CONFIG;
   const storeConfigStr = `const STORE_CONFIG = {
   isOpen: ${jb(SC2.isOpen)},
+  // ── 每日固定營業時間（每天自動重複套用，空班時段自動鎖單，見上方說明）──
+  businessHours: ${businessHoursStr},
   closedRanges: ${closedRangesStr},
-  announcementText: ${js(SC2.announcementText)},
+  announcementLines: ${announceStr},
   popupLines: ${popupStr},
   defaultNote: ${js(SC2.defaultNote)},
   deliveryHintLine1: ${js(SC2.deliveryHintLine1)},
   deliveryHintLine2: ${js(SC2.deliveryHintLine2)},
+  // ── 空班時段（非公休）遮罩文字：留空 outsideHoursNote = 自動顯示營業時間 ──
+  outsideHoursTitle: ${js(SC2.outsideHoursTitle||'目前非營業時間')},
+  outsideHoursNote: ${js(SC2.outsideHoursNote||'')},
   // ── 候餐時間（分鐘）：外帶選單顯示 3 個時段（N、2N、3N）──
   // 外送固定 +60 分鐘，不受以下設定影響
   waitSmall: ${SC2.waitSmall||15},    // 1–2 項時最早候餐分鐘
