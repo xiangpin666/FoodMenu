@@ -600,8 +600,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="adm-topbar">
     <div class="adm-topbar-title">🍱 管理後台</div>
     <div class="adm-tabs">
-      <button class="adm-tab" id="adm-tab-store" onclick="admShowPage('store',this)">🏪 店家</button>
-      <button class="adm-tab active" id="adm-tab-menu" onclick="admShowPage('menu',this)">📋 菜單</button>
+      <button class="adm-tab active" id="adm-tab-store" onclick="admShowPage('store',this)">🏪 店家</button>
+      <button class="adm-tab" id="adm-tab-menu" onclick="admShowPage('menu',this)">📋 菜單</button>
     </div>
     <button class="adm-save-btn" onclick="admSaveAndDownload()">💾 存檔</button>
     <button class="adm-close-btn" onclick="admClose()">✕ 關閉</button>
@@ -610,7 +610,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="adm-body">
 
     <!-- ── 店家設定頁 ── -->
-    <div class="adm-page" id="adm-page-store">
+    <div class="adm-page active" id="adm-page-store">
 
       <!-- ▌ 群組一：營業管理 -->
       <div style="font-size:.8125rem;font-weight:700;color:white;background:#1a2455;border-radius:.5rem;padding:.4rem .75rem;margin-bottom:.5rem;letter-spacing:.5px">▌ 營業管理</div>
@@ -711,6 +711,46 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
       <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-07-15">
+        <input type="time" class="cr-start-t" value="00:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-07-15">
+        <input type="time" class="cr-end-t" value="23:59">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-07-15">
+        <input type="time" class="cr-start-t" value="00:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-07-15">
+        <input type="time" class="cr-end-t" value="23:59">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
@@ -866,7 +906,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div><!-- /store -->
 
     <!-- ── 菜單管理頁 ── -->
-    <div class="adm-page active" id="adm-page-menu">
+    <div class="adm-page" id="adm-page-menu">
 
       <div class="adm-card">
         <div class="adm-card-title">📋 菜單品項</div>
@@ -2458,6 +2498,16 @@ const STORE_CONFIG = {
 ],
   closedRanges: [
   {
+    "start": "2026-07-16T21:30",
+    "end": "2026-07-17T03:00",
+    "note": "7/16(四) 營業至21:30，造成不便敬請見諒。期待下次為您服務！☕️✨"
+  },
+  {
+    "start": "2026-07-17T16:00",
+    "end": "2026-07-18T03:00",
+    "note": "7/16(四) 16:00後公休，造成不便敬請見諒。期待下次為您服務！☕️✨"
+  },
+  {
     "start": "2026-08-09T00:00",
     "end": "2026-08-09T15:00",
     "note": "8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
@@ -2626,7 +2676,7 @@ const MENU_DATA = [
 // ║    留空 '' = 關閉自動更新偵測                                        ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260713-02';
+const VER = '20260715-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 
 // ════════════════════════════════════════════════════════════════
@@ -3639,7 +3689,20 @@ renderTabs(); renderMenu();
         // 中間某段公休 → 顯示「幾點～幾點」
         return `${fmtLocal(sY,sMo,sD)} ${sTimePart}～${eTimePart}`;
       } else {
-        // 跨天：只顯示日期範圍（整日跨天）
+        // 跨天：先算相差天數，區分「單一營業日/單一晚班」與「連續多天」
+        const startDateObj = new Date(sY, sMo-1, sD);
+        const endDateObj   = new Date(eY, eMo-1, eD);
+        const dayDiff = Math.round((endDateObj - startDateObj) / 86400000);
+
+        if (dayDiff === 1 && sTimePart === eTimePart) {
+          // 起訖時間相同（例如 03:00～隔日03:00）＝ 本店整個營業日公休口訣，視為單日公休
+          return fmtLocal(sY,sMo,sD);
+        }
+        if (dayDiff === 1) {
+          // 只跨一天且非同一時間 → 屬於「單一晚班/單一營業日內」的跨午夜公休，顯示「幾點後」
+          return `${fmtLocal(sY,sMo,sD)} ${sTimePart}後`;
+        }
+        // 相差超過一天 → 真正連續多天公休，顯示日期範圍
         return `${fmtLocal(sY,sMo,sD)}～${fmtLocal(eY,eMo,eD)}`;
       }
     });
