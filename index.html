@@ -972,35 +972,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
         <input type="date" class="cr-start-d" value="2026-08-09">
-        <input type="time" class="cr-start-t" value="00:00">
+        <input type="time" class="cr-start-t" value="03:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-08-09">
-        <input type="time" class="cr-end-t" value="15:00">
+        <input type="date" class="cr-end-d" value="2026-08-10">
+        <input type="time" class="cr-end-t" value="03:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
       <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
-  </div><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-07-21">
-        <input type="time" class="cr-start-t" value="00:00">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-07-21">
-        <input type="time" class="cr-end-t" value="23:59">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
@@ -2801,11 +2781,6 @@ const STORE_CONFIG = {
 },
   closedRanges: [
   {
-    "start": "2026-07-21T03:00",
-    "end": "2026-07-22T03:00",
-    "note": ""
-  },
-  {
     "start": "2026-08-09T03:00",
     "end": "2026-08-10T03:00",
     "note": "8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
@@ -2973,7 +2948,7 @@ const MENU_DATA = [
 // ║    留空 '' = 關閉自動更新偵測                                        ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260721-01';
+const VER = '20260722-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 
 // ════════════════════════════════════════════════════════════════
