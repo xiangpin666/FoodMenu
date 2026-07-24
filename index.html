@@ -51,6 +51,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
 /* 分類標題 */
 .section-title{padding:.875rem .875rem .375rem;font-size:.9375rem;font-weight:700;color:#1a2455}
+/* 分類備註（顯示在分類標題下方，後台可設定） */
+.cat-note{padding:0 .875rem .5rem;font-size:.75rem;color:#999;line-height:1.5;word-break:break-all}
 
 /* 菜單列表 */
 .menu-list{padding:0 .625rem 8rem;display:flex;flex-direction:column;gap:.5rem}
@@ -241,7 +243,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .adm-tab{padding:.375rem .75rem;border-radius:.875rem;border:1.5px solid rgba(255,255,255,.3);background:transparent;color:rgba(255,255,255,.8);font-size:.8125rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;transition:all .15s}
 .adm-tab.active,.adm-tab:hover{background:#e8a020;border-color:#e8a020;color:white;font-weight:700}
 .adm-close-btn{padding:.375rem .75rem;border-radius:.625rem;border:1.5px solid rgba(255,255,255,.4);background:transparent;color:rgba(255,255,255,.8);font-size:.8125rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
-.adm-dl-btn,.adm-save-btn{padding:.375rem .875rem;border-radius:.625rem;border:none;background:#27ae60;color:white;font-size:.875rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
+.adm-save-btn{padding:.375rem .875rem;border-radius:.625rem;border:none;background:#27ae60;color:white;font-size:.875rem;font-weight:700;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap}
 
 /* 後台頁面捲動區 */
 .adm-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:.875rem .875rem 4rem}
@@ -262,9 +264,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 表單元素 */
 .adm-label{display:block;font-size:.8125rem;font-weight:700;color:#444;margin-bottom:.25rem}
 .adm-label .sub{font-weight:400;color:#888;font-size:.75rem}
-.adm-input,.adm-select,.adm-textarea{width:100%;border:1.5px solid #ddd;border-radius:.5rem;padding:.5rem .75rem;font-size:.9375rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white;margin-bottom:.75rem;transition:border-color .15s}
-.adm-input:focus,.adm-select:focus,.adm-textarea:focus{outline:none;border-color:#1a2455}
-.adm-textarea{resize:vertical;min-height:72px}
+.adm-input,.adm-select{width:100%;border:1.5px solid #ddd;border-radius:.5rem;padding:.5rem .75rem;font-size:.9375rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white;margin-bottom:.75rem;transition:border-color .15s}
+.adm-input:focus,.adm-select:focus{outline:none;border-color:#1a2455}
 .adm-input-sm{max-width:110px}
 
 /* 開關 */
@@ -370,7 +371,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 }
 .sum-disc-row.show { display: flex; }
 
-</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
+</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style><style>@keyframes slideUpBanner{from{transform:translateX(-50%) translateY(100%)}to{transform:translateX(-50%) translateY(0)}}</style></head>
 <body>
 <!-- ════════════════════════════════════════
      點餐系統主體（客人看到的部分）
@@ -459,12 +460,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
         <div class="opt-toggle" style="margin-bottom:6px;width:100%">
           <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
-          <button onclick="selPickup('delivery',this)" style="flex:1">外送</button>
+          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex:1">外送</button>
         </div>
         <div class="delivery-hint" id="delivery-hint" style="margin-bottom:8px">
           <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
           <span class="delivery-hint-warn" id="delivery-hint-line2">*請於下方填入外送地址與聯絡電話</span>
         </div>
+        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="display:none;font-size:.75rem;color:#c4390a;margin:-4px 0 8px;line-height:1.5"></div>
 
         <!-- ② 外送地址（外送才顯示，緊接取餐方式） -->
         <div class="delivery-fields" id="delivery-fields">
@@ -1065,6 +1067,20 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <input class="adm-input" type="text" id="f-deliveryHintLine1">
         <label class="adm-label">第二行 <span class="sub">（紅色粗體）</span></label>
         <input class="adm-input" type="text" id="f-deliveryHintLine2">
+
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .75rem"></div>
+        <div class="adm-card-title" style="margin-bottom:.25rem">⏰ 外送服務時間</div>
+        <div class="adm-tip">✏️ 超過此時間範圍，客人的取餐方式將無法選擇「外送」，僅能選外帶自取。</div>
+        <div class="cr-dt-row">
+          <div style="flex:1">
+            <label class="adm-label">開始時間</label>
+            <input class="bh-time-input" type="time" id="f-deliveryHoursStart">
+          </div>
+          <div style="flex:1">
+            <label class="adm-label">結束時間</label>
+            <input class="bh-time-input" type="time" id="f-deliveryHoursEnd">
+          </div>
+        </div>
       </div>
 
       <div class="adm-card">
@@ -2478,65 +2494,95 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <button class="adm-btn-save" style="flex-shrink:0;border-radius:.5rem;padding:.375rem .625rem;font-size:.8125rem;white-space:nowrap" onclick="admAddCat()">➕ 新增</button>
         </div>
         <div id="adm-cats-list" style="display:flex;flex-direction:column;gap:.375rem;margin-bottom:.75rem">
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="0">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍳熱炒類</span>
-      <button onclick="admRenameCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="0">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍳熱炒類</span>
+        <button onclick="admRenameCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(0)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(0, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="1">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥬時蔬類</span>
-      <button onclick="admRenameCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="1">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥬時蔬類</span>
+        <button onclick="admRenameCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(1)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="" onchange="admSetCatNote(1, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="2">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🟡酥炸類</span>
-      <button onclick="admRenameCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="2">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🟡酥炸類</span>
+        <button onclick="admRenameCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(2)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="" onchange="admSetCatNote(2, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="3">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍚炒飯</span>
-      <button onclick="admRenameCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="3">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍚炒飯</span>
+        <button onclick="admRenameCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(3)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(3, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="4">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒麵</span>
-      <button onclick="admRenameCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="4">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒麵</span>
+        <button onclick="admRenameCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(4)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(4, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="5">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒烏龍麵</span>
-      <button onclick="admRenameCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="5">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝炒烏龍麵</span>
+        <button onclick="admRenameCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(5)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(5, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="6">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝烏龍湯麵</span>
-      <button onclick="admRenameCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="6">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🍝烏龍湯麵</span>
+        <button onclick="admRenameCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(6)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(6, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="7">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣粥品</span>
-      <button onclick="admRenameCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="7">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣粥品</span>
+        <button onclick="admRenameCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(7)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。" onchange="admSetCatNote(7, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="8">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣湯品</span>
-      <button onclick="admRenameCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="8">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">🥣湯品</span>
+        <button onclick="admRenameCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(8)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="" onchange="admSetCatNote(8, this.value)">
     </div>
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="9">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">✨新品上市</span>
-      <button onclick="admRenameCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="9">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">✨新品上市</span>
+        <button onclick="admRenameCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(9)" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="" onchange="admSetCatNote(9, this.value)">
     </div></div>
 
     </div><!-- /menu -->
@@ -2612,6 +2658,20 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  ★ 改完後點【💾 存檔】確認無誤，再點【⬇ 下載 HTML】上傳 GitHub  ║
 // ║  ★ 不要手動改這裡，用後台改完再存檔                                ║
 // ║                                                                      ║
+// ╠══════════════════════════════════════════════════════════════════════╣
+// ║  📚 新手教學總覽 — 這份檔案裡「可以修改」的地方，全部都在這裡      ║
+// ║  ─────────────────────────────────────────────────────────────────  ║
+// ║  99% 的情況都建議「用後台改」，改完點【💾 存檔】就會自動幫你          ║
+// ║  改好、存進正確位置，不需要自己找程式碼。以下列表只是給你「萬一        ║
+// ║  真的要直接改程式碼」時，能快速找到位置的地圖：                      ║
+// ║                                                                      ║
+// ║  【區塊 A】店家設定      → 營業時間、公休、公告、外送、候餐時間等   ║
+// ║  【區塊 B】菜單資料      → 每一道菜的名稱、價格、加購選項            ║
+// ║  【區塊 C】系統設定與識別碼 → LIFF_ID／版本號／GitHub 網址／後台密碼 ║
+// ║  【區塊 C-1】分類順序    → 菜單分類（如「熱炒類」）的順序             ║
+// ║                                                                      ║
+// ║  📌 區塊 A ～ C-1 以外的程式碼＝系統運作邏輯，一般不需要、也不建議   ║
+// ║     手動修改，改錯可能導致整個點餐頁面無法使用。                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 
 // ╔══════════════════════════════════════════════════════════════════════╗
@@ -2691,6 +2751,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  takeoutDiscount → 外帶折扣數字                                      ║
 // ║    0.9 = 九折 / 0.85 = 八五折 / 1.0 = 不打折                       ║
 // ║  pickupTimeHint  → 取餐時間下方橘色小提示文字                       ║
+// ║                                                                      ║
+// ║  ── 🛵 外送服務時間 ──────────────────────────────────────────────  ║
+// ║  deliveryHours → 每天可選「外送」的時間範圍 { start, end }（HH:MM）║
+// ║    超過此時間範圍，客人無法選擇外送，僅能選外帶自取                 ║
+// ║    ⚠️ 所有時間皆為台灣時間（GMT+8）                                 ║
+// ║                                                                      ║
+// ║  ── 📝 分類備註 ──────────────────────────────────────────────────  ║
+// ║  categoryNotes → { "分類名稱": "備註文字" }                         ║
+// ║    顯示在該分類標題下方（前台菜單頁），留空或未設定則不顯示         ║
 // ║                                                                      ║
 // ║  ── 📨 LINE 訊息文字 ────────────────────────────────────────────── ║
 // ║  lineNotifyHeader      → LINE 通知第一行標題                        ║
@@ -2796,11 +2865,13 @@ const STORE_CONFIG = {
   "",
   "💡貼心小提醒：",
   "量多請提前預約，為您保留美味並節省時間⏰",
-  "如有外送需求，請先洽詢店家🛵"
+  "🛵外送服務：09:30–21:30，請先洽詢店家"
 ],
   defaultNote: "例：口味調整、其他需求...",
   deliveryHintLine1: "🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）",
   deliveryHintLine2: "*請於下方填入外送地址與聯絡電話",
+  // ── 外送服務時間（超過此範圍客人無法選擇外送，見上方說明）──
+  deliveryHours: {"start":"09:30","end":"21:30"},
   // ── 空班時段（非公休）遮罩文字：留空 outsideHoursNote = 自動顯示營業時間 ──
   outsideHoursTitle: "目前非營業時間",
   outsideHoursNote: "⏰營業時間：09:30–14:00｜16:00–凌晨03:00",
@@ -2823,6 +2894,15 @@ const STORE_CONFIG = {
   // ── LINE 訊息：底部提醒文字（後台可修改）──
   lineTodayCustomNote: "",
   lineReserveNote:     "※ 此為預約訂單，請勿提前備餐 ⚠️",
+  // ── 菜單分類備註（見上方說明，key 為分類名稱）──
+  categoryNotes: {
+  "🍳熱炒類": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。",
+  "🍚炒飯": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。",
+  "🍝炒麵": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。",
+  "🍝炒烏龍麵": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。",
+  "🍝烏龍湯麵": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。",
+  "🥣粥品": "肉產地來源－牛肉：巴拉圭／豬肉：台灣／羊肉：澳洲。"
+},
 };
 
 // ╔══════════════════════════════════════════════════════════════════════╗
@@ -2932,9 +3012,10 @@ const MENU_DATA = [
 ];
 
 // ╔══════════════════════════════════════════════════════════════════════╗
-// ║  🔑【區塊 C】系統識別碼                                             ║
+// ║  🔑【區塊 C】系統設定與識別碼                                       ║
 // ╠══════════════════════════════════════════════════════════════════════╣
-// ║  ⚠️ 以下三個值由後台【💾 存檔】自動寫入，通常不需手動修改          ║
+// ║  ⚠️ 下面四個值，平常都由後台【💾 存檔】自動寫入，通常不需手動修改  ║
+// ║     只有在「後台密碼忘記、無法登入後台」時，才需要直接改這裡        ║
 // ║                                                                      ║
 // ║  LIFF_ID        → LINE 登入用識別碼                                 ║
 // ║    取得方式：LINE Developers → 你的 Channel → LIFF → 複製 LIFF ID  ║
@@ -2946,10 +3027,16 @@ const MENU_DATA = [
 // ║    取得方式：GitHub repo → 點進 HTML 檔 → 點右上角「Raw」→ 複製網址║
 // ║    格式：https://raw.githubusercontent.com/帳號/repo/main/檔名.html ║
 // ║    留空 '' = 關閉自動更新偵測                                        ║
+// ║                                                                      ║
+// ║  ADM_PW         → 後台登入密碼（至少 4 位數字/英文）                ║
+// ║    ✅ 正常情況：請從「後台 → 系統設定 → 🔒 後台登入密碼」修改      ║
+// ║    🆘 忘記密碼：直接把下面這行的 '233009' 改成你要的新密碼          ║
+// ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260722-01';
+const VER = '20260724-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
+const ADM_PW = '233009';
 
 // ════════════════════════════════════════════════════════════════
 //  🔄 自動更新邏輯（不需修改以下程式碼）
@@ -3065,6 +3152,12 @@ let cart = {}, opts = {cutlery:'no', receipt:'no', pickup:'takeout'}, selCat = '
 // ╚══════════════════════════════════════════════════════════════════════╝
 const ALL_CATS = ["🍳熱炒類","🥬時蔬類","🟡酥炸類","🍚炒飯","🍝炒麵","🍝炒烏龍麵","🍝烏龍湯麵","🥣粥品","🥣湯品","✨新品上市"];
 
+// ╔══════════════════════════════════════════════════════════════════════╗
+// ║  🚧 以下為系統運作程式碼（區塊 A ～ C-1 結束）                       ║
+// ║  ⚠️ 不是設定值，是控制點餐頁面運作的邏輯，請勿手動修改              ║
+// ║     想調整設定請往上捲，或直接用後台修改                            ║
+// ╚══════════════════════════════════════════════════════════════════════╝
+
 function renderTabs(){
   document.getElementById('cat-tabs').innerHTML = ['全部',...ALL_CATS].map(c =>
     `<button class="cat-tab${c===selCat?' active':''}" onclick="selCategory('${c}')">${c}</button>`
@@ -3078,12 +3171,15 @@ function renderMenu(){
   items.forEach(i=>{ if(!byCat[i.cat]) byCat[i.cat]=[]; byCat[i.cat].push(i); });
   let html = '<div class="menu-list">';
   if(selCat !== '全部'){
+    const note = (STORE_CONFIG.categoryNotes||{})[selCat];
+    if(note) html += `<div class="cat-note">${note}</div>`;
     html += items.length ? items.map(renderItem).join('') : '<div style="text-align:center;padding:40px 20px;color:#aaa;font-size:14px">此分類尚無品項</div>';
   } else {
     ALL_CATS.forEach(cat=>{
       const ci = byCat[cat]||[];
       if(!ci.length) return;
-      html += `<div class="section-title">${cat}</div>` + ci.map(renderItem).join('');
+      const note = (STORE_CONFIG.categoryNotes||{})[cat];
+      html += `<div class="section-title">${cat}</div>` + (note?`<div class="cat-note">${note}</div>`:'') + ci.map(renderItem).join('');
     });
   }
   document.getElementById('menu-content').innerHTML = html + '</div>';
@@ -3182,6 +3278,9 @@ function confirmAddToCart(){
 function openCart(){
   renderCartItems();
   updateSummary();
+  // 每次開啟購物車：重新檢查外送服務時間狀態
+  _lastDeliveryAllowed = null; // 強制重新比對，避免快取狀態未更新
+  checkDeliveryAvailability();
   // 每次開啟購物車：依目前模式刷新取餐時段或預約日期
   if (isReserveMode) {
     renderReserveDateBtns(); // 刷新日期按鈕、重檢公休
@@ -3246,6 +3345,10 @@ function selOpt(key,val,btn){
   updateSummary();
 }
 function selPickup(val, btn){
+  if (val === 'delivery' && !isDeliveryTimeAllowed()) {
+    alert(`⚠️ 外送服務時間為 ${formatDeliveryHoursText()}，目前非外送時段，僅能選擇外帶自取。`);
+    return;
+  }
   opts.pickup = val;
   // 切換按鈕選取狀態
   btn.closest('.opt-toggle').querySelectorAll('button').forEach(b => b.classList.remove('sel'));
@@ -3637,6 +3740,10 @@ function placeOrder(){
     }
   }
   if(opts.pickup==='delivery'){
+    if (!isDeliveryTimeAllowed()) {
+      alert(`⚠️ 外送服務時間為 ${formatDeliveryHoursText()}，目前非外送時段，暫不開放外送，請改選外帶自取。`);
+      return;
+    }
     const ae=document.getElementById('delivery-address');
     if(!ae.value.trim()){ ae.classList.add('error'); ae.scrollIntoView({behavior:'smooth',block:'center'}); return; }
     else ae.classList.remove('error');
@@ -3684,7 +3791,6 @@ function placeOrder(){
   document.getElementById('confirm-total').textContent=`合計 $${t}（共 ${items.reduce((s,i)=>s+i.qty,0)} 項）`;
   document.getElementById('confirm-overlay').classList.add('open');
 }
-// genOrderId → 已移除（不再使用訂單編號）
 function submitOrder(){
   // ── 後端二次校驗：最終送出前再確認（防止頁面開著跨越公休時段）──
   if(isClosedOnSubmit()) return;
@@ -3836,12 +3942,63 @@ function formatBusinessHoursText() {
     return `${daysLabel} ${g.text}`;
   }).join('；');
 }
-// ── 取得「今天」的營業時間文字（單日，供部分提示使用）──
-function formatTodayBusinessHoursText() {
-  const now = getTaiwanNow();
-  const bh = STORE_CONFIG.businessHours || {};
-  return formatDayHoursText(bh[BH_DAY_KEYS[now.getDay()]]);
+
+// ════════════════════════════════════════════════════════════════
+//  🛵 外送服務時間（STORE_CONFIG.deliveryHours，後台可修改）
+//  ────────────────────────────────────────────────────────────
+//  超過此時間範圍，客人無法選擇「外送」，僅能選外帶自取
+// ════════════════════════════════════════════════════════════════
+function isDeliveryTimeAllowed() {
+  const dh = STORE_CONFIG.deliveryHours;
+  if (!dh || !dh.start || !dh.end) return true; // 未設定 = 不限制
+  const now  = getTaiwanNow();
+  const hhmm = toHHMM(now);
+  if (dh.start <= dh.end) {
+    // 一般時段（例：09:30–21:30）
+    return hhmm >= dh.start && hhmm <= dh.end;
+  } else {
+    // 跨日時段（例：20:00–02:00）
+    return hhmm >= dh.start || hhmm <= dh.end;
+  }
 }
+function formatDeliveryHoursText() {
+  const dh = STORE_CONFIG.deliveryHours;
+  if (!dh || !dh.start || !dh.end) return '';
+  return dh.start <= dh.end ? `${dh.start}–${dh.end}` : `${dh.start}–翌日${dh.end}`;
+}
+// ── 依外送服務時間即時更新外送按鈕的可選狀態（時間到就自動鎖/解鎖）──
+let _lastDeliveryAllowed = null;
+function checkDeliveryAvailability() {
+  const allowed = isDeliveryTimeAllowed();
+  if (allowed === _lastDeliveryAllowed) return; // 狀態未變則跳過
+  _lastDeliveryAllowed = allowed;
+
+  const btn  = document.getElementById('delivery-pickup-btn');
+  const note = document.getElementById('delivery-time-closed-note');
+  if (!btn) return;
+
+  if (allowed) {
+    btn.disabled = false;
+    btn.style.opacity = '';
+    btn.style.cursor = '';
+    if (note) { note.style.display = 'none'; note.textContent = ''; }
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '.45';
+    btn.style.cursor = 'not-allowed';
+    if (note) {
+      note.style.display = '';
+      note.textContent = `🛵 外送服務時間 ${formatDeliveryHoursText()}，目前非外送時段，僅能選擇外帶自取`;
+    }
+    // 若客人正好選在「外送」，時間一到自動切回外帶自取
+    if (opts.pickup === 'delivery') {
+      const takeoutBtn = document.querySelector('.opt-toggle button[onclick*="selPickup(\'takeout\'"]');
+      if (takeoutBtn) selPickup('takeout', takeoutBtn);
+      alert(`⚠️ 外送服務時間為 ${formatDeliveryHoursText()}，目前非外送時段，已自動切換為外帶自取。`);
+    }
+  }
+}
+setInterval(checkDeliveryAvailability, 1000);
 
 // ── 判斷「現在」是否落在任一公休區間內 ──
 // 全程使用真實 UTC 毫秒（Date.now()），與客戶端時區設定完全無關
@@ -3943,6 +4100,7 @@ function isClosedOnSubmit() {
 
 // 初始化
 renderTabs(); renderMenu();
+checkDeliveryAvailability();
 // ── 依 STORE_CONFIG.businessHours 更新預約取餐時間提示文字 ──
 (function renderReserveHoursHint(){
   const el = document.getElementById('reserve-hours-hint');
@@ -4071,15 +4229,7 @@ liff.init({liffId:LIFF_ID})
 //  ✏️  管理後台邏輯（以下程式碼不需修改）
 // ════════════════════════════════════════════════════════════════
 
-// ╔══════════════════════════════════════════════════════════════════════╗
-// ║  🔑 後台登入密碼                                                    ║
-// ╠══════════════════════════════════════════════════════════════════════╣
-// ║  正常情況：從後台「系統設定 → 🔒 後台登入密碼」修改                ║
-// ║  忘記密碼：直接改下面 ADM_PW = '233009' 裡的值                     ║
-// ║            改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub             ║
-// ║  ⚠️ 密碼至少 4 位                                                   ║
-// ╚══════════════════════════════════════════════════════════════════════╝
-const ADM_PW = '233009';
+// ── 後台密碼設定：ADM_PW 已統一移到檔案上方【區塊 C：系統設定與識別碼】──
 let admCatFilter = '全部', admEditingId = null;
 
 // ── Logo 連按 3 下觸發後台登入 ──
@@ -4167,6 +4317,8 @@ function admInitStore(){
   document.getElementById('f-defaultNote').value = STORE_CONFIG.defaultNote;
   document.getElementById('f-deliveryHintLine1').value = STORE_CONFIG.deliveryHintLine1;
   document.getElementById('f-deliveryHintLine2').value = STORE_CONFIG.deliveryHintLine2;
+  document.getElementById('f-deliveryHoursStart').value = (STORE_CONFIG.deliveryHours && STORE_CONFIG.deliveryHours.start) || '09:30';
+  document.getElementById('f-deliveryHoursEnd').value   = (STORE_CONFIG.deliveryHours && STORE_CONFIG.deliveryHours.end)   || '21:30';
   document.getElementById('f-outsideHoursTitle').value = STORE_CONFIG.outsideHoursTitle || '目前非營業時間';
   document.getElementById('f-outsideHoursNote').value  = STORE_CONFIG.outsideHoursNote  || '';
   // ── 候餐時間 ──
@@ -4204,6 +4356,11 @@ function admReadStore(){
   STORE_CONFIG.defaultNote = document.getElementById('f-defaultNote').value;
   STORE_CONFIG.deliveryHintLine1 = document.getElementById('f-deliveryHintLine1').value;
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
+  {
+    const dhs = document.getElementById('f-deliveryHoursStart').value.trim();
+    const dhe = document.getElementById('f-deliveryHoursEnd').value.trim();
+    STORE_CONFIG.deliveryHours = { start: dhs || '09:30', end: dhe || '21:30' };
+  }
   STORE_CONFIG.outsideHoursTitle = document.getElementById('f-outsideHoursTitle').value.trim().replace(/\n/g,'') || '目前非營業時間';
   STORE_CONFIG.outsideHoursNote  = document.getElementById('f-outsideHoursNote').value.trim().replace(/\n/g,'');
   // ── 候餐時間 ──
@@ -4524,13 +4681,25 @@ function admRenderCatsTextarea(){
   const list = document.getElementById('adm-cats-list');
   if(!list) return;
   list.innerHTML = ALL_CATS.map((cat, i) => `
-    <div style="display:flex;align-items:center;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="${i}">
-      <span class="drag-handle" title="按住拖曳排序">⠿</span>
-      <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">${esc(cat)}</span>
-      <button onclick="admRenameCat(${i})" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
-      <button onclick="admDeleteCat(${i})" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+    <div style="display:flex;flex-direction:column;gap:.375rem;background:#f8f8f8;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.375rem .5rem;transition:border-color .15s,background .15s" draggable="true" data-cat-idx="${i}">
+      <div style="display:flex;align-items:center;gap:.375rem">
+        <span class="drag-handle" title="按住拖曳排序">⠿</span>
+        <span style="flex:1;font-size:.9375rem;color:#1a2455;font-weight:500;word-break:break-all">${esc(cat)}</span>
+        <button onclick="admRenameCat(${i})" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #1a2455;background:white;color:#1a2455;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="改名">✏️ 改名</button>
+        <button onclick="admDeleteCat(${i})" style="flex-shrink:0;padding:.25rem .5rem;border-radius:.375rem;border:1.5px solid #c4390a;background:white;color:#c4390a;font-size:.75rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;white-space:nowrap" title="刪除">🗑</button>
+      </div>
+      <input type="text" class="adm-input" style="font-size:.8125rem;padding:.375rem .5rem" placeholder="📝 分類備註（顯示在此分類標題下方，留空不顯示）" value="${esc((STORE_CONFIG.categoryNotes||{})[cat]||'')}" onchange="admSetCatNote(${i}, this.value)">
     </div>`).join('');
   initCatDrag();
+}
+// ── 設定 / 更新 分類備註 ──
+function admSetCatNote(idx, val){
+  const cat = ALL_CATS[idx];
+  if(!cat) return;
+  if(!STORE_CONFIG.categoryNotes) STORE_CONFIG.categoryNotes = {};
+  const trimmed = val.trim();
+  if(trimmed) STORE_CONFIG.categoryNotes[cat] = trimmed;
+  else delete STORE_CONFIG.categoryNotes[cat];
 }
 
 // ── 分類拖曳排序（桌機 + 手機觸控）──
@@ -4613,6 +4782,11 @@ function admRenameCat(idx){
   if(ALL_CATS.includes(trimmed)){ alert(`「${trimmed}」已存在，請換一個名稱。`); return; }
   // 同步更新所有品項的分類名稱
   MENU_DATA.forEach(item=>{ if(item.cat === oldName) item.cat = trimmed; });
+  // 同步搬移分類備註（key 從舊名稱改成新名稱）
+  if(STORE_CONFIG.categoryNotes && Object.prototype.hasOwnProperty.call(STORE_CONFIG.categoryNotes, oldName)){
+    STORE_CONFIG.categoryNotes[trimmed] = STORE_CONFIG.categoryNotes[oldName];
+    delete STORE_CONFIG.categoryNotes[oldName];
+  }
   ALL_CATS[idx] = trimmed;
   admRenderCatsTextarea();
   admRenderCatFilter();
@@ -4631,6 +4805,7 @@ function admDeleteCat(idx){
     : `確定刪除分類「${name}」？`;
   if(!confirm(msg)) return;
   ALL_CATS.splice(idx, 1);
+  if(STORE_CONFIG.categoryNotes) delete STORE_CONFIG.categoryNotes[name];
   admRenderCatsTextarea();
   admRenderCatFilter();
   admPopulateCatSelect();
@@ -4754,6 +4929,8 @@ function admDownload(){
   const popupStr = JSON.stringify(STORE_CONFIG.popupLines, null, 2);
   const closedRangesStr = JSON.stringify(STORE_CONFIG.closedRanges||[], null, 2);
   const businessHoursStr = JSON.stringify(STORE_CONFIG.businessHours||{}, null, 2);
+  const deliveryHoursStr = JSON.stringify(STORE_CONFIG.deliveryHours||{start:'09:30',end:'21:30'});
+  const categoryNotesStr = JSON.stringify(STORE_CONFIG.categoryNotes||{}, null, 2);
 
   // 下載前先把後台、密碼框關掉，讓 DOM 回到純前台點餐狀態
   const admEl    = document.getElementById('adm-overlay');
@@ -4783,6 +4960,8 @@ function admDownload(){
   defaultNote: ${js(SC2.defaultNote)},
   deliveryHintLine1: ${js(SC2.deliveryHintLine1)},
   deliveryHintLine2: ${js(SC2.deliveryHintLine2)},
+  // ── 外送服務時間（超過此範圍客人無法選擇外送，見上方說明）──
+  deliveryHours: ${deliveryHoursStr},
   // ── 空班時段（非公休）遮罩文字：留空 outsideHoursNote = 自動顯示營業時間 ──
   outsideHoursTitle: ${js(SC2.outsideHoursTitle||'目前非營業時間')},
   outsideHoursNote: ${js(SC2.outsideHoursNote||'')},
@@ -4805,6 +4984,8 @@ function admDownload(){
   // ── LINE 訊息：底部提醒文字（後台可修改）──
   lineTodayCustomNote: ${js(SC2.lineTodayCustomNote||'')},
   lineReserveNote:     ${js(SC2.lineReserveNote||'※ 此為預約訂單，請勿提前備餐 ⚠️')},
+  // ── 菜單分類備註（見上方說明，key 為分類名稱）──
+  categoryNotes: ${categoryNotesStr},
 };`;
   out = out.replace(/const STORE_CONFIG = \{[\s\S]*?\};/, storeConfigStr);
 
