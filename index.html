@@ -422,7 +422,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="popup-card">
     <div class="popup-icon">📢</div>
     <div class="popup-title">店家公告</div>
-    <div class="popup-body" id="popup-body"><span>🍱歡迎光臨【香品小食堂🍲】</span><br><span>堅持現點現做，完美滋味值得您耐心等待⏳</span><br><br><span>💡貼心小提醒：</span><br><span>量多請提前預約，為您保留美味並節省時間⏰</span><br><span>如有外送需求，請先洽詢店家🛵</span><br></div>
+    <div class="popup-body" id="popup-body"><span>🍱歡迎光臨【香品小食堂🍲】</span><br><span>堅持現點現做，完美滋味值得您耐心等待⏳</span><br><br><span>💡貼心小提醒：</span><br><span>量多請提前預約，為您保留美味並節省時間⏰</span><br><span>🛵外送服務：09:30–21:30，請先洽詢店家</span><br></div>
     <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">✓ 我知道了</button>
   </div>
 </div>
@@ -460,13 +460,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
         <div class="opt-toggle" style="margin-bottom:6px;width:100%">
           <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
-          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex:1">外送</button>
+          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%; opacity: 0.45; cursor: not-allowed;" disabled="">外送</button>
         </div>
         <div class="delivery-hint" id="delivery-hint" style="margin-bottom:8px">
           <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
           <span class="delivery-hint-warn" id="delivery-hint-line2">*請於下方填入外送地址與聯絡電話</span>
         </div>
-        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="display:none;font-size:.75rem;color:#c4390a;margin:-4px 0 8px;line-height:1.5"></div>
+        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="font-size: 0.75rem; color: rgb(196, 57, 10); margin: -4px 0px 8px; line-height: 1.5;">🛵 外送服務時間 09:30–21:30，目前非外送時段，僅能選擇外帶自取</div>
 
         <!-- ② 外送地址（外送才顯示，緊接取餐方式） -->
         <div class="delivery-fields" id="delivery-fields">
@@ -985,6 +985,46 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
     </div>
     <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-07-29">
+        <input type="time" class="cr-start-t" value="00:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-07-29">
+        <input type="time" class="cr-end-t" value="23:59">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-07-29">
+        <input type="time" class="cr-start-t" value="00:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-07-29">
+        <input type="time" class="cr-end-t" value="23:59">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   </div></div>
         <button class="adm-add-row-btn" onclick="admAddClosedDateRow()">＋ 新增公休時段</button>
       </div>
@@ -1002,7 +1042,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="adm-card">
         <div class="adm-card-title">📬 進入頁面彈窗公告</div>
         <div class="adm-tip">✏️ 每行一個字串。<code>空白行</code>＝空一行。<strong>全部刪除</strong>＝不顯示彈窗。</div>
-        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="如有外送需求，請先洽詢店家🛵"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🛵外送服務：09:30–21:30，請先洽詢店家"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddPopupLine('')">＋ 新增一行</button>
       </div>
 
@@ -2644,7 +2684,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- Toast -->
-<div class="adm-toast" id="adm-toast">🗑 已刪除 椒鹽秋刀魚</div>
+<div class="adm-toast" id="adm-toast">⬇ 已下載版本 20260729-01，請上傳到 GitHub</div>
 
 <!-- ════════════════════════════════════════
      JavaScript
@@ -2850,6 +2890,16 @@ const STORE_CONFIG = {
 },
   closedRanges: [
   {
+    "start": "2026-07-29T03:00",
+    "end": "2026-07-30T03:00",
+    "note": "7/29(三) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
+  },
+  {
+    "start": "2026-08-01T09:30",
+    "end": "2026-08-01T17:00",
+    "note": "8/1(六) 下午 17:00 營業，造成不便敬請見諒。☕️✨"
+  },
+  {
     "start": "2026-08-09T03:00",
     "end": "2026-08-10T03:00",
     "note": "8/9(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
@@ -3034,7 +3084,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260724-01';
+const VER = '20260729-02';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
