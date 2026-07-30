@@ -398,7 +398,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   </div>
 
   <div class="announce" id="announce-bar"><span>⏰營業時間：09:30–14:00｜16:00–凌晨03:00</span><br><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
-  <div class="announce-closed-bar" id="announce-closed-bar" style="display: none;">⚠️ 預告公休日：06/20 (六) 18:00前</div>
+  <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：08/01 (六) 09:30～17:00</div>
   <div id="menu-content"></div>
 
   <div class="bottom-bar" id="bottom-bar" style="display: none;">
@@ -460,13 +460,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
         <div class="opt-toggle" style="margin-bottom:6px;width:100%">
           <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
-          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%; opacity: 0.45; cursor: not-allowed;" disabled="">外送</button>
+          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%;">外送</button>
         </div>
         <div class="delivery-hint" id="delivery-hint" style="margin-bottom:8px">
           <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
           <span class="delivery-hint-warn" id="delivery-hint-line2">*請於下方填入外送地址與聯絡電話</span>
         </div>
-        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="font-size: 0.75rem; color: rgb(196, 57, 10); margin: -4px 0px 8px; line-height: 1.5;">🛵 外送服務時間 09:30–21:30，目前非外送時段，僅能選擇外帶自取</div>
+        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="font-size: 0.75rem; color: rgb(196, 57, 10); margin: -4px 0px 8px; line-height: 1.5; display: none;"></div>
 
         <!-- ② 外送地址（外送才顯示，緊接取餐方式） -->
         <div class="delivery-fields" id="delivery-fields">
@@ -973,6 +973,46 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-07-29">
+        <input type="time" class="cr-start-t" value="03:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-07-30">
+        <input type="time" class="cr-end-t" value="03:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="7/29(三) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-start-d" value="2026-08-01">
+        <input type="time" class="cr-start-t" value="09:30">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
+      <div class="cr-dt-row">
+        <input type="date" class="cr-end-d" value="2026-08-01">
+        <input type="time" class="cr-end-t" value="17:00">
+      </div>
+      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
+      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/1(六) 下午 17:00 營業，造成不便敬請見諒。☕️✨" style="width:100%">
+    </div>
+    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  </div><div class="closed-range-row">
+    <div class="closed-range-row-title">
+      📅 公休時段
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+    </div>
+    <div class="closed-range-fields">
+      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
+      <div class="cr-dt-row">
         <input type="date" class="cr-start-d" value="2026-08-09">
         <input type="time" class="cr-start-t" value="03:00">
       </div>
@@ -993,32 +1033,12 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="closed-range-fields">
       <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-07-29">
+        <input type="date" class="cr-start-d" value="2026-07-30">
         <input type="time" class="cr-start-t" value="00:00">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
       <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-07-29">
-        <input type="time" class="cr-end-t" value="23:59">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="" style="width:100%">
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
-  </div><div class="closed-range-row">
-    <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-07-29">
-        <input type="time" class="cr-start-t" value="00:00">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-07-29">
+        <input type="date" class="cr-end-d" value="2026-07-30">
         <input type="time" class="cr-end-t" value="23:59">
       </div>
       <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
@@ -2890,9 +2910,14 @@ const STORE_CONFIG = {
 },
   closedRanges: [
   {
-    "start": "2026-07-29T03:00",
-    "end": "2026-07-30T03:00",
-    "note": "7/29(三) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨"
+    "start": "2026-07-30T16:00",
+    "end": "2026-07-30T17:00",
+    "note": ""
+  },
+  {
+    "start": "2026-07-30T21:30",
+    "end": "2026-07-31T03:00",
+    "note": ""
   },
   {
     "start": "2026-08-01T09:30",
@@ -3084,7 +3109,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260729-02';
+const VER = '20260730-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
