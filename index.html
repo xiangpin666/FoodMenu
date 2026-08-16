@@ -35,6 +35,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .announce{background:#fef3d0;border-left:3px solid #e8a020;margin:.75rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#7a5200;line-height:1.5;word-break:break-all}
 /* 公休預告獨立欄位（無公休時自動隱藏） */
 .announce-closed-bar{background:#fff0f0;border-left:3px solid #c4390a;margin:.375rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#c4390a;font-weight:700;line-height:1.5;word-break:break-all}
+/* 營業時間調整預告（跟公休用不同色系區分：公休=紅色、調整=橘色）。用 flex 讓多天內容自動對齊在標籤右側 */
+.announce-hours-bar{background:#fff8e6;border-left:3px solid #e8a020;margin:.375rem .75rem 0;border-radius:.375rem;padding:.5rem .75rem;font-size:.8125rem;color:#8a5a00;font-weight:700;line-height:1.6;display:flex;gap:.25rem}
+.announce-hours-bar .ahb-label{flex-shrink:0;white-space:nowrap}
+.announce-hours-bar .ahb-content{flex:1;min-width:0}
+.announce-hours-bar .ahb-content div{word-break:break-all}
 /* 必填欄位包覆框（聯絡電話等）：同外送地址 #fff0f0 背景 */
 .required-field-wrap{background:#fff0f0;border-radius:.625rem;padding:.75rem;margin-top:.5rem}
 
@@ -43,16 +48,25 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .closed-range-row-title{font-size:.75rem;font-weight:700;color:#888;display:flex;justify-content:space-between;align-items:center}
 .closed-range-fields{display:flex;flex-direction:column;gap:.375rem}
 .closed-range-label{font-size:.75rem;color:#555;margin-bottom:2px}
-/* 日期＋時間並排 */
-.cr-dt-row{display:flex;gap:.375rem;align-items:center}
-.cr-dt-row input[type=date],.cr-dt-row input[type=time]{flex:1;min-width:0;border:1.5px solid #ddd;border-radius:.5rem;padding:.4rem .5rem;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white}
-/* 每日固定營業時間：時間輸入框（與 .cr-dt-row input 共用同一組樣式，避免重複寫 inline style）*/
-.bh-time-input{width:100%;border:1.5px solid #ddd;border-radius:.5rem;padding:.4rem .5rem;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white}
+/* 時段輸入框（開始～結束時間並排），供每週固定營業時間／單日特例／外送服務時間共用 */
+.bh-time-input{flex:1;min-width:0;border:1.5px solid #ddd;border-radius:.5rem;padding:.4rem .5rem;font-size:.9rem;font-family:'Noto Sans TC',sans-serif;color:#333;background:white}
+/* 每週固定營業時間：一列一天（精簡版，取代舊版一天一大卡片）*/
+.wk-day-row{border:1.5px solid #eee;border-radius:.625rem;padding:.625rem .75rem;margin-bottom:.5rem;transition:outline .15s}
+.wk-day-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:.5rem}
+.wk-day-name{font-weight:700;font-size:.875rem;color:#1a2455}
+.wk-hour-row{display:flex;align-items:center;gap:.375rem;margin-bottom:.375rem}
+/* 小尺寸開關（每週固定營業時間的星期幾列用，比全域營業狀態的開關小一號）*/
+.sw-sm{width:40px;height:22px}
+.sw-sm .sw-slider::before{width:16px;height:16px}
+.sw-sm input:checked+.sw-slider::before{transform:translateX(18px)}
+/* 特殊日期設定：星期幾快捷 chip（點擊可直接切換該天公休／營業）*/
+.wk-chip{border:1.5px solid #ddd;border-radius:1.25rem;padding:.375rem .875rem;font-size:.8125rem;font-family:'Noto Sans TC',sans-serif;background:white;color:#555;cursor:pointer}
+.wk-chip.is-closed{background:#ffe8e8;border-color:#e8a0a0;color:#c4390a;font-weight:700}
 
 /* 分類標題 */
-.section-title{padding:.875rem .875rem .375rem;font-size:.9375rem;font-weight:700;color:#1a2455}
-/* 分類備註（顯示在分類標題下方，後台可設定） */
-.cat-note{padding:0 .875rem .5rem;font-size:.75rem;color:#999;line-height:1.5;word-break:break-all}
+.section-title{padding:.875rem .875rem .1875rem;font-size:.9375rem;font-weight:700;color:#1a2455}
+/* 分類備註（顯示在分類標題下方，後台可設定）。line-height、padding 調小讓標題與備註更緊湊 */
+.cat-note{padding:0 .875rem .375rem;font-size:.75rem;color:#999;line-height:1.35;word-break:break-all}
 
 /* 菜單列表 */
 .menu-list{padding:0 .625rem 8rem;display:flex;flex-direction:column;gap:.5rem}
@@ -176,6 +190,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .delivery-field-input{width:100%;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .625rem;font-size:1rem;font-family:'Noto Sans TC',sans-serif;color:#333}
 .delivery-field-input:focus{outline:none;border-color:#1a2455}
 .delivery-field-input.error{border-color:#c4390a !important;background:#fff5f5}
+/* 聯絡電話：固定「09」前綴 + 客人只需輸入後8碼 */
+.phone-input-row{display:flex;align-items:center;gap:.375rem}
+.phone-prefix{flex-shrink:0;font-size:1rem;font-weight:700;color:#333;background:#f0f0f0;border:1.5px solid #e0e0e0;border-radius:.5rem;padding:.5rem .625rem}
+.phone-input-row .delivery-field-input{flex:1;min-width:0}
 .receipt-tax-row{margin-top:.375rem;display:none;background:#fff0f0;border-radius:.625rem;padding:.75rem}
 .receipt-tax-row.show{display:block;background:#fff0f0;border-radius:.625rem;padding:.75rem}
 
@@ -397,8 +415,12 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar"><span>⏰營業時間：09:30–14:00｜16:00–凌晨03:00</span><br><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
-  <div class="announce-closed-bar" id="announce-closed-bar" style="">⚠️ 預告公休日：08/14 (五) 21:30後、08/15 (六) 09:30～16:00</div>
+  <div class="announce" id="announce-bar"><span>⏰營業時間：09:30-14:00｜16:00-凌晨03:00</span><br><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
+  <div class="announce-closed-bar" id="announce-closed-bar" style="display:none"></div>
+  <div class="announce-hours-bar" id="announce-hours-bar" style="display:none">
+    <span class="ahb-label">⚠️ 營業時間調整：</span>
+    <div class="ahb-content" id="announce-hours-bar-content"></div>
+  </div>
   <div id="menu-content"></div>
 
   <div class="bottom-bar" id="bottom-bar" style="display: none;">
@@ -422,7 +444,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="popup-card">
     <div class="popup-icon">📢</div>
     <div class="popup-title">店家公告</div>
-    <div class="popup-body" id="popup-body"><span>🍱歡迎光臨【香品小食堂🍲】</span><br><span>堅持現點現做，完美滋味值得您耐心等待⏳</span><br><br><span>💡貼心小提醒：</span><br><span>量多請提前預約，為您保留美味並節省時間⏰</span><br><span>🛵外送服務：09:30–21:30，請先洽詢店家</span><br></div>
+    <div class="popup-body" id="popup-body"><span>🍱歡迎光臨【香品小食堂🍲】</span><br><span>堅持現點現做，完美滋味值得您耐心等待⏳</span><br><br><span>💡貼心小提醒：</span><br><span>量多請提前預約，為您保留美味並節省時間⏰</span><br><span>🛵外送服務：09:30-14:00 ； 16:00-21:30，請先洽詢店家</span><br></div>
     <button class="popup-close" onclick="document.getElementById('popup-overlay').classList.remove('open')">✓ 我知道了</button>
   </div>
 </div>
@@ -476,10 +498,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           </div>
         </div>
 
-        <!-- ③ 聯絡電話（外帶＆外送皆必填） -->
+        <!-- ③ 聯絡電話（外帶＆外送皆必填）：固定「09」前綴，客人只需輸入後8碼 -->
         <div class="required-field-wrap" style="margin-top:8px;margin-bottom:8px">
           <div class="delivery-field-label">📞 聯絡電話 <span>*必填</span></div>
-          <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="numeric" maxlength="10" pattern="09[0-9]{8}" placeholder="請輸入手機號碼：09 + 8位數字">
+          <div class="phone-input-row">
+            <span class="phone-prefix">09</span>
+            <input class="delivery-field-input" type="tel" id="delivery-phone" inputmode="numeric" maxlength="8" pattern="[0-9]{8}" placeholder="請輸入後 8 碼">
+          </div>
         </div>
 
         <!-- ④ 取餐時間 / 預約訂單（模式切換） -->
@@ -506,7 +531,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="reserve-wrap" id="reserve-wrap">
           <div class="reserve-date-label" style="margin-bottom:.375rem">📆 選擇取餐日期 <span style="font-size:.75rem;color:#888;font-weight:400">（僅受理3日內預約）</span></div>
           <div class="reserve-date-btns" id="reserve-date-btns"></div>
-          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400" id="reserve-hours-hint">（週一～日 09:30–14:00、16:00–翌日03:00）</span></div>
+          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400" id="reserve-hours-hint">（週一～日 09:30-14:00 ； 16:00-翌日03:00）</span></div>
           <div style="width:100%;overflow:hidden;box-sizing:border-box;">
           <input type="time" class="reserve-time-input" id="reserve-time-input" min="00:00" max="23:59" value="12:00" onchange="onReserveTimeChange(this)">
           </div>
@@ -618,375 +643,235 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div style="font-size:.8125rem;font-weight:700;color:white;background:#1a2455;border-radius:.5rem;padding:.4rem .75rem;margin-bottom:.5rem;letter-spacing:.5px">▌ 營業管理</div>
 
       <div class="adm-card">
-        <div class="adm-card-title">⚡ 營業狀態 <span class="adm-card-sub">（最常修改）</span></div>
-        <div class="adm-tip">✏️ 關閉時，客人看到「目前為公休時間」並無法點餐。<br>若只是特定時段公休，請改用下方「指定公休時段」設定，不需關閉此開關。</div>
-        <div class="adm-toggle-row">
-          <div class="adm-toggle-label">
-            是否<strong>營業中</strong>
-            <span class="desc">關閉 = 公休，客人無法點餐</span>
-          </div>
-          <label class="sw"><input type="checkbox" id="f-isOpen" checked=""><span class="sw-slider"></span></label>
-        </div>
-      </div>
-
-      <div class="adm-card">
         <div class="adm-card-title">⏰ 每週固定營業時間 <span class="adm-card-sub">（依星期分開設定，每週自動套用）</span></div>
         <div class="adm-tip">
-          ✏️ 可依星期分別設定不同營業時段，<strong>空班時段（例：14:00–16:00 或凌晨 03:00–09:30）會自動屏蔽點餐</strong>，效果與公休日相同，不需另外設定。<br>
-          若結束時間小於開始時間（例：16:00 → 03:00），會自動視為<strong>營業到隔天凌晨</strong>。<br>
-          某天時段全部刪除 = 該天<strong>全天公休</strong>（每週固定重複）。<br>
+          ✏️ 每一列＝一個星期幾，右側切換鈕：<strong>開＝當天營業／關＝當天固定公休</strong>（每週自動重複，不用再手動刪光時段）。<br>
+          時段以外的時間（例：14:00-16:00 午休、凌晨 03:00-09:30）會自動視為空班、無法點餐，效果與公休相同，不需另外設定。<br>
+          結束時間小於開始時間（例：16:00 → 03:00）＝ 自動視為<strong>營業到隔天凌晨</strong>。<br>
           ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>。
         </div>
-        <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.625rem">
-          <button class="adm-add-row-btn" onclick="admCopyBusinessHours('mon',['tue','wed','thu','fri'])">📋 週一設定套用到週二～五</button>
-          <button class="adm-add-row-btn" onclick="admCopyBusinessHours('sat',['sun'])">📋 週六設定套用到週日</button>
-        </div>
-        <div id="adm-business-hours-wrap">
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週一</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('mon')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-mon" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="mon">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
+        <div id="adm-weekly-schedule-wrap"><div class="wk-day-row" data-day="mon">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週一</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('mon', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-mon">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('mon', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="mon">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('mon', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('mon')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="tue">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週二</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('tue', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-tue">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('tue', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週二</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('tue')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-tue" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="tue">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('tue', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('tue')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="wed">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週三</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('wed', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-wed">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('wed', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="tue">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('wed', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('wed')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="thu">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週四</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('thu', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-thu">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('thu', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週三</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('wed')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-wed" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="wed">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('thu', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('thu')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="fri">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週五</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('fri', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-fri">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('fri', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="wed">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('fri', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('fri')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="sat">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週六</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('sat', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-sat">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sat', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週四</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('thu')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-thu" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="thu">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sat', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('sat')">＋ 加時段（如：午休分段）</button></div>
+    </div><div class="wk-day-row" data-day="sun">
+      <div class="wk-day-head">
+        <span class="wk-day-name">週日</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" checked="" onchange="admSetDayClosed('sun', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
       </div>
+      <div class="wk-day-body" id="wk-body-sun">
+    <div class="wk-hour-row" data-idx="0">
+      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sun', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="thu">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
+  
+    <div class="wk-hour-row" data-idx="1">
+      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sun', this)" title="刪除此時段">✕</button>
     </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週五</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('fri')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-fri" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="fri">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="fri">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週六</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('sat')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-sat" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="sat">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="sat">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-          <div class="bh-day-block" style="border:1px solid #eee;border-radius:.5rem;padding:.5rem .625rem;margin-bottom:.5rem">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.375rem">
-              <div style="font-weight:700;font-size:.8125rem;color:#1a2455">週日</div>
-              <button class="adm-add-row-btn" style="padding:.15rem .55rem;font-size:.7rem" onclick="admAddBusinessHourRow('sun')">＋ 新增時段</button>
-            </div>
-            <div id="bh-rows-sun" style="display:flex;flex-direction:column;gap:.5rem"><div class="closed-range-row business-hour-row" data-day="sun">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="09:30">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="14:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div><div class="closed-range-row business-hour-row" data-day="sun">
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="16:00">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="03:00">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  </div></div>
-          </div>
-        </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('sun')">＋ 加時段（如：午休分段）</button></div>
+    </div></div>
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
         <div class="adm-card-title" style="font-size:.875rem">📝 空班時段公告文字 <span class="adm-card-sub">（非公休，客人看到的提示）</span></div>
         <label class="adm-label">遮罩標題</label>
         <input class="adm-input" type="text" id="f-outsideHoursTitle" placeholder="目前非營業時間">
         <label class="adm-label">遮罩備註 <span class="sub">（留空 = 自動顯示營業時間文字）</span></label>
-        <input class="adm-input" type="text" id="f-outsideHoursNote" placeholder="留空則自動顯示「營業時間：週一～五 09:30–14:00、16:00–翌日03:00；週六～日 09:30–翌日03:00」">
+        <input class="adm-input" type="text" id="f-outsideHoursNote" placeholder="留空則自動顯示「營業時間：週一～日 09:30-14:00 ； 16:00-翌日03:00」">
       </div>
 
       <div class="adm-card">
-        <div class="adm-card-title">📅 指定公休時段 <span class="adm-card-sub">（自動停止接單）</span></div>
+        <div class="adm-card-title">📅 特殊日期設定 <span class="adm-card-sub">（對齊 Google 商家「特別營業時間」邏輯）</span></div>
         <div class="adm-tip">
-          ✏️ 新增後，頁面每秒自動比對台灣時間，進入時段立即顯示「公休」遮罩並鎖定結帳。<br>
-          支援<strong>跨日設定</strong>，例如：5/5 22:00 ～ 5/6 10:00。<br>
-          ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>，無需手動換算。
+          ✏️ 分成兩種：<strong>①重複公休</strong>＝每週固定某天公休，設定一次、每週自動套用（前台會自動每週顯示公告，不用重複輸入）；<strong>②單日特例</strong>＝只影響特定某一天，一次性、不重複。<br>
+          兩者若衝突，<strong>單日特例優先</strong>（例如週一固定公休，但某週一有活動要正常營業，設單日特例即可覆蓋）。<br>
+          ⚠️ 所有時間均為<strong>台灣時間（GMT+8）</strong>。
         </div>
-        <div class="adm-tip" style="background:#fff8e6;border-left:3px solid #e8a020">
-          ⭐ <strong>本店固定口訣</strong>（無論平日或假日，凌晨 03:00–09:30 都是每天固定的空班時段）：<br>
-          公休某一天 → 開始時間填「<strong>該日 03:00</strong>」、結束時間填「<strong>隔日 03:00</strong>」。<br>
-          例：7/14 公休 → 開始 2026-07-14 03:00　結束 2026-07-15 03:00<br>
-          連續公休多天 → 結束時間改填「最後一天的隔日 03:00」即可，開始時間不變。
-        </div>
-        <div id="adm-closed-dates-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row">
+
+        <div class="adm-label" style="margin-bottom:.5rem">① 重複公休（每週固定星期幾）</div>
+        <div id="adm-weekly-closed-chips" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.375rem"><button type="button" class="wk-chip " onclick="admSetDayClosed('mon', true)">週一 8/17</button><button type="button" class="wk-chip " onclick="admSetDayClosed('tue', true)">週二 8/18</button><button type="button" class="wk-chip " onclick="admSetDayClosed('wed', true)">週三 8/19</button><button type="button" class="wk-chip " onclick="admSetDayClosed('thu', true)">週四 8/20</button><button type="button" class="wk-chip " onclick="admSetDayClosed('fri', true)">週五 8/21</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sat', true)">週六 8/22</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sun', true)">週日 8/16</button></div>
+        <div style="font-size:.7rem;color:#aaa;margin-bottom:.875rem">💡 點選星期幾＝切換該天固定公休／營業，與上方「⏰ 每週固定營業時間」共用同一份設定（改這裡，上面也會跟著變，反之亦然）</div>
+
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .875rem"></div>
+
+        <div class="adm-label" style="margin-bottom:.5rem">② 單日特例（只影響特定一天）</div>
+        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex0">
     <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+      📅 單日特例
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="2026-08-15">
-        <input type="time" class="cr-start-t" value="09:30">
+      <div class="closed-range-label">📆 日期（台灣時間）</div>
+      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-15">
+      <div class="closed-range-label" style="margin-top:.5rem">類型</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="dex0-type" class="de-type-radio" value="closed" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
+        </label>
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="dex0-type" class="de-type-radio" value="hours" checked="" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
+        </label>
       </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="2026-08-15">
-        <input type="time" class="cr-end-t" value="16:00">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="8/15(六) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+      <div class="de-hours-wrap" data-uid="dex0" style="display:block">
+    <div class="wk-hour-row de-hour-row" data-idx="0">
+      <input type="time" class="de-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
+  
+    <div class="wk-hour-row de-hour-row" data-idx="1">
+      <input type="time" class="de-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
+    </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
+      <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/15(六) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+    </div>
   </div></div>
-        <button class="adm-add-row-btn" onclick="admAddClosedDateRow()">＋ 新增公休時段</button>
+        <button class="adm-add-row-btn" onclick="admAddDateException()">＋ 新增單日特例</button>
       </div>
 
       <!-- ▌ 群組二：前台文字 -->
@@ -995,14 +880,14 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="adm-card">
         <div class="adm-card-title">📢 頂部黃色公告橫幅</div>
         <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的公告文字，可新增第2、3、4行，多行會自動換行顯示。</div>
-        <div id="adm-announce-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：09:30–14:00｜16:00–凌晨03:00"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div id="adm-announce-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：09:30-14:00｜16:00-凌晨03:00"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddAnnounceLine('')">＋ 新增一行</button>
       </div>
 
       <div class="adm-card">
         <div class="adm-card-title">📬 進入頁面彈窗公告</div>
         <div class="adm-tip">✏️ 每行一個字串。<code>空白行</code>＝空一行。<strong>全部刪除</strong>＝不顯示彈窗。</div>
-        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🛵外送服務：09:30–21:30，請先洽詢店家"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🛵外送服務：09:30-14:00 ； 16:00-21:30，請先洽詢店家"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddPopupLine('')">＋ 新增一行</button>
       </div>
 
@@ -1017,7 +902,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div style="font-size:.8125rem;font-weight:700;color:white;background:#1a2455;border-radius:.5rem;padding:.4rem .75rem;margin-bottom:.5rem;letter-spacing:.5px">▌ 訂單設定</div>
 
       <div class="adm-card">
-        <div class="adm-card-title">⏰ 候餐時間設定</div>
+        <div class="adm-card-title">⏰ 候餐與取餐時段設定</div>
         <div class="adm-tip">
           ✏️ 依購物車品項數量自動調整最早可選取餐時間，避免客人選太早到來等待。<br>
           下方可設定每個時段按鈕之間的間隔分鐘數，共顯示 3 個選項 + 自訂時間。
@@ -1040,28 +925,26 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <div class="adm-toggle-label">⏱ 今日取餐　按鈕時間間隔（分鐘）<span class="desc">例：15 = 每隔 15 分鐘顯示一個時段按鈕（共 3 個）</span></div>
           <input class="adm-input adm-input-sm" type="number" id="f-slot-interval" min="5" max="60" value="15" style="margin-bottom:0;width:80px">
         </div>
-        <div class="adm-tip" style="margin-top:.5rem;margin-bottom:0">💡 以上設定存入 HTML 後生效，不需重新部署。</div>
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
+        <label class="adm-label">取餐時間提示文字 <span class="sub">（取餐時間下方橘色小字）</span></label>
+        <input class="adm-input" type="text" id="f-pickupTimeHint" style="margin-bottom:0">
+        <div class="adm-tip" style="margin-top:.625rem;margin-bottom:0">💡 以上設定存入 HTML 後生效，不需重新部署。</div>
       </div>
 
       <div class="adm-card">
-        <div class="adm-card-title">✏️ 文字與折扣設定</div>
+        <div class="adm-card-title">🛵 外帶與外送設定</div>
         <div class="adm-tip">✏️ 以下文字直接顯示在點餐頁面，改完存檔即生效。</div>
-
-        <label class="adm-label">取餐時間提示文字 <span class="sub">（取餐時間下方橘色小字）</span></label>
-        <input class="adm-input" type="text" id="f-pickupTimeHint">
 
         <label class="adm-label">外帶按鈕文字 <span class="sub">（例：外帶自取 9折）</span></label>
         <input class="adm-input" type="text" id="f-takeoutLabel">
 
+        <label class="adm-label">外帶折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
+        <input class="adm-input adm-input-sm" type="number" id="f-takeoutDiscount" min="0.1" max="1.0" step="0.05" placeholder="0.9">
+
         <label class="adm-label">外送按鈕文字 <span class="sub">（例：外送）</span></label>
         <input class="adm-input" type="text" id="f-deliveryLabel">
 
-        <label class="adm-label">外帶折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
-        <input class="adm-input adm-input-sm" type="number" id="f-takeoutDiscount" min="0.1" max="1.0" step="0.05" placeholder="0.9">
-      </div>
-
-      <div class="adm-card">
-        <div class="adm-card-title">🛵 外送說明框</div>
+        <div style="height:1px;background:#f0f0f0;margin:.375rem 0 .75rem"></div>
         <div class="adm-tip">✏️ 客人選「外送」後，出現在粉紅色框裡的說明文字（共兩行）。</div>
         <label class="adm-label">第一行</label>
         <input class="adm-input" type="text" id="f-deliveryHintLine1">
@@ -1069,18 +952,23 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <input class="adm-input" type="text" id="f-deliveryHintLine2">
 
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .75rem"></div>
-        <div class="adm-card-title" style="margin-bottom:.25rem">⏰ 外送服務時間</div>
-        <div class="adm-tip">✏️ 超過此時間範圍，客人的取餐方式將無法選擇「外送」，僅能選外帶自取。</div>
-        <div class="cr-dt-row">
-          <div style="flex:1">
-            <label class="adm-label">開始時間</label>
-            <input class="bh-time-input" type="time" id="f-deliveryHoursStart">
-          </div>
-          <div style="flex:1">
-            <label class="adm-label">結束時間</label>
-            <input class="bh-time-input" type="time" id="f-deliveryHoursEnd">
-          </div>
-        </div>
+        <div class="adm-card-title" style="margin-bottom:.25rem">⏰ 外送服務時間 <span class="adm-card-sub">（可設多段，例：09:30-14:00、16:00-21:30）</span></div>
+        <div class="adm-tip">✏️ 超過此範圍，客人的取餐方式將無法選擇「外送」，僅能選外帶自取。可用「＋加時段」設定中午、晚上分開兩段外送時間。</div>
+        <div id="adm-delivery-hours-wrap">
+    <div class="wk-hour-row dlv-hour-row" data-idx="0">
+      <input type="time" class="dlv-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="dlv-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelDeliveryHourRow(this)" title="刪除此時段">✕</button>
+    </div>
+  
+    <div class="wk-hour-row dlv-hour-row" data-idx="1">
+      <input type="time" class="dlv-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="dlv-end-t bh-time-input" value="21:30">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelDeliveryHourRow(this)" title="刪除此時段">✕</button>
+    </div>
+  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddDeliveryHourRow()">＋ 加時段</button></div>
       </div>
 
       <div class="adm-card">
@@ -1129,13 +1017,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
 
       <div class="adm-card">
-        <div class="adm-card-title">🔑 LINE LIFF ID</div>
+        <div class="adm-card-title">🔧 系統識別碼</div>
         <div class="adm-tip">✏️ LINE Developers 後台取得的 LIFF ID，一般不需改動。若需更換，請直接修改 HTML 原始碼中的 <code>const LIFF_ID</code>。</div>
+        <label class="adm-label">LINE LIFF ID</label>
         <div style="font-size:.875rem;color:#555;background:#f8f8f8;border-radius:.5rem;padding:.625rem .75rem;font-family:monospace;word-break:break-all" id="adm-liff-display">2009693763-bOg2whDg</div>
-      </div>
 
-      <div class="adm-card">
-        <div class="adm-card-title">🔄 自動更新偵測網址 <span class="adm-card-sub">（GitHub Raw URL）</span></div>
+        <div style="height:1px;background:#f0f0f0;margin:.875rem 0 .75rem"></div>
+        <div class="adm-card-title" style="font-size:.875rem">🔄 自動更新偵測網址 <span class="adm-card-sub">（GitHub Raw URL）</span></div>
         <div class="adm-tip">
           ✏️ 填入後，客人開著頁面時每 60 秒自動比對版本，有新版本就會出現「立即更新」提示。<br><br>
           <strong>怎麼取得網址？</strong><br>
@@ -2682,50 +2570,47 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║                                                                      ║
 // ║  📌 若要直接改這裡，各欄位說明如下：                                ║
 // ║                                                                      ║
-// ║  ── 🔴 營業狀態 ────────────────────────────────────────────────── ║
-// ║  isOpen                                                              ║
-// ║    true  = 正常營業（客人可點餐）                                    ║
-// ║    false = 全日公休（強制鎖單，客人看到公休遮罩）                   ║
+// ║  🗓️ 營業時間／公休設定（對齊 Google 商家「定期營業時間／特別營業    ║
+// ║     時間」邏輯，分成兩層，兩層都建議從後台改，不要手動編輯）        ║
+// ║  ────────────────────────────────────────────────────────────────  ║
 // ║                                                                      ║
-// ║  businessHours  ← 每週固定營業時間（依星期分開設定，每週自動重複）  ║
-// ║    格式：{ mon:[...], tue:[...], wed:[...], thu:[...], fri:[...],  ║
-// ║            sat:[...], sun:[...] }                                   ║
-// ║    每天的值是陣列，每筆格式：{ start:"HH:MM", end:"HH:MM" }         ║
-// ║    ▶ 一般時段：start < end，例如 09:30–14:00                        ║
+// ║  weeklySchedule  ← ①每週固定營業時間（依星期分開設定，每週自動重複）║
+// ║    格式：{ mon:{closed, hours:[...]}, tue:{...}, ..., sun:{...} }   ║
+// ║    closed: true  = 該星期幾固定公休（每週重複，等於 Google 的       ║
+// ║                     「這天公休」設定；後台切換開關即可，            ║
+// ║                     不用再刪光時段）                                ║
+// ║    hours:  當天營業時段陣列，每筆 { start:"HH:MM", end:"HH:MM" }    ║
+// ║    ▶ 一般時段：start < end，例如 09:30-14:00                        ║
 // ║    ▶ 跨日時段：start > end 代表營業到隔天凌晨，                     ║
-// ║      例如 16:00–03:00 = 當天 16:00 開始營業，直到隔天 03:00         ║
+// ║      例如 16:00-03:00 = 當天 16:00 開始營業，直到隔天 03:00         ║
 // ║      （隔天凌晨這段自動算在「隔天」的營業時間內，不用重複填）        ║
-// ║    ▶ 未列在任何時段內的時間（空班時段，例：14:00–16:00、            ║
-// ║      03:00–09:30）會自動顯示「非營業時間」遮罩、鎖定點餐，          ║
-// ║      效果與公休日設定相同，不需另外手動設定 closedRanges            ║
-// ║    ▶ 某天陣列留空 [] = 該天不受每週固定時段限制（不建議留空）       ║
+// ║    ▶ 未列在任何時段內的時間（空班時段，例：14:00-16:00、            ║
+// ║      03:00-09:30）會自動顯示「非營業時間」遮罩、鎖定點餐，          ║
+// ║      效果與公休日相同，不需另外設定 dateExceptions                  ║
 // ║    ⚠️ 所有時間皆為台灣時間（GMT+8）                                 ║
 // ║                                                                      ║
-// ║    本店目前設定：                                                    ║
-// ║      平日（一～五）09:30–14:00、16:00–翌日03:00                     ║
-// ║      假日（六、日）09:30–翌日03:00                                  ║
+// ║    本店目前設定：全週 09:30-14:00、16:00-翌日03:00（無固定公休日）  ║
 // ║                                                                      ║
-// ║  closedRanges  ← 指定公休時段（可設多筆，自動到時間切換）          ║
+// ║  dateExceptions  ← ②單日特例（只影響某一個特定日期，不會每週重複） ║
 // ║    每筆格式：                                                        ║
-// ║      { start:"YYYY-MM-DDTHH:MM",                                    ║
-// ║        end:  "YYYY-MM-DDTHH:MM",                                    ║
+// ║      { date: "YYYY-MM-DD",         ← 哪一天                        ║
+// ║        type: "closed" | "hours",   ← 本日公休 / 當天時間調整        ║
+// ║        hours: [{start,end}],       ← type為"hours"才需要，可多段    ║
 // ║        note: "備註（選填，顯示在公休遮罩下方）" }                   ║
 // ║                                                                      ║
-// ║    ⭐ 本店固定口訣（無論平日/假日，凌晨 03:00–09:30 都是空班時段）：║
-// ║      公休某一天 = 該日 T03:00 ～ 隔日 T03:00                        ║
-// ║      例：7/14 公休 → start:"2026-07-14T03:00"                       ║
-// ║                       end:  "2026-07-15T03:00"                      ║
-// ║      為什麼是 03:00：因為 03:00–09:30 本來就是每天的空班時段，      ║
-// ║      公休起訖點卡在這裡才不會誤傷到前一晚或隔天的營業時段。         ║
-// ║      連續公休 N 天 → end 改成「最後一天+1」的 T03:00 即可           ║
-// ║                                                                      ║
-// ║    ▶ 整日公休：start T00:00，end T23:59                             ║
-// ║      範例：start:"2026-06-03T00:00", end:"2026-06-03T23:59"         ║
-// ║    ▶ 只休下午：start T16:00，end T23:59                             ║
-// ║      範例：start:"2026-06-04T16:00", end:"2026-06-04T23:59"         ║
-// ║    ▶ 跨日公休：日期不同的 start / end                               ║
-// ║      範例：start:"2026-06-05T22:00", end:"2026-06-06T10:00"         ║
+// ║    ▶ 本日公休：{ date:"2026-08-15", type:"closed", note:"店休一天" }║
+// ║    ▶ 當天調整營業時間（例：只到 21:00 提早打烊）：                  ║
+// ║      { date:"2026-08-20", type:"hours",                             ║
+// ║        hours:[{start:"09:30",end:"21:00"}], note:"" }               ║
+// ║    ▶ 若該日同時符合「每週固定公休」，dateExceptions 的設定優先      ║
+// ║      （例如週一固定公休，但某週一辦活動要營業，設單日特例即可）     ║
 // ║    ⚠️ 所有時間皆為台灣時間（GMT+8），不需換算                      ║
+// ║                                                                      ║
+// ║  📢 前台公告規則：dateExceptions／每週固定公休會自動在頁面頂部      ║
+// ║     顯示「當日起 3 天內（含今天，共4天）」的預告，分成兩則獨立公告：║
+// ║     ①公休整日 → 紅色列，例："⚠️ 預告公休日：8/17 (一)、8/18 (二) 。"║
+// ║     ②時間調整 → 橘色列，例："⚠️ 營業時間調整：8/20 (四) 10:00-15:00 。"║
+// ║     不用手動貼公告，改 weeklySchedule／dateExceptions 就會自動更新  ║
 // ║                                                                      ║
 // ║  ── 📢 前台文字 ────────────────────────────────────────────────── ║
 // ║  announcementLines → 頂部黃色橫幅文字（陣列，每行一個字串，可1~多行）║
@@ -2735,8 +2620,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  deliveryHintLine2 → 選「外送」後粉框第二行（紅字）                 ║
 // ║  outsideHoursTitle → 空班時段（非公休）遮罩標題文字                 ║
 // ║  outsideHoursNote  → 空班時段（非公休）遮罩備註文字                 ║
-// ║    留空 = 自動顯示「營業時間：09:30–14:00、16:00–翌日03:00」        ║
+// ║    留空 = 自動顯示「營業時間：09:30-14:00 ； 16:00-翌日03:00」      ║
 // ║    有填 = 改顯示這行自訂文字，取代自動產生的營業時間文字            ║
+// ║    💡 建議留空：自動產生的文字會跟著 weeklySchedule 即時更新，       ║
+// ║       手動填死文字改時段容易忘記同步修改，導致資訊不一致            ║
 // ║                                                                      ║
 // ║  ── ⏰ 候餐時間（分鐘）─────────────────────────────────────────── ║
 // ║  waitSmall    → 購物車 1–2 項時，最早可選的取餐分鐘數（預設 20）    ║
@@ -2753,8 +2640,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  pickupTimeHint  → 取餐時間下方橘色小提示文字                       ║
 // ║                                                                      ║
 // ║  ── 🛵 外送服務時間 ──────────────────────────────────────────────  ║
-// ║  deliveryHours → 每天可選「外送」的時間範圍 { start, end }（HH:MM）║
-// ║    超過此時間範圍，客人無法選擇外送，僅能選外帶自取                 ║
+// ║  deliveryHours → 每天可選「外送」的時間範圍，陣列可設多段            ║
+// ║    格式：[ {start:"HH:MM", end:"HH:MM"}, ... ]                      ║
+// ║    例：[ {start:"09:30",end:"14:00"}, {start:"16:00",end:"21:30"} ] ║
+// ║      = 上午 09:30-14:00、下午 16:00-21:30 才能選外送，中間時段      ║
+// ║        超過此範圍，客人無法選擇外送，僅能選外帶自取                 ║
 // ║    ⚠️ 所有時間皆為台灣時間（GMT+8）                                 ║
 // ║                                                                      ║
 // ║  ── 📝 分類備註 ──────────────────────────────────────────────────  ║
@@ -2774,89 +2664,120 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║    有填 = 只有選「其他時間」時改顯示這行，取代 lineReserveNote      ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const STORE_CONFIG = {
-  isOpen: true,
-  // ── 每週固定營業時間（依星期分開設定，每週自動重複套用，空班時段自動鎖單，見上方說明）──
-  businessHours: {
-  "mon": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "tue": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "wed": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "thu": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "fri": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "sat": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ],
-  "sun": [
-    {
-      "start": "09:30",
-      "end": "14:00"
-    },
-    {
-      "start": "16:00",
-      "end": "03:00"
-    }
-  ]
+  // ── ①每週固定營業時間（依星期分開設定，每週自動重複套用，空班時段自動鎖單，見上方說明）──
+  weeklySchedule: {
+  "mon": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "tue": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "wed": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "thu": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "fri": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "sat": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  },
+  "sun": {
+    "closed": false,
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "03:00"
+      }
+    ]
+  }
 },
-  closedRanges: [
+  // ── ②單日特例（只影響特定一天，不會每週重複，見上方說明）──
+  dateExceptions: [
   {
-    "start": "2026-08-15T09:30",
-    "end": "2026-08-15T16:00",
+    "date": "2026-08-16",
+    "type": "hours",
+    "hours": [
+      {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "21:30"
+      }
+    ],
     "note": "8/15(六) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨"
   }
 ],
   announcementLines: [
-  "⏰營業時間：09:30–14:00｜16:00–凌晨03:00",
+  "⏰營業時間：09:30-14:00｜16:00-凌晨03:00",
   "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"
 ],
   popupLines: [
@@ -2865,23 +2786,23 @@ const STORE_CONFIG = {
   "",
   "💡貼心小提醒：",
   "量多請提前預約，為您保留美味並節省時間⏰",
-  "🛵外送服務：09:30–21:30，請先洽詢店家"
+  "🛵外送服務：09:30-14:00 ； 16:00-21:30，請先洽詢店家"
 ],
   defaultNote: "例：口味調整、其他需求...",
   deliveryHintLine1: "🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）",
   deliveryHintLine2: "*請於下方填入外送地址與聯絡電話",
   // ── 外送服務時間（超過此範圍客人無法選擇外送，見上方說明）──
-  deliveryHours: {"start":"09:30","end":"21:30"},
+  deliveryHours: [{"start":"09:30","end":"14:00"},{"start":"16:00","end":"21:30"}],
   // ── 空班時段（非公休）遮罩文字：留空 outsideHoursNote = 自動顯示營業時間 ──
   outsideHoursTitle: "目前非營業時間",
-  outsideHoursNote: "⏰營業時間：09:30–14:00｜16:00–凌晨03:00",
+  outsideHoursNote: "",
   // ── 候餐時間（分鐘）：外帶選單顯示 3 個時段（N、2N、3N）──
   // 外送固定 +60 分鐘，不受以下設定影響
   waitSmall: 20,    // 1–2 項時最早候餐分鐘
   waitMedium: 40,   // 3–5 項時最早候餐分鐘
   waitLarge: 60,    // 6 項以上時最早候餐分鐘
   slotInterval: 20, // 今日取餐按鈕時間間隔（分鐘）
-  // ── 文字與折扣設定 ──
+  // ── 外帶外送文字與折扣、候餐提示文字 ──
   pickupTimeHint: "⏱ 備餐時間僅供參考，如有變動將主動通知 🙏",
   takeoutLabel: "外帶自取 9折",
   deliveryLabel: "外送",
@@ -3034,7 +2955,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260814-01';
+const VER = '20260816-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
@@ -3401,6 +3322,11 @@ function fmtDateChinese(str) {
   const [y, mo, d] = str.split('-').map(Number);
   return `${mo}/${String(d).padStart(2,'0')} (${['日','一','二','三','四','五','六'][new Date(y,mo-1,d).getDay()]})`;
 }
+// ── 聯絡電話：客人只需輸入「09」後面的 8 碼，這裡自動組合成完整 10 碼手機號碼 ──
+function getFullPhone() {
+  const v = (document.getElementById('delivery-phone')?.value || '').trim();
+  return v ? '09' + v : '';
+}
 
 // ── 依購物車數量算最早候餐分鐘 ──
 function getMinWaitMinutes() {
@@ -3410,19 +3336,11 @@ function getMinWaitMinutes() {
   return STORE_CONFIG.waitLarge || 35;
 }
 
-// ── 檢查某日期（YYYY-MM-DD）是否整日公休（以營業時間 09:00–23:59 為基準）──
-// 只有當公休時段完整覆蓋「09:00 到 23:59」，才算整日公休
-// → 上午公休（00:00–13:00）不會誤判為整日公休
-// → 下午公休（16:00–23:59）也不會誤判為整日公休
+// ── 檢查某日期（YYYY-MM-DD）是否整日公休 ──
+// 優先看該日是否有「單日特例」設定，沒有的話依「每週固定營業時間」判斷
+// （getEffectiveDaySchedule 定義在下方公休判斷區塊）
 function isDateClosed(dateStr) {
-  if (!STORE_CONFIG.isOpen) return true;
-  const openMs  = twTimeToUTCms(dateStr + 'T09:00'); // 營業開始
-  const closeMs = twTimeToUTCms(dateStr + 'T23:59'); // 營業結束
-  return (STORE_CONFIG.closedRanges || []).some(r =>
-    r.start && r.end &&
-    twTimeToUTCms(r.start) <= openMs &&
-    twTimeToUTCms(r.end)   >= closeMs
-  );
+  return getEffectiveDaySchedule(dateStr).closed;
 }
 
 // ── 取今日起指定天數的日期字串陣列（台灣時間）──
@@ -3713,12 +3631,10 @@ function placeOrder(){
       alert('請填入預約取餐時間！');
       return;
     }
-    // 限制時間須落在該預約日期當天的固定營業時間內（避免預約到空班時段）
-    const [ry, rmo, rd] = reserveDate.split('-').map(Number);
-    const reserveDow = new Date(ry, rmo - 1, rd).getDay();
-    if (!isTimeInBusinessHours(timeInp.value, reserveDow)) {
+    // 限制時間須落在該預約日期當天的有效營業時間內（自動考慮單日特例，避免預約到空班時段）
+    if (!isTimeInBusinessHours(timeInp.value, reserveDate)) {
       timeInp.classList.add('error');
-      const hrs = formatDayHoursText((STORE_CONFIG.businessHours||{})[BH_DAY_KEYS[reserveDow]]);
+      const hrs = formatDayHoursText(getEffectiveDaySchedule(reserveDate).hours);
       alert(`預約取餐時間須在當天營業時間內。${hrs ? '\n' + fmtDateChinese(reserveDate) + ' 營業時間：' + hrs : ''}`);
       return;
     }
@@ -3752,10 +3668,10 @@ function placeOrder(){
   {
     const pe=document.getElementById('delivery-phone');
     const phoneVal=pe.value.trim();
-    if(!phoneVal||phoneVal.length!==10||!phoneVal.startsWith('09')||!/^\d{10}$/.test(phoneVal)){
+    if(!phoneVal||phoneVal.length!==8||!/^\d{8}$/.test(phoneVal)){
       pe.classList.add('error');
-      if(!phoneVal) pe.placeholder='⚠ 請輸入手機號碼';
-      alert('手機號碼格式錯誤！\n請輸入 10 碼、09 開頭的手機號碼。');
+      if(!phoneVal) pe.placeholder='⚠ 請輸入後8碼';
+      alert('手機號碼格式錯誤！\n請輸入 09 後面的 8 碼數字。');
       pe.scrollIntoView({behavior:'smooth',block:'center'});
       return;
     } else pe.classList.remove('error');
@@ -3773,7 +3689,7 @@ function placeOrder(){
   const cutlery=opts.cutlery==='yes'?'需要':'不需要',receipt=opts.receipt==='yes'?'需要':'不需要';
   const pl={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
-  const dp=document.getElementById('delivery-phone').value.trim();
+  const dp=getFullPhone();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
   const ptDisplay = getPickupTimeDisplay();
   const ptLabelConfirm = isReserveMode ? '📅 預約取餐時間'
@@ -3800,7 +3716,7 @@ function submitOrder(){
   const now=new Date(),timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
   const pl=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
-  const dp=document.getElementById('delivery-phone').value.trim();
+  const dp=getFullPhone();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
   const tl=opts.pickup==='takeout'&&s!==t?`💰 合計：$${t}（原價 $${s}）`:`💰 合計：$${t}`;
   const il=[]; items.forEach(i=>{ il.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`); if(i.notes) il.push(`     └ ${i.notes}`); });
@@ -3850,82 +3766,85 @@ function submitOrder(){
 }
 
 // ════════════════════════════════════════════════════════════════
-//  🕐 公休時段判斷（台灣時間 GMT+8，秒級即時監控）
+//  🕐 公休／營業時間判斷（台灣時間 GMT+8，秒級即時監控）
 //  ─────────────────────────────────────────────────────────────
-//  getTaiwanNow()    → 取得台灣當下時間的 Date 物件
-//  isInClosedRange() → 判斷現在是否在任一公休時段內
+//  資料來源分兩層（對齊 Google 商家邏輯，見上方 STORE_CONFIG 說明）：
+//    ①weeklySchedule  → 每週固定營業時間／固定公休（每週重複）
+//    ②dateExceptions  → 單日特例（本日公休 / 當天時間調整，只影響那一天）
+//  getEffectiveDaySchedule(dateStr) → 算出「某一天」實際生效的班表
+//    （有單日特例就用特例，沒有就退回每週固定班表）
+//  isInClosedRange()   → 判斷現在是否為公休／非營業時間
 //  checkClosedStatus() → 每秒執行：自動顯示/隱藏公休遮罩、鎖定結帳按鈕
 // ════════════════════════════════════════════════════════════════
-
-// ── 將「台灣時間字串 YYYY-MM-DDTHH:MM」轉為真實 UTC 毫秒 ──
-// 台灣 = UTC+8，後台輸入的是台灣時間，需減 8 小時才是真實 UTC
-// 例：台灣 2025-05-05T22:00 → UTC 14:00 → Date.UTC(2025,4,5,14,0)
-function twTimeToUTCms(str) {
-  const [datePart, timePart] = str.split('T');
-  const [y, mo, d] = datePart.split('-').map(Number);
-  const [h, mi]    = (timePart || '00:00').split(':').map(Number);
-  return Date.UTC(y, mo - 1, d, h - 8, mi, 0);
-}
 
 // ── 星期代碼對照（getDay()：0=日 1=一 2=二 3=三 4=四 5=五 6=六）──
 const BH_DAY_KEYS   = ['sun','mon','tue','wed','thu','fri','sat'];
 const BH_DAY_ORDER  = ['mon','tue','wed','thu','fri','sat','sun']; // 顯示用（週一開始）
 const BH_DAY_LABELS = { mon:'一', tue:'二', wed:'三', thu:'四', fri:'五', sat:'六', sun:'日' };
 
-// ── 每週固定營業時間判斷（依星期分開設定，每週自動重複套用）──
-// businessHours 為 { mon:[{start,end}...], tue:[...], ..., sun:[...] }
-// start < end：一般時段（例：09:30–14:00）
-// start > end：跨日時段，代表營業到隔天凌晨（例：16:00–03:00）
-// dow：0=日 1=一 … 6=六（對應 Date.getDay()）
-function isTimeInBusinessHours(hhmm, dow) {
-  const bh = STORE_CONFIG.businessHours || {};
-  const todayKey = BH_DAY_KEYS[dow];
-  const yesterdayKey = BH_DAY_KEYS[(dow + 6) % 7];
-  const todayRanges = bh[todayKey] || [];
-  const yesterdayRanges = bh[yesterdayKey] || [];
+// ── 日期字串工具：Date → "YYYY-MM-DD"，以及日期字串前後推移 N 天 ──
+function toDateStr(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function addDaysToDateStr(dateStr, n) {
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  return toDateStr(new Date(y, mo - 1, d + n));
+}
 
-  // 今天的時段
-  const inToday = todayRanges.some(r => {
+// ── 算出「某一天（YYYY-MM-DD）」實際生效的班表 ──
+// 優先順序：① dateExceptions 裡有該日期的單日特例 → 用特例
+//          ② 沒有特例 → 退回 weeklySchedule 該星期幾的固定班表
+// 回傳格式一律為 { closed:boolean, hours:[{start,end}...] }
+function getEffectiveDaySchedule(dateStr) {
+  const ex = (STORE_CONFIG.dateExceptions || []).find(e => e.date === dateStr);
+  if (ex) {
+    if (ex.type === 'closed') return { closed: true, hours: [] };
+    if (ex.type === 'hours')  return { closed: false, hours: ex.hours || [] };
+  }
+  const [y, mo, d] = dateStr.split('-').map(Number);
+  const dayKey = BH_DAY_KEYS[new Date(y, mo - 1, d).getDay()];
+  return (STORE_CONFIG.weeklySchedule && STORE_CONFIG.weeklySchedule[dayKey]) || { closed: true, hours: [] };
+}
+
+// ── 判斷某個時間點（HH:MM，屬於 dateStr 這一天）是否落在營業時間內 ──
+// start < end：一般時段（例：09:30-14:00）
+// start > end：跨日時段，代表營業到隔天凌晨（例：16:00-03:00）
+// 也會自動檢查「前一天」的跨日時段是否延續到今天凌晨（例：昨天 16:00-03:00，今天 00:00-03:00 仍算營業）
+function isTimeInBusinessHours(hhmm, dateStr) {
+  const todayHours = getEffectiveDaySchedule(dateStr).hours || [];
+  const inToday = todayHours.some(r => {
     if (!r.start || !r.end) return false;
-    if (r.start <= r.end) {
-      return hhmm >= r.start && hhmm < r.end;
-    } else {
-      // 跨日時段（例：16:00–03:00），今天 start 之後都算營業中
-      return hhmm >= r.start;
-    }
+    if (r.start <= r.end) return hhmm >= r.start && hhmm < r.end;
+    return hhmm >= r.start; // 跨日時段，今天 start 之後都算營業中
   });
   if (inToday) return true;
 
-  // 昨天跨日營業，延續到今天凌晨的部分（例：昨天 16:00–03:00，今天 00:00–03:00 仍算營業）
-  return yesterdayRanges.some(r => {
-    if (!r.start || !r.end) return false;
-    if (r.start > r.end) {
-      return hhmm < r.end;
-    }
-    return false;
-  });
+  const yesterdayHours = getEffectiveDaySchedule(addDaysToDateStr(dateStr, -1)).hours || [];
+  return yesterdayHours.some(r => r.start && r.end && r.start > r.end && hhmm < r.end);
 }
-// ── 判斷「現在」是否為每週固定營業時間之外的空班時段 ──
+// ── 判斷「現在」是否為每週固定營業時間之外的空班時段（含單日特例）──
 function isOutsideBusinessHours() {
-  const now  = getTaiwanNow();
-  const hhmm = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-  return !isTimeInBusinessHours(hhmm, now.getDay());
+  const now = getTaiwanNow();
+  return !isTimeInBusinessHours(toHHMM(now), toDateStr(now));
 }
-// ── 將某一天的時段陣列組成人類可讀文字，例："09:30–14:00、16:00–翌日03:00" ──
-function formatDayHoursText(ranges) {
-  if (!ranges || !ranges.length) return '公休';
-  return ranges.map(r => {
+// ── 將某一天的時段陣列組成人類可讀文字，例："09:30-14:00、16:00-翌日03:00" ──
+// 統一格式：時間用半形 "-"，多段時間用全形分號 " ； " 分隔（例："09:30-14:00 ； 16:30-21:30"）
+// 這個函式被公休遮罩文字、預約失敗提示、前台公告共用，改這裡等於全站格式一起統一
+function formatDayHoursText(hours) {
+  if (!hours || !hours.length) return '公休';
+  return hours.map(r => {
     if (!r.start || !r.end) return '';
-    return r.start <= r.end ? `${r.start}–${r.end}` : `${r.start}–翌日${r.end}`;
-  }).filter(Boolean).join('、') || '公休';
+    return r.start <= r.end ? `${r.start}-${r.end}` : `${r.start}-翌日${r.end}`;
+  }).filter(Boolean).join(' ； ') || '公休';
 }
-// ── 將整週 businessHours 組成人類可讀文字，自動合併相鄰且時段相同的星期 ──
-// 例："週一～五 09:30–14:00、16:00–翌日03:00；週六～日 09:30–翌日03:00"
+// ── 將整週 weeklySchedule 組成人類可讀文字，自動合併相鄰且時段相同的星期 ──
+// 例："週一～五 09:30-14:00 ； 16:00-翌日03:00；週六～日 09:30-翌日03:00"
 function formatBusinessHoursText() {
-  const bh = STORE_CONFIG.businessHours || {};
+  const ws = STORE_CONFIG.weeklySchedule || {};
   const groups = [];
   BH_DAY_ORDER.forEach(key => {
-    const text = formatDayHoursText(bh[key]);
+    const sch = ws[key] || { closed: true, hours: [] };
+    const text = sch.closed ? '公休' : formatDayHoursText(sch.hours);
     const last = groups[groups.length - 1];
     if (last && last.text === text) {
       last.days.push(key);
@@ -3944,27 +3863,23 @@ function formatBusinessHoursText() {
 }
 
 // ════════════════════════════════════════════════════════════════
-//  🛵 外送服務時間（STORE_CONFIG.deliveryHours，後台可修改）
+//  🛵 外送服務時間（STORE_CONFIG.deliveryHours，後台可修改，可設多段）
 //  ────────────────────────────────────────────────────────────
-//  超過此時間範圍，客人無法選擇「外送」，僅能選外帶自取
+//  格式：[{start,end}, ...]，超過此範圍，客人無法選擇「外送」，僅能選外帶自取
 // ════════════════════════════════════════════════════════════════
 function isDeliveryTimeAllowed() {
-  const dh = STORE_CONFIG.deliveryHours;
-  if (!dh || !dh.start || !dh.end) return true; // 未設定 = 不限制
-  const now  = getTaiwanNow();
-  const hhmm = toHHMM(now);
-  if (dh.start <= dh.end) {
-    // 一般時段（例：09:30–21:30）
-    return hhmm >= dh.start && hhmm <= dh.end;
-  } else {
-    // 跨日時段（例：20:00–02:00）
-    return hhmm >= dh.start || hhmm <= dh.end;
-  }
+  const ranges = STORE_CONFIG.deliveryHours;
+  if (!ranges || !ranges.length) return true; // 未設定 = 不限制
+  const hhmm = toHHMM(getTaiwanNow());
+  return ranges.some(r => {
+    if (!r.start || !r.end) return false;
+    if (r.start <= r.end) return hhmm >= r.start && hhmm <= r.end; // 一般時段（例：09:30-14:00）
+    return hhmm >= r.start || hhmm <= r.end; // 跨日時段（例：20:00-02:00）
+  });
 }
+// 沿用 formatDayHoursText()，格式跟全站其他時段顯示一致（例："09:30-14:00 ； 16:00-21:30"）
 function formatDeliveryHoursText() {
-  const dh = STORE_CONFIG.deliveryHours;
-  if (!dh || !dh.start || !dh.end) return '';
-  return dh.start <= dh.end ? `${dh.start}–${dh.end}` : `${dh.start}–翌日${dh.end}`;
+  return formatDayHoursText(STORE_CONFIG.deliveryHours);
 }
 // ── 依外送服務時間即時更新外送按鈕的可選狀態（時間到就自動鎖/解鎖）──
 let _lastDeliveryAllowed = null;
@@ -4000,21 +3915,11 @@ function checkDeliveryAvailability() {
 }
 setInterval(checkDeliveryAvailability, 1000);
 
-// ── 判斷「現在」是否落在任一公休區間內 ──
-// 全程使用真實 UTC 毫秒（Date.now()），與客戶端時區設定完全無關
+// ── 判斷「現在」是否為公休／非營業時間 ──
+// isOutsideBusinessHours() 已經整合了固定公休、單日特例（公休/時間調整）、
+// 以及每日空班時段（如午休、凌晨），涵蓋所有公休情境
 function isInClosedRange() {
-  if (!STORE_CONFIG.isOpen) return true; // 強制全日公休
-  if (isOutsideBusinessHours()) return true; // 非每日固定營業時間（空班時段），依公休設定屏蔽
-
-  const ranges = STORE_CONFIG.closedRanges || [];
-  if (!ranges.length) return false;
-
-  const nowMs = Date.now(); // 真實 UTC 毫秒
-
-  return ranges.some(r => {
-    if (!r.start || !r.end) return false;
-    return nowMs >= twTimeToUTCms(r.start) && nowMs <= twTimeToUTCms(r.end);
-  });
+  return isOutsideBusinessHours();
 }
 
 // ── 即時狀態切換：每秒檢查一次，進入公休立即鎖單 ──
@@ -4031,52 +3936,41 @@ function checkClosedStatus() {
   const rangeNote    = document.getElementById('closed-range-note');  // 公休備註文字
 
   if (closed) {
-    // ── 進入公休：顯示遮罩、鎖按鈕、顯示時段說明 ──
+    // ── 進入公休：顯示遮罩、鎖按鈕、顯示原因說明 ──
     overlay.classList.add('open');
     if (checkoutBtn) { checkoutBtn.disabled = true; checkoutBtn.style.opacity = '0.45'; checkoutBtn.style.cursor = 'not-allowed'; }
     if (bottomBtn)   { bottomBtn.disabled = true;   bottomBtn.style.opacity = '0.45';  bottomBtn.style.cursor = 'not-allowed'; }
-    // 找出目前命中的區間，顯示說明
     if (rangeHint) {
-      const nowMs = Date.now();
-      const active = (STORE_CONFIG.closedRanges||[]).find(r =>
-        r.start && r.end && nowMs >= twTimeToUTCms(r.start) && nowMs <= twTimeToUTCms(r.end)
-      );
-      if (active) {
-        const fmt = s => s.replace('T',' ').slice(0,16);
-        rangeHint.style.whiteSpace = 'nowrap';
-        rangeHint.style.overflow = 'hidden';
-        rangeHint.style.textOverflow = 'ellipsis';
-        rangeHint.textContent = `公休時段：${fmt(active.start)} ～ ${fmt(active.end)}`;
-        if (rangeNote) {
-          rangeNote.style.whiteSpace = 'nowrap';
-          rangeNote.style.overflow = 'hidden';
-          rangeNote.style.textOverflow = 'ellipsis';
-          rangeNote.textContent = active.note ? active.note : '';
-        }
-      } else if (!STORE_CONFIG.isOpen) {
-        rangeHint.textContent = '（店家設定全日公休）';
+      rangeHint.style.whiteSpace = 'normal';
+      rangeHint.style.overflow = 'visible';
+      rangeHint.style.textOverflow = 'clip';
+      if (rangeNote) {
+        rangeNote.style.whiteSpace = 'normal';
+        rangeNote.style.overflow = 'visible';
+        rangeNote.style.textOverflow = 'clip';
+      }
+      const todayStr = toDateStr(getTaiwanNow());
+      const ex = (STORE_CONFIG.dateExceptions || []).find(e => e.date === todayStr);
+      if (ex && ex.type === 'closed') {
+        // ① 今天有「單日特例：本日公休」
+        rangeHint.textContent = '今日公休';
+        if (rangeNote) rangeNote.textContent = ex.note || '';
+      } else if (ex && ex.type === 'hours') {
+        // ② 今天有「單日特例：當天營業時間調整」，目前時間落在調整後時段之外
+        rangeHint.textContent = `今日營業時間調整為 ${formatDayHoursText(ex.hours)}`;
+        if (rangeNote) rangeNote.textContent = ex.note || '';
+      } else if ((STORE_CONFIG.weeklySchedule[BH_DAY_KEYS[getTaiwanNow().getDay()]] || {}).closed) {
+        // ③ 沒有單日特例，今天是每週固定公休日
+        rangeHint.textContent = '本日固定公休';
         if (rangeNote) rangeNote.textContent = '';
-      } else if (isOutsideBusinessHours()) {
-        // ── 非公休日，但落在每日固定營業時間之外的空班時段（文字可從後台修改）──
-        rangeHint.style.whiteSpace = 'normal';
-        rangeHint.style.overflow = 'visible';
-        rangeHint.style.textOverflow = 'clip';
+      } else {
+        // ④ 非公休日，只是落在每日固定營業時間之外的空班時段（如午休、凌晨），文字可從後台修改
         rangeHint.textContent = STORE_CONFIG.outsideHoursTitle || '目前非營業時間';
         if (rangeNote) {
-          rangeNote.style.whiteSpace = 'normal';
-          rangeNote.style.overflow = 'visible';
-          rangeNote.style.textOverflow = 'clip';
           const customNote = (STORE_CONFIG.outsideHoursNote || '').trim();
-          if (customNote) {
-            rangeNote.textContent = customNote;
-          } else {
-            const hrs = formatBusinessHoursText();
-            rangeNote.textContent = hrs ? `營業時間：${hrs}` : '';
-          }
+          const hrs = formatBusinessHoursText();
+          rangeNote.textContent = customNote || (hrs ? `營業時間：${hrs}` : '');
         }
-      } else {
-        rangeHint.textContent = '';
-        if (rangeNote) rangeNote.textContent = '';
       }
     }
   } else {
@@ -4101,98 +3995,60 @@ function isClosedOnSubmit() {
 // 初始化
 renderTabs(); renderMenu();
 checkDeliveryAvailability();
-// ── 依 STORE_CONFIG.businessHours 更新預約取餐時間提示文字 ──
+// ── 依 STORE_CONFIG.weeklySchedule 更新預約取餐時間提示文字 ──
 (function renderReserveHoursHint(){
   const el = document.getElementById('reserve-hours-hint');
   if (!el) return;
   const hrs = formatBusinessHoursText();
   el.textContent = hrs ? `（${hrs}）` : '';
 })();
-// ── 公告橫幅：公告文字 + 公休預告各自獨立欄位（無公休時公休欄自動消失）──
-(function renderAnnounceBar(){
-  const bar       = document.getElementById('announce-bar');
-  const closedBar = document.getElementById('announce-closed-bar');
-  const annLines = (STORE_CONFIG.announcementLines || []).filter(l => l !== '');
-
-  // 台灣當下時間（UTC 毫秒）
-  const nowMs       = Date.now();
-  // 7 天後的毫秒上限
-  const sevenDaysMs = nowMs + 7 * 24 * 3600000;
-
-  // 「YYYY-MM-DDTHH:MM」（台灣時間）→ UTC Date
-  function twStrToDate(str) {
-    const [datePart, timePart] = str.split('T');
-    const [y, mo, d] = datePart.split('-').map(Number);
-    const [h, mi]    = (timePart || '00:00').split(':').map(Number);
-    return new Date(Date.UTC(y, mo - 1, d, h - 8, mi, 0)); // 台灣 -8h = UTC
+// ── 公告橫幅：公告文字 + 公休預告／時間調整預告，各自獨立欄位（無內容時自動隱藏）──
+// ── 算出「當日起 3 天內（共4天，含今天）」需要公告的公休／營業時間調整（對齊 Google 商家「特別營業時間」預告邏輯）──
+// 每一天先看有沒有「單日特例」，沒有的話再看「每週固定公休」是否命中——
+// 固定公休因此會自動每週重複出現在預告，不用手動重新輸入
+function getUpcomingClosureAnnouncements() {
+  const todayStr = toDateStr(getTaiwanNow());
+  const results = [];
+  for (let i = 0; i <= 3; i++) {
+    const dateStr = addDaysToDateStr(todayStr, i);
+    const ex = (STORE_CONFIG.dateExceptions || []).find(e => e.date === dateStr);
+    if (ex && ex.type === 'closed') { results.push({ dateStr, type: 'closed' }); continue; }
+    if (ex && ex.type === 'hours')  { results.push({ dateStr, type: 'hours', hours: ex.hours }); continue; }
+    if (getEffectiveDaySchedule(dateStr).closed) results.push({ dateStr, type: 'closed' });
   }
-
-  // 篩選「尚未結束」且「start 在 7日內」的所有公休，按 start 排序
-  const list = (STORE_CONFIG.closedRanges || [])
-    .filter(r => {
-      if (!r.start || !r.end) return false;
-      const endMs   = twStrToDate(r.end).getTime();
-      const startMs = twStrToDate(r.start).getTime();
-      if (endMs <= nowMs) return false;          // 已結束，排除
-      return startMs <= sevenDaysMs;             // start 在 7 日內
-    })
-    .sort((a, b) => twStrToDate(a.start) - twStrToDate(b.start));
+  return results;
+}
+(function renderAnnounceBar(){
+  const bar           = document.getElementById('announce-bar');
+  const closedBar      = document.getElementById('announce-closed-bar');       // ①公休整日預告（單行，多天用「、」串接）
+  const hoursBar        = document.getElementById('announce-hours-bar');        // ②營業時間調整預告（標籤一次，每天各自一行對齊）
+  const hoursBarContent = document.getElementById('announce-hours-bar-content');
+  const annLines = (STORE_CONFIG.announcementLines || []).filter(l => l !== '');
 
   // 公告欄：固定顯示公告文字（支援多行）
   bar.innerHTML = annLines.map(l => `<span>${esc(l)}</span>`).join('<br>');
 
-  // 公休預告欄：有公休才顯示，否則完全隱藏
-  if (list.length) {
-    const parts = list.map(r => {
-      // 直接從字串取台灣本地日期，避免 UTC 往返換算造成跨日誤差
-      const sDatePart = r.start.split('T')[0]; // "YYYY-MM-DD"
-      const eDatePart = r.end.split('T')[0];
-      const sTimePart = (r.start.split('T')[1] || '00:00').slice(0,5); // "HH:MM"
-      const eTimePart = (r.end.split('T')[1]   || '23:59').slice(0,5);
-      const [sY,sMo,sD] = sDatePart.split('-').map(Number);
-      const [eY,eMo,eD] = eDatePart.split('-').map(Number);
-      const wd = ['日','一','二','三','四','五','六'];
-      function fmtLocal(y,mo,d){
-        const dt = new Date(y, mo-1, d);
-        return `${String(mo).padStart(2,'0')}/${String(d).padStart(2,'0')} (${wd[dt.getDay()]})`;
-      }
-      const isSameDay = sY===eY && sMo===eMo && sD===eD;
-      // 是否為整日公休（開始 00:00 且結束 23:59）
-      const isFullDay = sTimePart === '00:00' && eTimePart === '23:59';
+  const list       = getUpcomingClosureAnnouncements();
+  const closedList = list.filter(i => i.type === 'closed');
+  const hoursList  = list.filter(i => i.type === 'hours');
 
-      if (isSameDay) {
-        // 同一天：整日不加時段，非整日加上「幾點後」或「幾點～幾點」
-        if (isFullDay) return fmtLocal(sY,sMo,sD);
-        // 只有下半段公休（如 16:00–23:59）→ 顯示「幾點後」
-        if (eTimePart === '23:59') return `${fmtLocal(sY,sMo,sD)} ${sTimePart}後`;
-        // 只有上半段公休（如 00:00–13:00）→ 顯示「幾點前」
-        if (sTimePart === '00:00') return `${fmtLocal(sY,sMo,sD)} ${eTimePart}前`;
-        // 中間某段公休 → 顯示「幾點～幾點」
-        return `${fmtLocal(sY,sMo,sD)} ${sTimePart}～${eTimePart}`;
-      } else {
-        // 跨天：先算相差天數，區分「單一營業日/單一晚班」與「連續多天」
-        const startDateObj = new Date(sY, sMo-1, sD);
-        const endDateObj   = new Date(eY, eMo-1, eD);
-        const dayDiff = Math.round((endDateObj - startDateObj) / 86400000);
+  // ① 公休整日預告：例："⚠️ 預告公休日：8/17 (一)、8/18 (二) 。"
+  if (closedList.length && closedBar) {
+    closedBar.textContent = `⚠️ 預告公休日：${closedList.map(i => fmtDateChinese(i.dateStr)).join('、')} 。`;
+    closedBar.style.display = '';
+  } else if (closedBar) {
+    closedBar.style.display = 'none';
+  }
 
-        if (dayDiff === 1 && sTimePart === eTimePart) {
-          // 起訖時間相同（例如 03:00～隔日03:00）＝ 本店整個營業日公休口訣，視為單日公休
-          return fmtLocal(sY,sMo,sD);
-        }
-        if (dayDiff === 1) {
-          // 只跨一天且非同一時間 → 屬於「單一晚班/單一營業日內」的跨午夜公休，顯示「幾點後」
-          return `${fmtLocal(sY,sMo,sD)} ${sTimePart}後`;
-        }
-        // 相差超過一天 → 真正連續多天公休，顯示日期範圍
-        return `${fmtLocal(sY,sMo,sD)}～${fmtLocal(eY,eMo,eD)}`;
-      }
-    });
-    if (closedBar) {
-      closedBar.textContent = `⚠️ 預告公休日：${parts.join('、')}`;
-      closedBar.style.display = '';
-    }
-  } else {
-    if (closedBar) closedBar.style.display = 'none';
+  // ② 營業時間調整預告：標籤只出現一次，每天各自一行，靠左側內容區塊的固定邊界自然對齊
+  // 例："⚠️ 營業時間調整：" + 每行 "8/17 (一) 09:30-14:00 ； 16:30-21:30 。"
+  if (hoursList.length && hoursBar && hoursBarContent) {
+    hoursBarContent.innerHTML = hoursList.map(i =>
+      `<div>${esc(fmtDateChinese(i.dateStr))} ${esc(formatDayHoursText(i.hours))} 。</div>`
+    ).join('');
+    hoursBar.style.display = 'flex';
+  } else if (hoursBar) {
+    hoursBar.style.display = 'none';
   }
 })();
 document.getElementById('order-note').placeholder = STORE_CONFIG.defaultNote;
@@ -4311,14 +4167,12 @@ function admToast(msg='✅ 已更新！改完所有設定後點【💾 存檔】
 
 // ── 店家設定 ──
 function admInitStore(){
-  document.getElementById('f-isOpen').checked = STORE_CONFIG.isOpen;
   const annWrap=document.getElementById('adm-announce-lines-wrap'); annWrap.innerHTML='';
   (STORE_CONFIG.announcementLines && STORE_CONFIG.announcementLines.length ? STORE_CONFIG.announcementLines : ['']).forEach(l=>admAddAnnounceLine(l,false));
   document.getElementById('f-defaultNote').value = STORE_CONFIG.defaultNote;
   document.getElementById('f-deliveryHintLine1').value = STORE_CONFIG.deliveryHintLine1;
   document.getElementById('f-deliveryHintLine2').value = STORE_CONFIG.deliveryHintLine2;
-  document.getElementById('f-deliveryHoursStart').value = (STORE_CONFIG.deliveryHours && STORE_CONFIG.deliveryHours.start) || '09:30';
-  document.getElementById('f-deliveryHoursEnd').value   = (STORE_CONFIG.deliveryHours && STORE_CONFIG.deliveryHours.end)   || '21:30';
+  admRenderDeliveryHours();
   document.getElementById('f-outsideHoursTitle').value = STORE_CONFIG.outsideHoursTitle || '目前非營業時間';
   document.getElementById('f-outsideHoursNote').value  = STORE_CONFIG.outsideHoursNote  || '';
   // ── 候餐時間 ──
@@ -4326,7 +4180,7 @@ function admInitStore(){
   document.getElementById('f-wait-md').value  = STORE_CONFIG.waitMedium || 25;
   document.getElementById('f-wait-lg').value  = STORE_CONFIG.waitLarge  || 35;
   document.getElementById('f-slot-interval').value = STORE_CONFIG.slotInterval || 15;
-  // ── 文字與折扣設定 ──
+  // ── 外帶外送文字與折扣、候餐提示文字 ──
   const SC = STORE_CONFIG;
   document.getElementById('f-lineNotifyHeader').value  = SC.lineNotifyHeader  || '🍱 香品小食堂｜新訂單通知';
   document.getElementById('f-pickupTimeHint').value    = SC.pickupTimeHint    || '⏱ 備餐時間僅供參考，如有變動將主動通知 🙏';
@@ -4343,23 +4197,27 @@ function admInitStore(){
   document.getElementById('f-githubRawUrl').value = GITHUB_RAW_URL || '';
   const wrap=document.getElementById('adm-popup-lines-wrap'); wrap.innerHTML='';
   STORE_CONFIG.popupLines.forEach(l=>admAddPopupLine(l,false));
-  // ── 載入公休時段 ──
-  const cdWrap=document.getElementById('adm-closed-dates-wrap'); cdWrap.innerHTML='';
-  (STORE_CONFIG.closedRanges||[]).slice().sort((a,b)=>a.start.localeCompare(b.start)).forEach(r=>admAddClosedDateRow(r,false));
-  // ── 載入每週固定營業時間（依星期分開設定）──
-  BH_DAY_ORDER.forEach(day=>admRenderBusinessHoursDay(day));
+  // ── 載入單日特例 ──
+  const dexWrap=document.getElementById('adm-date-exceptions-wrap'); dexWrap.innerHTML='';
+  (STORE_CONFIG.dateExceptions||[]).slice().sort((a,b)=>a.date.localeCompare(b.date)).forEach(e=>admAddDateException(e,false));
+  // ── 載入每週固定營業時間（依星期分開設定）＋ 特殊日期設定卡片裡的星期幾 chips ──
+  admRenderWeeklySchedule();
 }
 function admReadStore(){
-  STORE_CONFIG.isOpen = document.getElementById('f-isOpen').checked;
   STORE_CONFIG.announcementLines = [];
   document.querySelectorAll('.adm-announce-line-input').forEach(inp=>STORE_CONFIG.announcementLines.push(inp.value));
   STORE_CONFIG.defaultNote = document.getElementById('f-defaultNote').value;
   STORE_CONFIG.deliveryHintLine1 = document.getElementById('f-deliveryHintLine1').value;
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
-  {
-    const dhs = document.getElementById('f-deliveryHoursStart').value.trim();
-    const dhe = document.getElementById('f-deliveryHoursEnd').value.trim();
-    STORE_CONFIG.deliveryHours = { start: dhs || '09:30', end: dhe || '21:30' };
+  // 若面板尚未渲染（.dlv-hour-row 不存在），保留原本設定，避免誤蓋成空值
+  if(document.querySelectorAll('.dlv-hour-row').length){
+    const ranges = [];
+    document.querySelectorAll('.dlv-hour-row').forEach(row=>{
+      const st = row.querySelector('.dlv-start-t')?.value.trim();
+      const et = row.querySelector('.dlv-end-t')?.value.trim();
+      if(st && et) ranges.push({ start: st, end: et });
+    });
+    STORE_CONFIG.deliveryHours = ranges.length ? ranges : [{start:'09:30', end:'21:30'}];
   }
   STORE_CONFIG.outsideHoursTitle = document.getElementById('f-outsideHoursTitle').value.trim().replace(/\n/g,'') || '目前非營業時間';
   STORE_CONFIG.outsideHoursNote  = document.getElementById('f-outsideHoursNote').value.trim().replace(/\n/g,'');
@@ -4368,7 +4226,7 @@ function admReadStore(){
   STORE_CONFIG.waitMedium = parseInt(document.getElementById('f-wait-md').value)  || 25;
   STORE_CONFIG.waitLarge  = parseInt(document.getElementById('f-wait-lg').value)  || 35;
   STORE_CONFIG.slotInterval = parseInt(document.getElementById('f-slot-interval').value) || 15;
-  // ── 文字與折扣設定 ──
+  // ── 外帶外送文字與折扣、候餐提示文字 ──
   STORE_CONFIG.lineNotifyHeader  = document.getElementById('f-lineNotifyHeader').value;
   STORE_CONFIG.pickupTimeHint    = document.getElementById('f-pickupTimeHint').value;
   STORE_CONFIG.takeoutLabel      = document.getElementById('f-takeoutLabel').value;
@@ -4382,141 +4240,269 @@ function admReadStore(){
   STORE_CONFIG.lineReserveNote       = document.getElementById('f-lineReserveNote').value.trim().replace(/\n/g,'');
   STORE_CONFIG.popupLines = [];
   document.querySelectorAll('.adm-popup-line-input').forEach(inp=>STORE_CONFIG.popupLines.push(inp.value));
-  // ── 讀取公休時段（日期＋時間分開輸入，拼成 YYYY-MM-DDTHH:MM）──
-  STORE_CONFIG.closedRanges = [];
-  document.querySelectorAll('.closed-range-row').forEach(row=>{
-    const sd = row.querySelector('.cr-start-d')?.value.trim();
-    const st = row.querySelector('.cr-start-t')?.value.trim() || '00:00';
-    const ed = row.querySelector('.cr-end-d')?.value.trim();
-    const et = row.querySelector('.cr-end-t')?.value.trim() || '23:59';
-    const note = row.querySelector('.cr-note')?.value.trim() || '';
-    if(sd && ed) STORE_CONFIG.closedRanges.push({ start:`${sd}T${st}`, end:`${ed}T${et}`, note });
+  // ── 讀取①單日特例（日期＋公休/時間調整二選一）──
+  STORE_CONFIG.dateExceptions = [];
+  document.querySelectorAll('.date-exception-row').forEach(row=>{
+    const date = row.querySelector('.de-date')?.value.trim();
+    if(!date) return;
+    const typeRadio = row.querySelector('.de-type-radio:checked');
+    const type = typeRadio ? typeRadio.value : 'closed';
+    const note = row.querySelector('.de-note')?.value.trim() || '';
+    if(type === 'hours'){
+      const hours = [];
+      row.querySelectorAll('.de-hour-row').forEach(hr=>{
+        const st = hr.querySelector('.de-start-t')?.value.trim();
+        const et = hr.querySelector('.de-end-t')?.value.trim();
+        if(st && et) hours.push({ start: st, end: et });
+      });
+      STORE_CONFIG.dateExceptions.push({ date, type:'hours', hours, note });
+    } else {
+      STORE_CONFIG.dateExceptions.push({ date, type:'closed', note });
+    }
   });
-  // 依開始日期自動排序（早的在前）
-  STORE_CONFIG.closedRanges.sort((a, b) => a.start.localeCompare(b.start));
-  // ── 讀取每週固定營業時間（依星期分開設定）──
-  const newBH = {};
-  BH_DAY_ORDER.forEach(day=>{ newBH[day] = []; });
-  document.querySelectorAll('.business-hour-row').forEach(row=>{
-    const day = row.dataset.day;
-    const st = row.querySelector('.bh-start-t')?.value.trim();
-    const et = row.querySelector('.bh-end-t')?.value.trim();
-    if(day && newBH[day] && st && et) newBH[day].push({ start: st, end: et });
-  });
-  STORE_CONFIG.businessHours = newBH;
+  // 依日期自動排序（早的在前）
+  STORE_CONFIG.dateExceptions.sort((a, b) => a.date.localeCompare(b.date));
+  // ── 讀取②每週固定營業時間（依星期分開設定，一列一天，含公休開關）──
+  // 若面板尚未渲染（.wk-day-row 不存在），保留原本的 STORE_CONFIG.weeklySchedule，避免誤蓋成空值
+  if(document.querySelectorAll('.wk-day-row').length){
+    const newWS = {};
+    BH_DAY_ORDER.forEach(day=>{
+      const dayRow = document.querySelector(`.wk-day-row[data-day="${day}"]`);
+      const openSwitch = dayRow?.querySelector('.wk-day-open-switch');
+      const isOpenDay = openSwitch ? openSwitch.checked : true;
+      const hours = [];
+      dayRow?.querySelectorAll('.wk-hour-row').forEach(hr=>{
+        const st = hr.querySelector('.wk-start-t')?.value.trim();
+        const et = hr.querySelector('.wk-end-t')?.value.trim();
+        if(st && et) hours.push({ start: st, end: et });
+      });
+      newWS[day] = { closed: !isOpenDay || !hours.length, hours: isOpenDay ? hours : [] };
+    });
+    STORE_CONFIG.weeklySchedule = newWS;
+  }
 }
-// ── 新增公休時段 Row（支援跨日、開始/結束時間、備註）──
-// r = { start:"YYYY-MM-DDTHH:MM", end:"YYYY-MM-DDTHH:MM", note:"..." } 或 undefined（新增空白列）
-function admAddClosedDateRow(r, save=true){
+// ════════════════════════════════════════════════════════════════
+//  📅 特殊日期設定：①單日特例（本日公休 / 當天營業時間調整，可多段時間）
+// ════════════════════════════════════════════════════════════════
+// e = { date:"YYYY-MM-DD", type:"closed"|"hours", hours:[{start,end}...], note } 或 undefined（新增空白列，預設今天）
+let admDateExceptionSeq = 0;
+// 切換到「當天營業時間調整」但尚未填過時段時，預設帶入這兩段（基本設定）
+const DEX_DEFAULT_HOURS = [{start:'09:30',end:'14:00'},{start:'16:30',end:'03:00'}];
+function admAddDateException(e, save=true){
   if(save) admReadStore();
-  const wrap = document.getElementById('adm-closed-dates-wrap');
+  const wrap = document.getElementById('adm-date-exceptions-wrap');
+  const uid  = 'dex' + (admDateExceptionSeq++);
   const row  = document.createElement('div');
-  row.className = 'closed-range-row';
+  row.className = 'closed-range-row date-exception-row';
+  row.dataset.uid = uid;
 
-  // 預設值：今天 00:00 ～ 今天 23:59（台灣時間）
+  // 預設值：今天（台灣時間），類型預設「本日公休」
   const now = new Date();
   const p = new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
   const o={}; p.forEach(({type,value})=>o[type]=value);
   const todayStr = `${o.year}-${o.month}-${o.day}`;
 
-  // 從已有資料拆出日期和時間
-  const [defSD, defST] = (r&&r.start) ? r.start.split('T') : [todayStr, '00:00'];
-  const [defED, defET] = (r&&r.end)   ? r.end.split('T')   : [todayStr, '23:59'];
-  const defNote = (r&&r.note) ? r.note : '';
+  const defDate  = (e && e.date) || todayStr;
+  const defType  = (e && e.type) || 'closed';
+  const defHours = (e && e.type === 'hours' && e.hours && e.hours.length) ? e.hours : DEX_DEFAULT_HOURS;
+  const defNote  = (e && e.note) || '';
 
   row.innerHTML = `
     <div class="closed-range-row-title">
-      📅 公休時段
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此時段">✕</button>
+      📅 單日特例
+      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">⏰ 開始時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-start-d" value="${esc(defSD)}">
-        <input type="time" class="cr-start-t" value="${esc(defST)}">
+      <div class="closed-range-label">📆 日期（台灣時間）</div>
+      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="${esc(defDate)}">
+      <div class="closed-range-label" style="margin-top:.5rem">類型</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="${uid}-type" class="de-type-radio" value="closed" ${defType==='closed'?'checked':''} onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
+        </label>
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="${uid}-type" class="de-type-radio" value="hours" ${defType==='hours'?'checked':''} onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
+        </label>
       </div>
-      <div class="closed-range-label" style="margin-top:.25rem">⏰ 結束時間（台灣時間）</div>
-      <div class="cr-dt-row">
-        <input type="date" class="cr-end-d" value="${esc(defED)}">
-        <input type="time" class="cr-end-t" value="${esc(defET)}">
-      </div>
-      <div class="closed-range-label" style="margin-top:.25rem">📝 備註（選填，例：五一連假）</div>
-      <input type="text" class="adm-input cr-note" placeholder="備註說明（顯示於公休遮罩下方）" value="${esc(defNote)}" style="width:100%">
+      <div class="de-hours-wrap" data-uid="${uid}" style="display:${defType==='hours'?'block':'none'}"></div>
+      <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="${esc(defNote)}" style="width:100%">
     </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 跨日示例：5/5 22:00 ～ 5/6 10:00 → 日期填 2025-05-05，時間填 22:00</div>
   `;
   wrap.appendChild(row);
+  admRenderDateExceptionHours(uid, defHours);
+}
+// ── 切換「本日公休／當天營業時間調整」時，顯示或隱藏時段清單；第一次切到「時間調整」自動帶入基本設定 ──
+function admToggleDateExceptionType(radio){
+  const row = radio.closest('.date-exception-row');
+  const hoursWrap = row.querySelector('.de-hours-wrap');
+  if(radio.value === 'hours'){
+    hoursWrap.style.display = 'block';
+    if(!hoursWrap.querySelector('.de-hour-row')) admRenderDateExceptionHours(row.dataset.uid, DEX_DEFAULT_HOURS);
+  } else {
+    hoursWrap.style.display = 'none';
+  }
+}
+// ── 渲染單日特例的時段清單（可多段，例：09:30-14:00 ； 16:30-03:00）──
+function admRenderDateExceptionHours(uid, hours){
+  const wrapEl = document.querySelector(`.de-hours-wrap[data-uid="${uid}"]`);
+  if(!wrapEl) return;
+  const list = (hours && hours.length) ? hours : DEX_DEFAULT_HOURS;
+  wrapEl.innerHTML = list.map((r,i)=>`
+    <div class="wk-hour-row de-hour-row" data-idx="${i}">
+      <input type="time" class="de-start-t bh-time-input" value="${esc(r.start||'09:30')}">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="${esc(r.end||'14:00')}">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('${uid}', this)" title="刪除此時段">✕</button>
+    </div>
+  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('${uid}')">＋ 加時段</button>`;
+}
+// ── 新增／刪除單日特例的時段列（直接操作 DOM，存檔時由 admReadStore 統一讀取）──
+function admAddExceptionHourRow(uid){
+  const wrapEl = document.querySelector(`.de-hours-wrap[data-uid="${uid}"]`);
+  if(!wrapEl) return;
+  const hours = [];
+  wrapEl.querySelectorAll('.de-hour-row').forEach(hr=>{
+    hours.push({ start: hr.querySelector('.de-start-t').value, end: hr.querySelector('.de-end-t').value });
+  });
+  hours.push({ start:'09:30', end:'14:00' });
+  admRenderDateExceptionHours(uid, hours);
+}
+function admDelExceptionHourRow(uid, btn){
+  const wrapEl = document.querySelector(`.de-hours-wrap[data-uid="${uid}"]`);
+  if(!wrapEl) return;
+  const idx = parseInt(btn.closest('.de-hour-row').dataset.idx);
+  const hours = [];
+  wrapEl.querySelectorAll('.de-hour-row').forEach((hr,i)=>{
+    if(i === idx) return;
+    hours.push({ start: hr.querySelector('.de-start-t').value, end: hr.querySelector('.de-end-t').value });
+  });
+  admRenderDateExceptionHours(uid, hours.length ? hours : DEX_DEFAULT_HOURS);
 }
 
-// ── 依 STORE_CONFIG.businessHours[day] 重新渲染某一天的時段列表 ──
-function admRenderBusinessHoursDay(day){
-  const wrap = document.getElementById('bh-rows-'+day);
+// ════════════════════════════════════════════════════════════════
+//  ⏰ 每週固定營業時間：②依星期分開設定（一列一天，含公休開關）
+//  同時負責渲染「特殊日期設定」卡片裡的①重複公休 chips
+//  （兩處共用同一份 STORE_CONFIG.weeklySchedule，改哪邊都會同步）
+// ════════════════════════════════════════════════════════════════
+function admRenderWeeklySchedule(){
+  const wrap = document.getElementById('adm-weekly-schedule-wrap');
   if(!wrap) return;
   wrap.innerHTML = '';
-  const ranges = (STORE_CONFIG.businessHours && STORE_CONFIG.businessHours[day]) || [];
-  if(!ranges.length){
-    wrap.innerHTML = '<div class="bh-day-empty-msg" style="font-size:.7rem;color:#c0392b">本日全天公休（無營業時段）</div>';
+  BH_DAY_ORDER.forEach(day=>{
+    const sch = (STORE_CONFIG.weeklySchedule && STORE_CONFIG.weeklySchedule[day]) || {closed:true, hours:[]};
+    const row = document.createElement('div');
+    row.className = 'wk-day-row';
+    row.dataset.day = day;
+    row.innerHTML = `
+      <div class="wk-day-head">
+        <span class="wk-day-name">週${BH_DAY_LABELS[day]}</span>
+        <label class="sw sw-sm">
+          <input type="checkbox" class="wk-day-open-switch" ${sch.closed ? '' : 'checked'} onchange="admSetDayClosed('${day}', !this.checked)">
+          <span class="sw-slider"></span>
+        </label>
+      </div>
+      <div class="wk-day-body" id="wk-body-${day}"></div>
+    `;
+    wrap.appendChild(row);
+    admRenderWeeklyDayBody(day, sch);
+  });
+  admRenderWeeklyClosedChips();
+}
+// ── 渲染某一天的時段輸入列，或「本日固定公休」提示 ──
+function admRenderWeeklyDayBody(day, sch){
+  const body = document.getElementById('wk-body-'+day);
+  if(!body) return;
+  sch = sch || (STORE_CONFIG.weeklySchedule && STORE_CONFIG.weeklySchedule[day]) || {closed:true, hours:[]};
+  if(sch.closed){
+    body.innerHTML = '<div style="font-size:.75rem;color:#c4390a">本日固定公休（每週重複）</div>';
     return;
   }
-  ranges.forEach(r=>admAddBusinessHourRow(day, r, false));
+  const hours = (sch.hours && sch.hours.length) ? sch.hours : [{start:'09:30',end:'03:00'}];
+  body.innerHTML = hours.map((r,i)=>`
+    <div class="wk-hour-row" data-idx="${i}">
+      <input type="time" class="wk-start-t bh-time-input" value="${esc(r.start||'09:30')}">
+      <span style="color:#999">～</span>
+      <input type="time" class="wk-end-t bh-time-input" value="${esc(r.end||'03:00')}">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('${day}', this)" title="刪除此時段">✕</button>
+    </div>
+  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('${day}')">＋ 加時段（如：午休分段）</button>`;
 }
-
-// ── 將某一天的營業時段設定，複製套用到其他天（例如週一套用到週二～五）──
-function admCopyBusinessHours(fromDay, toDays){
+// ── 設定某天固定公休／營業（切換開關、①重複公休 chip 都呼叫這個，確保兩處同步）──
+function admSetDayClosed(day, closed){
   admReadStore();
-  const src = ((STORE_CONFIG.businessHours && STORE_CONFIG.businessHours[fromDay]) || [])
-    .map(r=>({ start: r.start, end: r.end }));
-  toDays.forEach(day=>{
-    STORE_CONFIG.businessHours[day] = JSON.parse(JSON.stringify(src));
-    admRenderBusinessHoursDay(day);
-  });
-}
-
-// ── 新增某一天的固定營業時段 Row（每週自動重複套用，僅時間、無日期）──
-// day = "mon"~"sun"；r = { start:"HH:MM", end:"HH:MM" } 或 undefined（新增空白列）
-function admAddBusinessHourRow(day, r, save=true){
-  if(save) admReadStore();
-  const wrap = document.getElementById('bh-rows-'+day);
-  if(!wrap) return;
-  const emptyMsg = wrap.querySelector('.bh-day-empty-msg');
-  if(emptyMsg) emptyMsg.remove();
-  const row  = document.createElement('div');
-  row.className = 'closed-range-row business-hour-row';
-  row.dataset.day = day;
-
-  const defST = (r && r.start) ? r.start : '09:00';
-  const defET = (r && r.end)   ? r.end   : '18:00';
-
-  row.innerHTML = `
-    <div class="closed-range-row-title">
-      ⏰ 營業時段
-      <button class="adm-del-btn" onclick="admDelBusinessHourRow(this)" title="刪除此時段">✕</button>
-    </div>
-    <div class="closed-range-fields">
-      <div class="cr-dt-row" style="align-items:flex-start">
-        <div style="flex:1">
-          <div class="closed-range-label">開始</div>
-          <input type="time" class="bh-start-t bh-time-input" value="${esc(defST)}">
-        </div>
-        <div style="flex:1">
-          <div class="closed-range-label">結束</div>
-          <input type="time" class="bh-end-t bh-time-input" value="${esc(defET)}">
-        </div>
-      </div>
-    </div>
-    <div style="font-size:.7rem;color:#aaa;margin-top:.25rem">💡 結束時間小於開始時間 = 自動視為營業到隔天凌晨（例：16:00 → 03:00）</div>
-  `;
-  wrap.appendChild(row);
-}
-
-// ── 刪除單一營業時段列；若刪光了，該天顯示「本日全天公休」提示 ──
-function admDelBusinessHourRow(btn){
-  const row = btn.closest('.closed-range-row');
-  const wrap = row.parentElement;
-  row.remove();
-  if(wrap && !wrap.querySelector('.business-hour-row')){
-    wrap.innerHTML = '<div class="bh-day-empty-msg" style="font-size:.7rem;color:#c0392b">本日全天公休（無營業時段）</div>';
+  const sch = STORE_CONFIG.weeklySchedule[day];
+  sch.closed = closed;
+  if(closed){
+    sch.hours = [];
+  } else if(!sch.hours || !sch.hours.length){
+    sch.hours = [{start:'09:30', end:'03:00'}]; // 重新開放時給預設常態時段，避免空白
   }
+  admRenderWeeklySchedule();
+}
+// ════════════════════════════════════════════════════════════════
+//  🛵 外送服務時間：可設多段（例：中午 09:30-14:00、晚上 16:00-21:30）
+// ════════════════════════════════════════════════════════════════
+function admRenderDeliveryHours(){
+  const wrap = document.getElementById('adm-delivery-hours-wrap');
+  if(!wrap) return;
+  const ranges = (STORE_CONFIG.deliveryHours && STORE_CONFIG.deliveryHours.length) ? STORE_CONFIG.deliveryHours : [{start:'09:30',end:'21:30'}];
+  wrap.innerHTML = ranges.map((r,i)=>`
+    <div class="wk-hour-row dlv-hour-row" data-idx="${i}">
+      <input type="time" class="dlv-start-t bh-time-input" value="${esc(r.start||'09:30')}">
+      <span style="color:#999">～</span>
+      <input type="time" class="dlv-end-t bh-time-input" value="${esc(r.end||'21:30')}">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelDeliveryHourRow(this)" title="刪除此時段">✕</button>
+    </div>
+  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddDeliveryHourRow()">＋ 加時段</button>`;
+}
+function admAddDeliveryHourRow(){
+  admReadStore();
+  if(!STORE_CONFIG.deliveryHours) STORE_CONFIG.deliveryHours = [];
+  STORE_CONFIG.deliveryHours.push({start:'09:30', end:'21:30'});
+  admRenderDeliveryHours();
+}
+function admDelDeliveryHourRow(btn){
+  admReadStore();
+  const idx = parseInt(btn.closest('.dlv-hour-row').dataset.idx);
+  STORE_CONFIG.deliveryHours.splice(idx, 1);
+  if(!STORE_CONFIG.deliveryHours.length) STORE_CONFIG.deliveryHours = [{start:'09:30', end:'21:30'}];
+  admRenderDeliveryHours();
+}
+// ── 特殊日期設定卡片①的星期幾 chips：點擊＝直接切換該天公休／營業 ──
+// 每個 chip 會附上「今天起 0~6 天內」最近一次對應的日期，方便管理者直覺對照月曆（每次開後台都即時重算，不是寫死的固定值）
+function admRenderWeeklyClosedChips(){
+  const wrap = document.getElementById('adm-weekly-closed-chips');
+  if(!wrap) return;
+  const todayStr = toDateStr(getTaiwanNow());
+  wrap.innerHTML = BH_DAY_ORDER.map(day=>{
+    const closed = STORE_CONFIG.weeklySchedule[day] && STORE_CONFIG.weeklySchedule[day].closed;
+    let nearestDateStr = todayStr;
+    for(let i=0;i<7;i++){
+      const d = addDaysToDateStr(todayStr, i);
+      const [y,mo,dd] = d.split('-').map(Number);
+      if(BH_DAY_KEYS[new Date(y,mo-1,dd).getDay()] === day){ nearestDateStr = d; break; }
+    }
+    const [,nmo,nd] = nearestDateStr.split('-').map(Number);
+    const dateLabel = `${nmo}/${nd}`;
+    return `<button type="button" class="wk-chip ${closed?'is-closed':''}" onclick="admSetDayClosed('${day}', ${closed?'false':'true'})">週${BH_DAY_LABELS[day]} ${dateLabel}${closed?' 公休中':''}</button>`;
+  }).join('');
+}
+// ── 新增／刪除某一天的時段列（可分段，如午休）──
+function admAddWeeklyHourRow(day){
+  admReadStore();
+  if(!STORE_CONFIG.weeklySchedule[day].hours) STORE_CONFIG.weeklySchedule[day].hours = [];
+  STORE_CONFIG.weeklySchedule[day].hours.push({start:'09:30', end:'14:00'});
+  admRenderWeeklyDayBody(day);
+}
+function admDelWeeklyHourRow(day, btn){
+  admReadStore();
+  const idx = parseInt(btn.closest('.wk-hour-row').dataset.idx);
+  STORE_CONFIG.weeklySchedule[day].hours.splice(idx, 1);
+  if(!STORE_CONFIG.weeklySchedule[day].hours.length){
+    STORE_CONFIG.weeklySchedule[day].closed = true; // 時段刪光 = 視為固定公休，開關同步變灰
+  }
+  admRenderWeeklySchedule();
 }
 
 function admAddAnnounceLine(v='', save=true){
@@ -4927,9 +4913,9 @@ function admDownload(){
   const allCatsOnly = JSON.stringify(ALL_CATS);
   const announceStr = JSON.stringify(STORE_CONFIG.announcementLines, null, 2);
   const popupStr = JSON.stringify(STORE_CONFIG.popupLines, null, 2);
-  const closedRangesStr = JSON.stringify(STORE_CONFIG.closedRanges||[], null, 2);
-  const businessHoursStr = JSON.stringify(STORE_CONFIG.businessHours||{}, null, 2);
-  const deliveryHoursStr = JSON.stringify(STORE_CONFIG.deliveryHours||{start:'09:30',end:'21:30'});
+  const weeklyScheduleStr = JSON.stringify(STORE_CONFIG.weeklySchedule||{}, null, 2);
+  const dateExceptionsStr = JSON.stringify(STORE_CONFIG.dateExceptions||[], null, 2);
+  const deliveryHoursStr = JSON.stringify(STORE_CONFIG.deliveryHours||[{start:'09:30',end:'21:30'}]);
   const categoryNotesStr = JSON.stringify(STORE_CONFIG.categoryNotes||{}, null, 2);
 
   // 下載前先把後台、密碼框關掉，讓 DOM 回到純前台點餐狀態
@@ -4951,10 +4937,10 @@ function admDownload(){
   // ── 重新序列化 STORE_CONFIG（含完整說明注解，存檔後不消失）──
   const SC2 = STORE_CONFIG;
   const storeConfigStr = `const STORE_CONFIG = {
-  isOpen: ${jb(SC2.isOpen)},
-  // ── 每週固定營業時間（依星期分開設定，每週自動重複套用，空班時段自動鎖單，見上方說明）──
-  businessHours: ${businessHoursStr},
-  closedRanges: ${closedRangesStr},
+  // ── ①每週固定營業時間（依星期分開設定，每週自動重複套用，空班時段自動鎖單，見上方說明）──
+  weeklySchedule: ${weeklyScheduleStr},
+  // ── ②單日特例（只影響特定一天，不會每週重複，見上方說明）──
+  dateExceptions: ${dateExceptionsStr},
   announcementLines: ${announceStr},
   popupLines: ${popupStr},
   defaultNote: ${js(SC2.defaultNote)},
@@ -4971,7 +4957,7 @@ function admDownload(){
   waitMedium: ${SC2.waitMedium||25},   // 3–5 項時最早候餐分鐘
   waitLarge: ${SC2.waitLarge||35},    // 6 項以上時最早候餐分鐘
   slotInterval: ${SC2.slotInterval||15}, // 今日取餐按鈕時間間隔（分鐘）
-  // ── 文字與折扣設定 ──
+  // ── 外帶外送文字與折扣、候餐提示文字 ──
   pickupTimeHint: ${js(SC2.pickupTimeHint||'⏱ 備餐時間僅供參考，如有變動將主動通知 🙏')},
   takeoutLabel: ${js(SC2.takeoutLabel||'外帶自取 9折')},
   deliveryLabel: ${js(SC2.deliveryLabel||'外送')},
