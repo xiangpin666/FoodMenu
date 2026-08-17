@@ -302,6 +302,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .popup-line-row .adm-input,.extra-row .adm-input,.sauce-row .adm-input{margin-bottom:0;flex:1}
 .adm-del-btn{width:1.875rem;height:1.875rem;border:none;border-radius:50%;background:#ffe8e8;color:#c4390a;font-size:.875rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .adm-add-row-btn{background:#f0f4ff;border:1.5px dashed #1a2455;border-radius:.5rem;color:#1a2455;font-size:.8125rem;font-weight:700;cursor:pointer;padding:.5rem 1rem;width:100%;font-family:'Noto Sans TC',sans-serif;margin-bottom:.75rem}
+.adm-add-hour-btn{background:#f0f4ff;border:1.5px dashed #1a2455;border-radius:.5rem;color:#1a2455;font-size:.75rem;font-weight:700;cursor:pointer;padding:.3rem .75rem;width:auto;display:inline-block;font-family:'Noto Sans TC',sans-serif;flex-shrink:0}
 .adm-inline-add-btn{background:#eee;border:none;border-radius:.5rem;color:#555;font-size:.8125rem;cursor:pointer;padding:.375rem .75rem;font-family:'Noto Sans TC',sans-serif;margin-top:.25rem;margin-bottom:.875rem}
 
 /* 菜單篩選 */
@@ -327,7 +328,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .adm-tag-new{background:#e0f0ff;color:#1060cc}
 .adm-tag-soldout{background:#ffe8e8;color:#c4390a}
 .adm-tag-hidden{background:#eee;color:#888}
-.adm-item-actions{display:flex;gap:.2rem;flex-wrap:wrap;margin-top:.3rem}
+.adm-item-actions{display:flex;flex-direction:column;gap:.25rem;margin-top:.3rem}
+.adm-item-actions-row{display:flex;gap:.2rem;flex-wrap:wrap}
 .adm-act-btn{padding:.175rem .4rem;border-radius:.3rem;border:1.5px solid;font-size:.6875rem;cursor:pointer;font-family:'Noto Sans TC',sans-serif;font-weight:700;transition:all .15s;white-space:nowrap}
 .adm-btn-edit{border-color:#1a2455;color:#1a2455;background:white}
 .adm-btn-edit:hover{background:#1a2455;color:white}
@@ -672,7 +674,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('mon', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('mon')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('mon')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="tue">
       <div class="wk-day-head">
         <span class="wk-day-name">週二</span>
@@ -695,7 +697,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('tue', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('tue')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('tue')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="wed">
       <div class="wk-day-head">
         <span class="wk-day-name">週三</span>
@@ -718,7 +720,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('wed', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('wed')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('wed')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="thu">
       <div class="wk-day-head">
         <span class="wk-day-name">週四</span>
@@ -741,7 +743,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('thu', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('thu')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('thu')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="fri">
       <div class="wk-day-head">
         <span class="wk-day-name">週五</span>
@@ -764,7 +766,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('fri', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('fri')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('fri')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="sat">
       <div class="wk-day-head">
         <span class="wk-day-name">週六</span>
@@ -787,7 +789,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sat', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('sat')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('sat')">＋ 加時段（如：午休分段）</button></div>
     </div><div class="wk-day-row" data-day="sun">
       <div class="wk-day-head">
         <span class="wk-day-name">週日</span>
@@ -810,7 +812,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="wk-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sun', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('sun')">＋ 加時段（如：午休分段）</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('sun')">＋ 加時段（如：午休分段）</button></div>
     </div></div>
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
         <div class="adm-card-title" style="font-size:.875rem">📝 空班時段公告文字 <span class="adm-card-sub">（非公休，客人看到的提示）</span></div>
@@ -841,8 +843,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-17">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-17"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -859,9 +860,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="de-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/17(一) 下午 17:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/17(一) 下午 17:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
     </div>
   </div><div class="closed-range-row date-exception-row" data-uid="dex1">
     <div class="closed-range-row-title">
@@ -869,8 +876,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-17">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-17"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -887,9 +893,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="de-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex1', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex1')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex1')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%;margin-bottom:0">
     </div>
   </div><div class="closed-range-row date-exception-row" data-uid="dex2">
     <div class="closed-range-row-title">
@@ -897,8 +909,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-17">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-17"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -915,9 +926,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="de-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex2', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex2')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex2')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%;margin-bottom:0">
     </div>
   </div><div class="closed-range-row date-exception-row" data-uid="dex3">
     <div class="closed-range-row-title">
@@ -925,8 +942,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-17">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-17"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -943,9 +959,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="de-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex3', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex3')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex3')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%;margin-bottom:0">
     </div>
   </div><div class="closed-range-row date-exception-row" data-uid="dex4">
     <div class="closed-range-row-title">
@@ -953,8 +975,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="2026-08-17">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-17"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -971,9 +992,15 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="de-end-t bh-time-input" value="03:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex4', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('dex4')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex4')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%;margin-bottom:0">
     </div>
   </div></div>
         <button class="adm-add-row-btn" onclick="admAddDateException()">＋ 新增單日特例</button>
@@ -1073,7 +1100,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <input type="time" class="dlv-end-t bh-time-input" value="21:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelDeliveryHourRow(this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddDeliveryHourRow()">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddDeliveryHourRow()">＋ 加時段</button></div>
       </div>
 
       <div class="adm-card">
@@ -1166,12 +1193,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(1)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(1,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(1,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(1,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(1,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(1)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(1)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(1)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(1,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(1,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(1,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(1,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="2">
       <div class="adm-item-hd">
@@ -1182,12 +1205,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(2)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(2,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(2,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(2,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(2,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(2)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(2)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(2)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(2,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(2,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(2,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(2,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="3">
       <div class="adm-item-hd">
@@ -1198,12 +1217,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(3)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(3,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(3,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(3,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(3,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(3)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(3)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(3)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(3,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(3,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(3,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(3,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="4">
       <div class="adm-item-hd">
@@ -1214,12 +1229,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(4)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(4,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(4,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(4,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(4,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(4)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(4)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(4)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(4,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(4,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(4,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(4,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="5">
       <div class="adm-item-hd">
@@ -1230,12 +1241,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(5)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(5,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(5,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(5,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(5,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(5)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(5)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(5)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(5,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(5,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(5,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(5,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="6">
       <div class="adm-item-hd">
@@ -1246,12 +1253,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(6)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(6,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(6,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(6,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(6,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(6)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(6)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(6)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(6,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(6,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(6,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(6,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="7">
       <div class="adm-item-hd">
@@ -1262,12 +1265,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(7)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(7,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(7,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(7,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(7,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(7)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(7)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(7)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(7,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(7,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(7,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(7,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="8">
       <div class="adm-item-hd">
@@ -1278,12 +1277,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(8)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(8,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(8,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(8,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(8,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(8)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(8)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(8)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(8,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(8,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(8,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(8,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="9">
       <div class="adm-item-hd">
@@ -1294,12 +1289,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(9)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(9,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(9,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(9,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(9,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(9)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(9)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(9)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(9,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(9,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(9,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(9,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="10">
       <div class="adm-item-hd">
@@ -1310,12 +1301,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(10)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(10,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(10,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(10,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(10,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(10)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(10)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(10)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(10,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(10,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(10,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(10,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="11">
       <div class="adm-item-hd">
@@ -1326,12 +1313,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(11)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(11,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(11,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(11,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(11,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(11)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(11)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(11)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(11,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(11,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(11,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(11,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="12">
       <div class="adm-item-hd">
@@ -1342,12 +1325,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(12)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(12,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(12,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(12,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(12,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(12)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(12)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(12)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(12,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(12,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(12,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(12,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="13">
       <div class="adm-item-hd">
@@ -1358,12 +1337,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(13)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(13,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(13,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(13,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(13,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(13)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(13)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(13)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(13,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(13,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(13,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(13,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="14">
       <div class="adm-item-hd">
@@ -1374,12 +1349,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(14)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(14,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(14,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(14,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(14,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(14)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(14)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(14)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(14,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(14,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(14,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(14,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="15">
       <div class="adm-item-hd">
@@ -1390,12 +1361,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(15)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(15,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(15,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(15,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(15,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(15)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(15)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(15)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(15,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(15,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(15,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(15,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="16">
       <div class="adm-item-hd">
@@ -1406,12 +1373,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(16)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(16,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(16,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(16,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(16,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(16)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(16)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(16)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(16,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(16,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(16,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(16,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="17">
       <div class="adm-item-hd">
@@ -1422,12 +1385,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(17)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(17,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(17,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(17,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(17,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(17)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(17)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(17)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(17,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(17,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(17,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(17,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="18">
       <div class="adm-item-hd">
@@ -1438,12 +1397,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(18)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(18,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(18,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(18,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(18,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(18)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(18)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(18)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(18,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(18,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(18,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(18,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="19">
       <div class="adm-item-hd">
@@ -1454,12 +1409,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(19)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(19,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(19,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(19,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(19,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(19)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(19)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(19)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(19,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(19,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(19,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(19,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="20">
       <div class="adm-item-hd">
@@ -1470,12 +1421,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(20)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(20,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(20,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(20,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(20,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(20)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(20)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(20)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(20,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(20,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(20,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(20,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="21">
       <div class="adm-item-hd">
@@ -1486,12 +1433,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(21)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(21,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(21,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(21,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(21,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(21)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(21)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(21)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(21,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(21,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(21,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(21,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="22">
       <div class="adm-item-hd">
@@ -1502,12 +1445,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(22)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(22,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(22,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(22,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(22,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(22)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(22)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(22)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(22,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(22,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(22,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(22,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="23">
       <div class="adm-item-hd">
@@ -1518,12 +1457,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(23)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(23,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(23,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(23,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(23,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(23)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(23)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(23)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(23,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(23,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(23,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(23,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="24">
       <div class="adm-item-hd">
@@ -1534,12 +1469,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(24)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(24,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(24,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(24,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(24,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(24)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(24)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(24)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(24,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(24,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(24,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(24,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="25">
       <div class="adm-item-hd">
@@ -1550,12 +1481,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(25)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(25,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(25,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(25,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(25,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(25)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(25)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(25)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(25,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(25,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(25,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(25,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="26">
       <div class="adm-item-hd">
@@ -1566,12 +1493,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(26)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(26,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(26,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(26,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(26,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(26)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(26)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(26)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(26,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(26,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(26,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(26,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="27">
       <div class="adm-item-hd">
@@ -1582,12 +1505,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(27)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(27,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(27,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(27,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(27,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(27)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(27)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(27)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(27,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(27,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(27,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(27,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="28">
       <div class="adm-item-hd">
@@ -1598,12 +1517,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(28)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(28,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(28,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(28,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(28,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(28)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(28)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(28)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(28,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(28,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(28,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(28,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="29">
       <div class="adm-item-hd">
@@ -1614,12 +1529,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(29)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(29,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(29,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(29,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(29,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(29)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(29)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(29)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(29,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(29,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(29,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(29,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="30">
       <div class="adm-item-hd">
@@ -1630,12 +1541,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(30)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(30,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(30,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(30,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(30,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(30)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(30)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(30)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(30,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(30,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(30,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(30,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="31">
       <div class="adm-item-hd">
@@ -1646,12 +1553,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(31)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(31,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(31,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(31,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(31,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(31)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(31)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(31)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(31,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(31,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(31,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(31,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="32">
       <div class="adm-item-hd">
@@ -1662,12 +1565,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(32)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(32,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(32,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(32,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(32,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(32)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(32)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(32)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(32,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(32,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(32,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(32,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="33">
       <div class="adm-item-hd">
@@ -1678,12 +1577,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(33)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(33,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(33,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(33,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(33,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(33)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(33)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(33)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(33,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(33,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(33,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(33,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="34">
       <div class="adm-item-hd">
@@ -1694,12 +1589,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(34)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(34,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(34,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(34,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(34,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(34)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(34)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(34)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(34,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(34,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(34,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(34,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="100">
       <div class="adm-item-hd">
@@ -1710,12 +1601,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(100)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(100,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(100,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(100,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(100,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(100)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(100)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(100)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(100,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(100,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(100,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(100,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="35">
       <div class="adm-item-hd">
@@ -1726,12 +1613,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(35)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(35,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(35,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(35,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(35,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(35)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(35)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(35)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(35,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(35,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(35,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(35,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="36">
       <div class="adm-item-hd">
@@ -1742,12 +1625,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(36)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(36,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(36,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(36,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(36,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(36)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(36)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(36)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(36,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(36,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(36,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(36,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="37">
       <div class="adm-item-hd">
@@ -1758,12 +1637,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(37)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(37,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(37,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(37,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(37,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(37)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(37)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(37)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(37,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(37,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(37,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(37,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="38">
       <div class="adm-item-hd">
@@ -1774,12 +1649,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(38)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(38,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(38,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(38,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(38,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(38)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(38)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(38)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(38,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(38,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(38,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(38,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="39">
       <div class="adm-item-hd">
@@ -1790,12 +1661,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(39)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(39,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(39,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(39,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(39,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(39)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(39)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(39)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(39,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(39,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(39,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(39,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="40">
       <div class="adm-item-hd">
@@ -1806,12 +1673,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(40)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(40,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(40,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(40,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(40,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(40)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(40)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(40)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(40,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(40,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(40,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(40,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="41">
       <div class="adm-item-hd">
@@ -1822,12 +1685,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(41)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(41,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(41,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(41,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(41,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(41)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(41)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(41)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(41,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(41,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(41,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(41,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="42">
       <div class="adm-item-hd">
@@ -1838,12 +1697,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(42)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(42,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(42,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(42,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(42,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(42)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(42)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(42)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(42,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(42,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(42,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(42,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="43">
       <div class="adm-item-hd">
@@ -1854,12 +1709,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(43)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(43,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(43,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(43,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(43,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(43)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(43)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(43)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(43,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(43,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(43,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(43,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="44">
       <div class="adm-item-hd">
@@ -1870,12 +1721,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(44)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(44,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(44,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(44,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(44,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(44)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(44)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(44)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(44,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(44,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(44,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(44,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="45">
       <div class="adm-item-hd">
@@ -1886,12 +1733,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(45)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(45,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(45,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(45,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(45,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(45)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(45)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(45)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(45,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(45,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(45,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(45,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="46">
       <div class="adm-item-hd">
@@ -1902,12 +1745,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(46)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(46,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(46,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(46,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(46,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(46)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(46)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(46)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(46,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(46,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(46,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(46,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="47">
       <div class="adm-item-hd">
@@ -1918,12 +1757,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(47)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(47,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(47,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(47,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(47,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(47)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(47)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(47)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(47,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(47,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(47,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(47,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="48">
       <div class="adm-item-hd">
@@ -1934,12 +1769,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(48)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(48,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(48,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(48,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(48,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(48)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(48)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(48)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(48,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(48,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(48,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(48,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="49">
       <div class="adm-item-hd">
@@ -1950,12 +1781,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(49)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(49,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(49,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(49,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(49,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(49)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(49)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(49)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(49,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(49,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(49,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(49,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="50">
       <div class="adm-item-hd">
@@ -1966,12 +1793,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(50)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(50,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(50,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(50,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(50,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(50)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(50)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(50)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(50,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(50,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(50,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(50,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="51">
       <div class="adm-item-hd">
@@ -1982,12 +1805,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(51)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(51,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(51,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(51,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(51,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(51)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(51)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(51)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(51,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(51,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(51,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(51,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="52">
       <div class="adm-item-hd">
@@ -1998,12 +1817,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(52)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(52,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(52,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(52,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(52,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(52)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(52)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(52)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(52,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(52,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(52,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(52,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="53">
       <div class="adm-item-hd">
@@ -2014,12 +1829,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(53)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(53,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(53,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(53,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(53,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(53)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(53)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(53)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(53,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(53,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(53,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(53,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="54">
       <div class="adm-item-hd">
@@ -2030,12 +1841,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(54)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(54,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(54,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(54,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(54,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(54)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(54)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(54)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(54,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(54,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(54,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(54,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="55">
       <div class="adm-item-hd">
@@ -2046,12 +1853,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(55)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(55,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(55,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(55,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(55,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(55)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(55)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(55)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(55,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(55,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(55,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(55,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="56">
       <div class="adm-item-hd">
@@ -2062,12 +1865,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(56)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(56,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(56,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(56,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(56,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(56)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(56)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(56)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(56,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(56,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(56,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(56,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="57">
       <div class="adm-item-hd">
@@ -2078,12 +1877,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(57)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(57,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(57,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(57,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(57,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(57)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(57)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(57)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(57,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(57,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(57,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(57,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="58">
       <div class="adm-item-hd">
@@ -2094,12 +1889,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(58)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(58,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(58,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(58,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(58,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(58)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(58)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(58)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(58,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(58,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(58,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(58,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="59">
       <div class="adm-item-hd">
@@ -2110,12 +1901,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(59)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(59,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(59,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(59,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(59,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(59)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(59)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(59)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(59,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(59,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(59,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(59,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="60">
       <div class="adm-item-hd">
@@ -2126,12 +1913,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(60)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(60,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(60,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(60,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(60,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(60)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(60)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(60)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(60,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(60,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(60,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(60,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="61">
       <div class="adm-item-hd">
@@ -2142,12 +1925,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(61)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(61,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(61,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(61,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(61,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(61)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(61)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(61)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(61,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(61,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(61,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(61,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card is-hidden" draggable="true" data-id="62">
       <div class="adm-item-hd">
@@ -2158,12 +1937,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-hidden">已隱藏</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(62)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(62,'isHidden')">👁 顯示</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(62,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(62,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(62,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(62)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(62)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(62)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(62,'isHidden')">👁 顯示</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(62,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(62,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(62,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="63">
       <div class="adm-item-hd">
@@ -2174,12 +1949,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(63)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(63,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(63,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(63,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(63,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(63)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(63)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(63)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(63,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(63,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(63,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(63,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="64">
       <div class="adm-item-hd">
@@ -2190,12 +1961,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(64)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(64,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(64,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(64,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(64,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(64)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(64)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(64)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(64,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(64,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(64,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(64,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="65">
       <div class="adm-item-hd">
@@ -2206,12 +1973,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(65)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(65,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(65,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(65,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(65,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(65)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(65)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(65)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(65,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(65,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(65,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(65,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="66">
       <div class="adm-item-hd">
@@ -2222,12 +1985,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(66)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(66,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(66,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(66,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(66,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(66)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(66)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(66)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(66,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(66,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(66,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(66,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="67">
       <div class="adm-item-hd">
@@ -2238,12 +1997,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(67)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(67,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(67,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(67,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(67,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(67)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(67)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(67)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(67,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(67,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(67,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(67,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="68">
       <div class="adm-item-hd">
@@ -2254,12 +2009,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(68)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(68,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(68,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(68,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(68,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(68)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(68)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(68)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(68,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(68,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(68,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(68,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="69">
       <div class="adm-item-hd">
@@ -2270,12 +2021,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(69)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(69,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(69,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(69,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(69,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(69)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(69)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(69)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(69,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(69,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(69,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(69,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="70">
       <div class="adm-item-hd">
@@ -2286,12 +2033,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(70)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(70,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(70,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(70,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(70,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(70)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(70)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(70)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(70,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(70,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(70,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(70,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="71">
       <div class="adm-item-hd">
@@ -2302,12 +2045,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(71)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(71,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(71,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(71,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(71,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(71)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(71)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(71)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(71,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(71,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(71,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(71,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="72">
       <div class="adm-item-hd">
@@ -2318,12 +2057,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(72)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(72,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(72,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(72,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(72,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(72)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(72)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(72)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(72,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(72,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(72,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(72,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="73">
       <div class="adm-item-hd">
@@ -2334,12 +2069,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(73)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(73,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(73,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(73,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(73,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(73)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(73)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(73)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(73,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(73,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(73,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(73,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="74">
       <div class="adm-item-hd">
@@ -2350,12 +2081,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(74)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(74,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(74,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(74,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(74,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(74)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(74)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(74)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(74,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(74,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(74,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(74,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="75">
       <div class="adm-item-hd">
@@ -2366,12 +2093,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(75)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(75,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(75,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(75,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(75,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(75)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(75)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(75)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(75,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(75,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(75,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(75,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="76">
       <div class="adm-item-hd">
@@ -2382,12 +2105,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(76)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(76,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(76,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(76,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(76,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(76)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(76)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(76)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(76,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(76,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(76,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(76,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="77">
       <div class="adm-item-hd">
@@ -2398,12 +2117,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(77)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(77,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(77,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(77,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(77,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(77)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(77)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(77)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(77,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(77,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(77,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(77,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="78">
       <div class="adm-item-hd">
@@ -2414,12 +2129,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(78)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(78,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(78,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(78,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(78,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(78)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(78)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(78)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(78,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(78,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(78,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(78,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="79">
       <div class="adm-item-hd">
@@ -2430,12 +2141,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(79)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(79,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(79,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(79,'popular')">⭐取消熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(79,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(79)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(79)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(79)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(79,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(79,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(79,'popular')">⭐取消熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(79,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="80">
       <div class="adm-item-hd">
@@ -2446,12 +2153,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(80)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(80,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(80,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(80,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(80,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(80)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(80)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(80)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(80,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(80,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(80,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(80,'isNew')">✨ 新品</button></div>
       </div>
     </div><div class="adm-item-card" draggable="true" data-id="81">
       <div class="adm-item-hd">
@@ -2462,12 +2165,8 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(81)">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(81,'isHidden')">🙈 隱藏</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(81,'isSoldOut')">❌ 售完</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(81,'popular')">🔥 熱銷</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(81,'isNew')">✨ 新品</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(81)">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(81)">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(81)">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(81,'isHidden')">🙈 隱藏</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(81,'isSoldOut')">❌ 售完</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(81,'popular')">🔥 熱銷</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(81,'isNew')">✨ 新品</button></div>
       </div>
     </div></div>
 
@@ -4432,7 +4131,7 @@ function admReadStore(){
 // e = { date:"YYYY-MM-DD", type:"closed"|"hours", hours:[{start,end}...], note } 或 undefined（新增空白列，預設今天）
 let admDateExceptionSeq = 0;
 // 切換到「當天營業時間調整」但尚未填過時段時，預設帶入這兩段（基本設定）
-const DEX_DEFAULT_HOURS = [{start:'09:30',end:'14:00'},{start:'16:30',end:'03:00'}];
+const DEX_DEFAULT_HOURS = [{start:'09:30',end:'14:00'},{start:'16:00',end:'03:00'}];
 function admAddDateException(e, save=true){
   if(save) admReadStore();
   const wrap = document.getElementById('adm-date-exceptions-wrap');
@@ -4447,7 +4146,23 @@ function admAddDateException(e, save=true){
   const o={}; p.forEach(({type,value})=>o[type]=value);
   const todayStr = `${o.year}-${o.month}-${o.day}`;
 
-  const defDate  = (e && e.date) || todayStr;
+  // 手動點「＋ 新增單日特例」時（沒有傳入 e），自動接續清單中最後一列的隔天日期；
+  // 若清單目前是空的，才退回今天。（透過 admAddDateException(e) 帶資料新增，如複製功能，則以 e.date 為準，不受此影響）
+  let autoNextDayStr = null;
+  if(!e){
+    const rows = wrap.querySelectorAll('.date-exception-row .de-date');
+    if(rows.length){
+      const lastDate = rows[rows.length-1].value;
+      if(lastDate){
+        const d = new Date(lastDate + 'T00:00:00');
+        d.setDate(d.getDate() + 1);
+        const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+        autoNextDayStr = `${y}-${m}-${day}`;
+      }
+    }
+  }
+
+  const defDate  = (e && e.date) || autoNextDayStr || todayStr;
   const defType  = (e && e.type) || 'closed';
   const defHours = (e && e.type === 'hours' && e.hours && e.hours.length) ? e.hours : DEX_DEFAULT_HOURS;
   const defNote  = (e && e.note) || '';
@@ -4455,11 +4170,13 @@ function admAddDateException(e, save=true){
   row.innerHTML = `
     <div class="closed-range-row-title">
       📅 單日特例
-      <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
+      <span style="margin-left:auto;display:flex;gap:.375rem">
+        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('${uid}')" title="複製此列設定，新增下一天">⧉ 複製</button>
+        <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
+      </span>
     </div>
     <div class="closed-range-fields">
-      <div class="closed-range-label">📆 日期（台灣時間）</div>
-      <input type="date" class="de-date adm-input" style="width:100%;margin-bottom:0" value="${esc(defDate)}">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="${esc(defDate)}"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -4471,11 +4188,82 @@ function admAddDateException(e, save=true){
       </div>
       <div class="de-hours-wrap" data-uid="${uid}" style="display:${defType==='hours'?'block':'none'}"></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="${esc(defNote)}" style="width:100%">
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="${esc(defNote)}" style="width:100%;margin-bottom:0">
     </div>
   `;
   wrap.appendChild(row);
   admRenderDateExceptionHours(uid, defHours);
+  return row;
+}
+// ── 複製某一列單日特例：類型／時段／備註原封不動複製，日期自動 +1 天（方便連續多天設定同一種營業時間，不用每天重打）──
+function admCopyDateException(uid){
+  const row = document.querySelector(`.date-exception-row[data-uid="${uid}"]`);
+  if(!row) return;
+
+  const srcDate = row.querySelector('.de-date')?.value;
+  const type = row.querySelector('.de-type-radio:checked')?.value || 'closed';
+  const note = row.querySelector('.de-note')?.value || '';
+  const hours = [];
+  row.querySelectorAll('.de-hour-row').forEach(hr=>{
+    const st = hr.querySelector('.de-start-t')?.value;
+    const et = hr.querySelector('.de-end-t')?.value;
+    if(st && et) hours.push({ start: st, end: et });
+  });
+
+  let nextDate = srcDate;
+  if(srcDate){
+    const d = new Date(srcDate + 'T00:00:00');
+    d.setDate(d.getDate() + 1);
+    const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), day = String(d.getDate()).padStart(2,'0');
+    nextDate = `${y}-${m}-${day}`;
+  }
+
+  const newRow = admAddDateException({ date: nextDate, type, hours, note }, true);
+  if(newRow) row.after(newRow); // 插在原列後面，連續假期設定時方便對照
+}
+// ── 備註範本下拉：套用後直接寫入文字框，仍可自行修改；選單選完自動重置回預設選項 ──
+function admApplyNoteTemplate(selectEl){
+  const kind = selectEl.value;
+  const row = selectEl.closest('.date-exception-row');
+  if(!row || !kind){ return; }
+  const noteInput = row.querySelector('.de-note');
+
+  if(kind === 'custom'){
+    selectEl.value = '';
+    noteInput.focus();
+    return;
+  }
+
+  const dateStr = row.querySelector('.de-date')?.value;
+  if(!dateStr){
+    alert('請先選擇日期，再套用範本');
+    selectEl.value = '';
+    return;
+  }
+  const [y, m, d] = dateStr.split('-').map(Number);
+  const weekLabel = ['日','一','二','三','四','五','六'][new Date(y, m-1, d).getDay()];
+  const dateLabel = `${m}/${String(d).padStart(2,'0')}(${weekLabel})`;
+
+  if(kind === 'hours'){
+    const startVal = row.querySelector('.de-hour-row .de-start-t')?.value;
+    if(!startVal){
+      alert('請先設定時段，再套用範本');
+      selectEl.value = '';
+      return;
+    }
+    const hh = parseInt(startVal.split(':')[0], 10);
+    const ampm = hh < 12 ? '上午' : '下午';
+    noteInput.value = `${dateLabel} ${ampm} ${startVal} 營業，造成不便敬請見諒。期待下次為您服務！☕️✨`;
+  } else if(kind === 'closed'){
+    noteInput.value = `${dateLabel} 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨`;
+  }
+  selectEl.value = '';
 }
 // ── 切換「本日公休／當天營業時間調整」時，顯示或隱藏時段清單；第一次切到「時間調整」自動帶入基本設定 ──
 function admToggleDateExceptionType(radio){
@@ -4500,7 +4288,7 @@ function admRenderDateExceptionHours(uid, hours){
       <input type="time" class="de-end-t bh-time-input" value="${esc(r.end||'14:00')}">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('${uid}', this)" title="刪除此時段">✕</button>
     </div>
-  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 .375rem;padding:.3rem .75rem;font-size:.75rem" onclick="admAddExceptionHourRow('${uid}')">＋ 加時段</button>`;
+  `).join('') + `<button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('${uid}')">＋ 加時段</button>`;
 }
 // ── 新增／刪除單日特例的時段列（直接操作 DOM，存檔時由 admReadStore 統一讀取）──
 function admAddExceptionHourRow(uid){
@@ -4571,7 +4359,7 @@ function admRenderWeeklyDayBody(day, sch){
       <input type="time" class="wk-end-t bh-time-input" value="${esc(r.end||'03:00')}">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('${day}', this)" title="刪除此時段">✕</button>
     </div>
-  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddWeeklyHourRow('${day}')">＋ 加時段（如：午休分段）</button>`;
+  `).join('') + `<button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('${day}')">＋ 加時段（如：午休分段）</button>`;
 }
 // ── 設定某天固定公休／營業（切換開關、①重複公休 chip 都呼叫這個，確保兩處同步）──
 function admSetDayClosed(day, closed){
@@ -4599,7 +4387,7 @@ function admRenderDeliveryHours(){
       <input type="time" class="dlv-end-t bh-time-input" value="${esc(r.end||'21:30')}">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelDeliveryHourRow(this)" title="刪除此時段">✕</button>
     </div>
-  `).join('') + `<button class="adm-add-row-btn" style="margin:.25rem 0 0;padding:.3rem .75rem;font-size:.75rem" onclick="admAddDeliveryHourRow()">＋ 加時段</button>`;
+  `).join('') + `<button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddDeliveryHourRow()">＋ 加時段</button>`;
 }
 function admAddDeliveryHourRow(){
   admReadStore();
@@ -4693,12 +4481,8 @@ function admRenderMenuList(){
         <div class="adm-item-tags">${tags}</div>
       </div>
       <div class="adm-item-actions">
-        <button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(${item.id})">✏️ 編輯</button>
-        <button class="adm-act-btn adm-btn-hide" onclick="admToggle(${item.id},'isHidden')">${item.isHidden?'👁 顯示':'🙈 隱藏'}</button>
-        <button class="adm-act-btn adm-btn-sold" onclick="admToggle(${item.id},'isSoldOut')">${item.isSoldOut?'✅ 恢復':'❌ 售完'}</button>
-        <button class="adm-act-btn adm-btn-pop" onclick="admToggle(${item.id},'popular')">${item.popular?'⭐取消熱銷':'🔥 熱銷'}</button>
-        <button class="adm-act-btn adm-btn-new" onclick="admToggle(${item.id},'isNew')">${item.isNew?'✨取消新品':'✨ 新品'}</button>
-        <button class="adm-act-btn adm-btn-del" onclick="admDelete(${item.id})">🗑 刪除</button>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-edit" onclick="admOpenEditModal(${item.id})">✏️ 編輯</button> <button class="adm-act-btn adm-btn-del" onclick="admDelete(${item.id})">🗑 刪除</button></div>
+        <div class="adm-item-actions-row"><button class="adm-act-btn adm-btn-hide" onclick="admToggle(${item.id},'isHidden')">${item.isHidden?'👁 顯示':'🙈 隱藏'}</button> <button class="adm-act-btn adm-btn-sold" onclick="admToggle(${item.id},'isSoldOut')">${item.isSoldOut?'✅ 恢復':'❌ 售完'}</button> <button class="adm-act-btn adm-btn-pop" onclick="admToggle(${item.id},'popular')">${item.popular?'⭐取消熱銷':'🔥 熱銷'}</button> <button class="adm-act-btn adm-btn-new" onclick="admToggle(${item.id},'isNew')">${item.isNew?'✨取消新品':'✨ 新品'}</button></div>
       </div>
     </div>`;
   }).join('');
