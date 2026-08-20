@@ -300,6 +300,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 /* 彈窗行 */
 .popup-line-row,.extra-row,.sauce-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
 .popup-line-row .adm-input,.extra-row .adm-input,.sauce-row .adm-input{margin-bottom:0;flex:1}
+.announce-line-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
+.announce-line-row .adm-input{margin-bottom:0;flex:1}
+.announce-line-row.dragging{opacity:.4}
+.announce-line-row.drag-over{border-top:2px solid #1a2455}
 .adm-del-btn{width:1.875rem;height:1.875rem;border:none;border-radius:50%;background:#ffe8e8;color:#c4390a;font-size:.875rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .adm-add-row-btn{background:#f0f4ff;border:1.5px dashed #1a2455;border-radius:.5rem;color:#1a2455;font-size:.8125rem;font-weight:700;cursor:pointer;padding:.5rem 1rem;width:100%;font-family:'Noto Sans TC',sans-serif;margin-bottom:.75rem}
 .adm-add-hour-btn{background:#f0f4ff;border:1.5px dashed #1a2455;border-radius:.5rem;color:#1a2455;font-size:.75rem;font-weight:700;cursor:pointer;padding:.3rem .75rem;width:auto;display:inline-block;font-family:'Noto Sans TC',sans-serif;flex-shrink:0}
@@ -417,11 +421,11 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar"><span>⏰營業時間：09:30-14:00｜16:00-凌晨03:00</span><br><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
+  <div class="announce" id="announce-bar"><span>⏰營業時間：09:30-14:00｜16:00-凌晨03:00</span><br><span>🎉四週年活動 (8/21-8/31) 外帶自取85折，活動結束後恢復原價</span></div>
   <div class="announce-closed-bar" id="announce-closed-bar" style="display:none"></div>
   <div class="announce-hours-bar" id="announce-hours-bar" style="display: flex;">
     <span class="ahb-label">⚠️ 營業時間調整：</span>
-    <div class="ahb-content" id="announce-hours-bar-content"><div>8/20 (四) 16:00-翌日00:00 。</div><div>8/21 (五) 16:00-翌日00:00 。</div></div>
+    <div class="ahb-content" id="announce-hours-bar-content"><div>8/20 (四) 16:00-21:30 。</div><div>8/21 (五) 16:00-翌日00:00 。</div></div>
   </div>
   <div id="menu-content"></div>
 
@@ -434,10 +438,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- 公休遮罩 -->
-<div class="closed-overlay open" id="closed-overlay">
+<div class="closed-overlay" id="closed-overlay">
   <div class="closed-icon">🔒</div>
   <div class="closed-title">目前為公休時間</div>
-  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size: 0.875rem; opacity: 0.7; margin-top: 0.5rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;">今日營業時間調整為 16:00-翌日00:00</span><span id="closed-range-note" style="font-size: 0.8125rem; opacity: 0.65; margin-top: 0.25rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;">8/20(四) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</span></div>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size: 0.875rem; opacity: 0.7; margin-top: 0.5rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;"></span><span id="closed-range-note" style="font-size: 0.8125rem; opacity: 0.65; margin-top: 0.25rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;"></span></div>
   <button class="closed-adm-btn" onclick="admOpenPw()" title="">⚙️</button>
 </div>
 
@@ -484,13 +488,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
         <div class="opt-toggle" style="margin-bottom:6px;width:100%">
           <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
-          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%; opacity: 0.45; cursor: not-allowed;" disabled="">外送</button>
+          <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%;">外送</button>
         </div>
         <div class="delivery-hint" id="delivery-hint" style="margin-bottom:8px">
           <span id="delivery-hint-line1">🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）</span><br>
           <span class="delivery-hint-warn" id="delivery-hint-line2">*請於下方填入外送地址與聯絡電話</span>
         </div>
-        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="font-size: 0.75rem; color: rgb(196, 57, 10); margin: -4px 0px 8px; line-height: 1.5;">🛵 外送服務時間 09:30-14:00 ； 16:00-21:30，目前非外送時段，僅能選擇外帶自取</div>
+        <div class="delivery-time-closed-note" id="delivery-time-closed-note" style="font-size: 0.75rem; color: rgb(196, 57, 10); margin: -4px 0px 8px; line-height: 1.5; display: none;"></div>
 
         <!-- ② 外送地址（外送才顯示，緊接取餐方式） -->
         <div class="delivery-fields" id="delivery-fields">
@@ -585,7 +589,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$33</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
-    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="opacity: 0.45; cursor: not-allowed;" disabled="">確認下單</button>
+    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="">確認下單</button>
   </div>
 </div>
 
@@ -837,7 +841,43 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .875rem"></div>
 
         <div class="adm-label" style="margin-bottom:.5rem">② 單日特例（只影響特定一天）</div>
-        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex1">
+        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex0">
+    <div class="closed-range-row-title">
+      📅 單日特例
+      <span style="margin-left:auto;display:flex;gap:.375rem">
+        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex0')" title="複製此列設定，新增下一天">⧉ 複製</button>
+        <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
+      </span>
+    </div>
+    <div class="closed-range-fields">
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-20"></div>
+      <div class="closed-range-label" style="margin-top:.5rem">類型</div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="dex0-type" class="de-type-radio" value="closed" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
+        </label>
+        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
+          <input type="radio" name="dex0-type" class="de-type-radio" value="hours" checked="" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
+        </label>
+      </div>
+      <div class="de-hours-wrap" data-uid="dex0" style="display:block">
+    <div class="wk-hour-row de-hour-row" data-idx="0">
+      <input type="time" class="de-start-t bh-time-input" value="16:00">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="21:30">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
+    </div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
+      <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
+      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
+        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
+        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
+        <option value="custom">✏️ 自行輸入備註</option>
+      </select>
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/20(四) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
+    </div>
+  </div><div class="closed-range-row date-exception-row" data-uid="dex1">
     <div class="closed-range-row-title">
       📅 單日特例
       <span style="margin-left:auto;display:flex;gap:.375rem">
@@ -846,7 +886,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </span>
     </div>
     <div class="closed-range-fields">
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-20"></div>
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-21"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
@@ -871,42 +911,6 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
         <option value="custom">✏️ 自行輸入備註</option>
       </select>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/20(四) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
-    </div>
-  </div><div class="closed-range-row date-exception-row" data-uid="dex2">
-    <div class="closed-range-row-title">
-      📅 單日特例
-      <span style="margin-left:auto;display:flex;gap:.375rem">
-        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex2')" title="複製此列設定，新增下一天">⧉ 複製</button>
-        <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
-      </span>
-    </div>
-    <div class="closed-range-fields">
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-21"></div>
-      <div class="closed-range-label" style="margin-top:.5rem">類型</div>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
-        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex2-type" class="de-type-radio" value="closed" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
-        </label>
-        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex2-type" class="de-type-radio" value="hours" checked="" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
-        </label>
-      </div>
-      <div class="de-hours-wrap" data-uid="dex2" style="display:block">
-    <div class="wk-hour-row de-hour-row" data-idx="0">
-      <input type="time" class="de-start-t bh-time-input" value="16:00">
-      <span style="color:#999">～</span>
-      <input type="time" class="de-end-t bh-time-input" value="00:00">
-      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex2', this)" title="刪除此時段">✕</button>
-    </div>
-  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex2')">＋ 加時段</button></div>
-      <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
-        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
-        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
-        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
-        <option value="custom">✏️ 自行輸入備註</option>
-      </select>
       <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/21(五) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
     </div>
   </div></div>
@@ -918,10 +922,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
       <div class="adm-card">
         <div class="adm-card-title">📢 頂部黃色公告橫幅</div>
-        <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的公告文字，可新增第2、3、4行，多行會自動換行顯示。</div>
-        <div id="adm-announce-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：09:30-14:00｜16:00-凌晨03:00"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的公告文字，可新增第2、3、4行，多行會自動換行顯示。<br>
+        每一行最左邊 <b>⠿</b> 可以按住拖曳，調整這行公告顯示的先後順序。<br>
+        每一行最右邊的開關可以暫時把該行隱藏（文字還在、不用刪掉，只是先不顯示），要恢復再打開就好。</div>
+        <div id="adm-announce-lines-wrap"><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：09:30-14:00｜16:00-凌晨03:00"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show"><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="🎉四週年活動 (8/21-8/31) 外帶自取85折，活動結束後恢復原價"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddAnnounceLine('')">＋ 新增一行</button>
       </div>
+
 
       <div class="adm-card">
         <div class="adm-card-title">📬 進入頁面彈窗公告</div>
@@ -974,17 +981,40 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-card-title">🛵 外帶與外送設定</div>
         <div class="adm-tip">✏️ 以下文字直接顯示在點餐頁面，改完存檔即生效。</div>
 
-        <label class="adm-label">外帶按鈕文字 <span class="sub">（例：外帶自取 9折）</span></label>
+        <div class="adm-card-title" style="margin-bottom:.25rem;font-size:.9rem">🥡 外帶自取</div>
+        <label class="adm-label">按鈕文字 <span class="sub">（例：外帶自取 9折）</span></label>
         <input class="adm-input" type="text" id="f-takeoutLabel">
-
-        <label class="adm-label">外帶折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
+        <label class="adm-label">折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
         <input class="adm-input adm-input-sm" type="number" id="f-takeoutDiscount" min="0.1" max="1.0" step="0.05" placeholder="0.9">
 
-        <label class="adm-label">外送按鈕文字 <span class="sub">（例：外送）</span></label>
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
+        <div class="adm-card-title" style="margin-bottom:.25rem;font-size:.9rem">🛵 外送</div>
+        <label class="adm-label">按鈕文字 <span class="sub">（例：外送。有打折時按鈕自動改顯示「外送 9折」，此欄只在「不打折」時顯示）</span></label>
         <input class="adm-input" type="text" id="f-deliveryLabel">
+        <label class="adm-label">折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
+        <input class="adm-input adm-input-sm" type="number" id="f-deliveryDiscount" min="0.1" max="1.0" step="0.05" placeholder="1.0">
 
-        <div style="height:1px;background:#f0f0f0;margin:.375rem 0 .75rem"></div>
-        <div class="adm-tip">✏️ 客人選「外送」後，出現在粉紅色框裡的說明文字（共兩行）。</div>
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
+        <div class="adm-card-title" style="margin-bottom:.25rem;font-size:.9rem">🎉 限時特惠 <span class="adm-card-sub">（共用同一段活動日期，外帶／外送折扣可分開設定；日期留空＝不啟用）</span></div>
+        <div style="display:flex;gap:.5rem;align-items:center;margin-bottom:.625rem">
+          <input class="adm-input" type="date" id="f-promoStart" style="margin-bottom:0">
+          <span style="color:#999">～</span>
+          <input class="adm-input" type="date" id="f-promoEnd" style="margin-bottom:0">
+        </div>
+        <div style="display:flex;gap:.625rem">
+          <div style="flex:1">
+            <label class="adm-label">外帶特惠折扣 <span class="sub">（0.85 = 八五折）</span></label>
+            <input class="adm-input adm-input-sm" type="number" id="f-promoDiscount" min="0.1" max="1.0" step="0.05" placeholder="0.85">
+          </div>
+          <div style="flex:1">
+            <label class="adm-label">外送特惠折扣 <span class="sub">（0.85 = 八五折）</span></label>
+            <input class="adm-input adm-input-sm" type="number" id="f-promoDeliveryDiscount" min="0.1" max="1.0" step="0.05" placeholder="0.85">
+          </div>
+        </div>
+        <div class="adm-tip" style="margin-top:.375rem">💡 特惠期間內，上面的「外帶特惠折扣」「外送特惠折扣」會分別取代平常的外帶／外送折扣，兩邊按鈕文字也會自動連動改成「外帶自取 85折」「外送 85折」這種格式；期滿自動恢復平常設定，免手動改回。</div>
+
+        <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .75rem"></div>
+        <div class="adm-tip">✏️ 客人選「外送」後，粉紅色框裡的說明文字（共兩行）。</div>
         <label class="adm-label">第一行</label>
         <input class="adm-input" type="text" id="f-deliveryHintLine1">
         <label class="adm-label">第二行 <span class="sub">（紅色粗體）</span></label>
@@ -1096,7 +1126,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">香腸炒飯</div>
-        <div class="adm-item-price">$105</div>
+        <div class="adm-item-price">$110</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1108,7 +1138,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">豬肉炒飯</div>
-        <div class="adm-item-price">$105</div>
+        <div class="adm-item-price">$110</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1120,7 +1150,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">牛肉炒飯</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1132,7 +1162,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">羊肉炒飯</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1144,7 +1174,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">蝦仁炒飯</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1156,7 +1186,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">鮭魚炒飯</div>
-        <div class="adm-item-price">$160</div>
+        <div class="adm-item-price">$165</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1168,7 +1198,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩豬肉炒飯</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1180,7 +1210,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩牛肉炒飯</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1192,7 +1222,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍚</div>
         <div class="adm-item-name">咖哩羊肉炒飯</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1204,7 +1234,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">豬肉炒麵</div>
-        <div class="adm-item-price">$105</div>
+        <div class="adm-item-price">$110</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1216,7 +1246,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">牛肉炒麵</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1228,7 +1258,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">羊肉炒麵</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1240,7 +1270,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">海鮮炒麵</div>
-        <div class="adm-item-price">$125</div>
+        <div class="adm-item-price">$130</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1252,7 +1282,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩豬肉炒麵</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1264,7 +1294,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩牛肉炒麵</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1276,7 +1306,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩羊肉炒麵</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1288,7 +1318,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩海鮮炒麵</div>
-        <div class="adm-item-price">$135</div>
+        <div class="adm-item-price">$140</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1300,7 +1330,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">豬肉炒烏龍麵</div>
-        <div class="adm-item-price">$105</div>
+        <div class="adm-item-price">$110</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1312,7 +1342,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">牛肉炒烏龍麵</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1324,7 +1354,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">羊肉炒烏龍麵</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1336,7 +1366,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">海鮮炒烏龍麵</div>
-        <div class="adm-item-price">$125</div>
+        <div class="adm-item-price">$130</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1348,7 +1378,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩豬肉炒烏龍麵</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1360,7 +1390,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩牛肉炒烏龍麵</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1372,7 +1402,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩羊肉炒烏龍麵</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1384,7 +1414,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍝</div>
         <div class="adm-item-name">咖哩海鮮炒烏龍麵</div>
-        <div class="adm-item-price">$135</div>
+        <div class="adm-item-price">$140</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1396,7 +1426,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶豬肉烏龍湯麵</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1408,7 +1438,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶牛肉烏龍湯麵</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1420,7 +1450,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">沙茶羊肉烏龍湯麵</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1432,7 +1462,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🍜</div>
         <div class="adm-item-name">海鮮烏龍湯麵</div>
-        <div class="adm-item-price">$130</div>
+        <div class="adm-item-price">$135</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1444,7 +1474,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">玉米瘦肉粥</div>
-        <div class="adm-item-price">$105</div>
+        <div class="adm-item-price">$110</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1456,7 +1486,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">滑蛋牛肉粥</div>
-        <div class="adm-item-price">$110</div>
+        <div class="adm-item-price">$115</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1468,7 +1498,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">皮蛋瘦肉粥</div>
-        <div class="adm-item-price">$115</div>
+        <div class="adm-item-price">$120</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -1480,7 +1510,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">海鮮總匯粥</div>
-        <div class="adm-item-price">$120</div>
+        <div class="adm-item-price">$125</div>
         <div class="adm-item-tags"><span class="adm-tag adm-tag-popular">熱銷</span></div>
       </div>
       <div class="adm-item-actions">
@@ -1492,7 +1522,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <span class="drag-handle" title="按住拖曳排序">⠿</span>
         <div class="adm-item-emoji">🥣</div>
         <div class="adm-item-name">虱目魚肚粥</div>
-        <div class="adm-item-price">$135</div>
+        <div class="adm-item-price">$140</div>
         <div class="adm-item-tags"></div>
       </div>
       <div class="adm-item-actions">
@@ -2193,7 +2223,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 <!-- 品項編輯 Modal -->
 <div class="adm-modal-overlay" id="adm-item-modal">
   <div class="adm-modal-card">
-    <div class="adm-modal-title" id="adm-modal-title">✏️ 編輯：椒鹽秋刀魚</div>
+    <div class="adm-modal-title" id="adm-modal-title">✏️ 編輯：牛肉炒烏龍麵</div>
 
     <label class="adm-label">分類 <span class="sub">（必須與分類列表名稱完全一致）</span></label>
     <select class="adm-select" id="ef-cat"><option value="🍳熱炒類">🍳熱炒類</option><option value="🥬時蔬類">🥬時蔬類</option><option value="🟡酥炸類">🟡酥炸類</option><option value="🍚炒飯">🍚炒飯</option><option value="🍝炒麵">🍝炒麵</option><option value="🍝炒烏龍麵">🍝炒烏龍麵</option><option value="🍝烏龍湯麵">🍝烏龍湯麵</option><option value="🥣粥品">🥣粥品</option><option value="🥣湯品">🥣湯品</option><option value="✨新品上市">✨新品上市</option></select>
@@ -2210,7 +2240,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     <div class="adm-tip">常用 Emoji：🍚炒飯 🍝炒/烏龍麵 🍜湯麵 🥣粥/湯品 🍳熱炒 🥬時蔬 🟡酥炸</div>
 
     <label class="adm-label">加購選項 <span class="sub">（勾選式，免費加購填 0）</span></label>
-    <div id="ef-extras-wrap"><div class="extra-row"><input type="text" class="adm-input ef-extra-label" placeholder="選項名稱（例：加飯）" value="加辣🌶️"><input type="number" class="adm-input ef-extra-price" placeholder="加價" value="0" min="0" style="max-width:90px"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+    <div id="ef-extras-wrap"><div class="extra-row"><input type="text" class="adm-input ef-extra-label" placeholder="選項名稱（例：加飯）" value="加麵"><input type="number" class="adm-input ef-extra-price" placeholder="加價" value="20" min="0" style="max-width:90px"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="extra-row"><input type="text" class="adm-input ef-extra-label" placeholder="選項名稱（例：加飯）" value="加辣🌶️"><input type="number" class="adm-input ef-extra-price" placeholder="加價" value="0" min="0" style="max-width:90px"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
     <button class="adm-inline-add-btn" onclick="admAddExtraRow('','0')">＋ 新增加購選項</button>
 
     <label class="adm-label">醬料選擇 <span class="sub">（單選，例：醬油芥末、蒜蓉醬）</span></label>
@@ -2243,7 +2273,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- Toast -->
-<div class="adm-toast" id="adm-toast">⬇ 已下載版本 20260814-01，請上傳到 GitHub</div>
+<div class="adm-toast" id="adm-toast">⬇ 已下載版本 20260820-01，請上傳到 GitHub</div>
 
 <!-- ════════════════════════════════════════
      JavaScript
@@ -2324,7 +2354,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║     不用手動貼公告，改 weeklySchedule／dateExceptions 就會自動更新  ║
 // ║                                                                      ║
 // ║  ── 📢 前台文字 ────────────────────────────────────────────────── ║
-// ║  announcementLines → 頂部黃色橫幅文字（陣列，每行一個字串，可1~多行）║
+// ║  announcementLines → 頂部黃色橫幅文字，陣列，每項為：               ║
+// ║    { text: "文字內容", show: true }                                 ║
+// ║    show:false → 這一行暫時隱藏（文字保留，之後開回來不用重打）      ║
+// ║    陣列順序＝顯示順序，後台可直接拖曳「⠿」調整順序                  ║
 // ║  popupLines        → 進頁面彈窗文字（陣列，每行一個字串）           ║
 // ║  defaultNote       → 備註欄的灰色提示文字                           ║
 // ║  deliveryHintLine1 → 選「外送」後粉框第一行說明                     ║
@@ -2343,11 +2376,31 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  slotInterval → 今日取餐時段按鈕的間隔分鐘（預設 15）               ║
 // ║                 例：15 → 顯示「12:30、12:45、13:00、其他時間」      ║
 // ║                                                                      ║
-// ║  ── 🏷️  外帶折扣與文字 ──────────────────────────────────────────  ║
-// ║  takeoutLabel    → 外帶自取按鈕文字（例："外帶自取 9折"）           ║
-// ║  deliveryLabel   → 外送按鈕文字（例："外送"）                       ║
-// ║  takeoutDiscount → 外帶折扣數字                                      ║
+// ║  ── 🏷️  外帶／外送折扣與文字 ──────────────────────────────────────  ║
+// ║  takeoutLabel    → 外帶自取按鈕「不打折時」顯示的文字（例："外帶自取"）║
+// ║    ※ takeoutDiscount＜1 時，按鈕文字目前仍需自行手動打成含折扣的文字 ║
+// ║       （例如手動填 "外帶自取 9折"），系統不會自動幫外帶按鈕加折扣字  ║
+// ║  deliveryLabel   → 外送按鈕「不打折時」顯示的文字（例："外送"）      ║
+// ║  takeoutDiscount → 外帶平常折扣數字                                  ║
 // ║    0.9 = 九折 / 0.85 = 八五折 / 1.0 = 不打折                       ║
+// ║  deliveryDiscount → 外送平常折扣數字（用法與 takeoutDiscount 相同）  ║
+// ║    0.9 = 九折 / 0.85 = 八五折 / 1.0 = 不打折（預設 1.0 不打折）    ║
+// ║    ※ 只要「現在生效的外送折扣」＜1（平常的 deliveryDiscount，或    ║
+// ║       特惠期間的 promoDeliveryDiscount），外送按鈕文字就會自動      ║
+// ║       變成「外送 9折」這種格式，不需要手動改 deliveryLabel；        ║
+// ║       折扣＝1.0 時才會顯示上面填的 deliveryLabel 文字               ║
+// ║  promoStart/promoEnd → 限時特惠活動日期區間（YYYY-MM-DD，共用一段）║
+// ║    只在區間內（含頭尾）生效，期滿自動恢復平常折扣，留空＝不啟用     ║
+// ║  promoDiscount         → 特惠期間的「外帶」折扣，取代 takeoutDiscount║
+// ║  promoDeliveryDiscount → 特惠期間的「外送」折扣，取代 deliveryDiscount║
+// ║    ※ 外帶／外送的特惠折扣可以設不同數字，各自獨立                   ║
+// ║    特惠期間會自動發生的事（不用手動改，期滿自動消失）：              ║
+// ║      ①外帶自取結帳金額直接算 promoDiscount                         ║
+// ║      ②外送結帳金額直接算 promoDeliveryDiscount                     ║
+// ║      ③外帶自取按鈕文字自動變成「外帶自取 85折」這種格式             ║
+// ║      ④外送按鈕文字自動變成「外送 85折」這種格式（規則同上面 deliveryDiscount）║
+// ║    特惠期間【不會】自動發生的事（要自己去後台改）：                 ║
+// ║      頂部黃色公告列文字（announcementLines）－請自行手動增刪         ║
 // ║  pickupTimeHint  → 取餐時間下方橘色小提示文字                       ║
 // ║                                                                      ║
 // ║  ── 🛵 外送服務時間 ──────────────────────────────────────────────  ║
@@ -2495,8 +2548,18 @@ const STORE_CONFIG = {
   }
 ],
   announcementLines: [
-  "⏰營業時間：09:30-14:00｜16:00-凌晨03:00",
-  "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"
+  {
+    "text": "⏰營業時間：09:30-14:00｜16:00-凌晨03:00",
+    "show": true
+  },
+  {
+    "text": "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)",
+    "show": false
+  },
+  {
+    "text": "🎉四週年限時優惠(8/21-8/31) ，🥡外帶自取 85折 /🛵 外送 95折",
+    "show": true
+  }
 ],
   popupLines: [
   "🍱歡迎光臨【香品小食堂🍲】",
@@ -2525,6 +2588,12 @@ const STORE_CONFIG = {
   takeoutLabel: "外帶自取 9折",
   deliveryLabel: "外送",
   takeoutDiscount: 0.9,   // 0.9=九折 / 0.85=八五折 / 1.0=不打折
+  deliveryDiscount: 1,  // 外送折扣，用法同 takeoutDiscount，預設 1.0=不打折
+  // ── 限時特惠折扣（只在區間內生效，期滿自動恢復上面的 takeoutDiscount/deliveryDiscount，免手動改回）──
+  promoStart: "2026-08-21",
+  promoEnd: "2026-08-31",
+  promoDiscount: 0.85,          // 外帶特惠折扣
+  promoDeliveryDiscount: 0.95,  // 外送特惠折扣
   lineNotifyHeader: "🍱 香品小食堂｜新訂單通知",
   // ── LINE 訊息：取餐時間標籤（依模式不同，後台可修改）──
   lineLabelPickupTime:    "⏰ 預計取餐時間：",
@@ -2566,40 +2635,40 @@ const STORE_CONFIG = {
 // ║    範例：["醬油芥末", "蒜蓉醬"]                                     ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const MENU_DATA = [
-  { id:1, cat:"🍚炒飯", name:"香腸炒飯", price:105, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:2, cat:"🍚炒飯", name:"豬肉炒飯", price:105, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:3, cat:"🍚炒飯", name:"牛肉炒飯", price:110, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:4, cat:"🍚炒飯", name:"羊肉炒飯", price:110, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:5, cat:"🍚炒飯", name:"蝦仁炒飯", price:115, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:6, cat:"🍚炒飯", name:"鮭魚炒飯", price:160, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:7, cat:"🍚炒飯", name:"咖哩豬肉炒飯", price:115, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:8, cat:"🍚炒飯", name:"咖哩牛肉炒飯", price:120, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:9, cat:"🍚炒飯", name:"咖哩羊肉炒飯", price:120, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:10, cat:"🍝炒麵", name:"豬肉炒麵", price:105, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:11, cat:"🍝炒麵", name:"牛肉炒麵", price:110, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:12, cat:"🍝炒麵", name:"羊肉炒麵", price:110, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:13, cat:"🍝炒麵", name:"海鮮炒麵", price:125, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:14, cat:"🍝炒麵", name:"咖哩豬肉炒麵", price:115, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:15, cat:"🍝炒麵", name:"咖哩牛肉炒麵", price:120, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:16, cat:"🍝炒麵", name:"咖哩羊肉炒麵", price:120, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:17, cat:"🍝炒麵", name:"咖哩海鮮炒麵", price:135, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:18, cat:"🍝炒烏龍麵", name:"豬肉炒烏龍麵", price:105, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:19, cat:"🍝炒烏龍麵", name:"牛肉炒烏龍麵", price:110, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:20, cat:"🍝炒烏龍麵", name:"羊肉炒烏龍麵", price:110, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:21, cat:"🍝炒烏龍麵", name:"海鮮炒烏龍麵", price:125, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:22, cat:"🍝炒烏龍麵", name:"咖哩豬肉炒烏龍麵", price:115, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:23, cat:"🍝炒烏龍麵", name:"咖哩牛肉炒烏龍麵", price:120, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:24, cat:"🍝炒烏龍麵", name:"咖哩羊肉炒烏龍麵", price:120, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:25, cat:"🍝炒烏龍麵", name:"咖哩海鮮炒烏龍麵", price:135, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:26, cat:"🍝烏龍湯麵", name:"沙茶豬肉烏龍湯麵", price:110, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:27, cat:"🍝烏龍湯麵", name:"沙茶牛肉烏龍湯麵", price:115, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:28, cat:"🍝烏龍湯麵", name:"沙茶羊肉烏龍湯麵", price:115, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:29, cat:"🍝烏龍湯麵", name:"海鮮烏龍湯麵", price:130, emoji:"🍜", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:30, cat:"🥣粥品", name:"玉米瘦肉粥", price:105, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:31, cat:"🥣粥品", name:"滑蛋牛肉粥", price:110, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:32, cat:"🥣粥品", name:"皮蛋瘦肉粥", price:115, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:33, cat:"🥣粥品", name:"海鮮總匯粥", price:120, emoji:"🥣", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
-  { id:34, cat:"🥣粥品", name:"虱目魚肚粥", price:135, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:1, cat:"🍚炒飯", name:"香腸炒飯", price:110, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:2, cat:"🍚炒飯", name:"豬肉炒飯", price:110, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:3, cat:"🍚炒飯", name:"牛肉炒飯", price:115, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:4, cat:"🍚炒飯", name:"羊肉炒飯", price:115, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:5, cat:"🍚炒飯", name:"蝦仁炒飯", price:120, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:6, cat:"🍚炒飯", name:"鮭魚炒飯", price:165, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:7, cat:"🍚炒飯", name:"咖哩豬肉炒飯", price:120, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:8, cat:"🍚炒飯", name:"咖哩牛肉炒飯", price:125, emoji:"🍚", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:9, cat:"🍚炒飯", name:"咖哩羊肉炒飯", price:125, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加飯",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:10, cat:"🍝炒麵", name:"豬肉炒麵", price:110, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:11, cat:"🍝炒麵", name:"牛肉炒麵", price:115, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:12, cat:"🍝炒麵", name:"羊肉炒麵", price:115, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:13, cat:"🍝炒麵", name:"海鮮炒麵", price:130, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:14, cat:"🍝炒麵", name:"咖哩豬肉炒麵", price:120, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:15, cat:"🍝炒麵", name:"咖哩牛肉炒麵", price:125, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:16, cat:"🍝炒麵", name:"咖哩羊肉炒麵", price:125, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:17, cat:"🍝炒麵", name:"咖哩海鮮炒麵", price:140, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:18, cat:"🍝炒烏龍麵", name:"豬肉炒烏龍麵", price:110, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:19, cat:"🍝炒烏龍麵", name:"牛肉炒烏龍麵", price:115, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:20, cat:"🍝炒烏龍麵", name:"羊肉炒烏龍麵", price:115, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:21, cat:"🍝炒烏龍麵", name:"海鮮炒烏龍麵", price:130, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:22, cat:"🍝炒烏龍麵", name:"咖哩豬肉炒烏龍麵", price:120, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:23, cat:"🍝炒烏龍麵", name:"咖哩牛肉炒烏龍麵", price:125, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:24, cat:"🍝炒烏龍麵", name:"咖哩羊肉炒烏龍麵", price:125, emoji:"🍝", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:25, cat:"🍝炒烏龍麵", name:"咖哩海鮮炒烏龍麵", price:140, emoji:"🍝", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:26, cat:"🍝烏龍湯麵", name:"沙茶豬肉烏龍湯麵", price:115, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:27, cat:"🍝烏龍湯麵", name:"沙茶牛肉烏龍湯麵", price:120, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:28, cat:"🍝烏龍湯麵", name:"沙茶羊肉烏龍湯麵", price:120, emoji:"🍜", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:29, cat:"🍝烏龍湯麵", name:"海鮮烏龍湯麵", price:135, emoji:"🍜", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加麵",price:20},{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:30, cat:"🥣粥品", name:"玉米瘦肉粥", price:110, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:31, cat:"🥣粥品", name:"滑蛋牛肉粥", price:115, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:32, cat:"🥣粥品", name:"皮蛋瘦肉粥", price:120, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:33, cat:"🥣粥品", name:"海鮮總匯粥", price:125, emoji:"🥣", popular:true, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
+  { id:34, cat:"🥣粥品", name:"虱目魚肚粥", price:140, emoji:"🥣", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:100, cat:"🍳熱炒類", name:"白飯", price:20, emoji:"🍚", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[], sauce:[] },
   { id:35, cat:"🍳熱炒類", name:"塔香烘蛋", price:135, emoji:"🍳", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
   { id:36, cat:"🍳熱炒類", name:"青蔥烘蛋", price:135, emoji:"🍳", popular:false, isSoldOut:false, isNew:false, isHidden:false, extras:[{label:"加辣🌶️",price:0}], sauce:[] },
@@ -2673,7 +2742,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260820-01';
+const VER = '20260820-02';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
@@ -3298,7 +3367,55 @@ function calcSub(){
     const it=menu.find(i=>i.id==k); return s+(it?it.price*v:0);
   },0);
 }
-function calcTotal(){ const s=calcSub(); return opts.pickup==='takeout'?Math.round(s*(STORE_CONFIG.takeoutDiscount||0.9)):s; }
+// ══════════════════════════════════════════════════════════════════════
+//  🎉 限時特惠折扣（新手教學：以下 4 個函式只做一件事，由上到下依序看）
+//  只要後台有填「特惠開始/結束日期」，這段就會自動判斷今天算不算特惠期間，
+//  期滿隔天會自動變回平常折扣，不需要手動改回。
+// ══════════════════════════════════════════════════════════════════════
+
+// ① 取得「今天」的台灣日期字串，格式跟後台日期欄位一樣：YYYY-MM-DD
+function getTaiwanDateStr(){
+  const now = new Date(new Date().toLocaleString('en-US',{timeZone:'Asia/Taipei'}));
+  return now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+}
+
+// ② 判斷「今天」是否落在後台設定的特惠日期區間內（起訖日皆算在內）
+//    後台沒填開始或結束日期 → 視為沒有開特惠，回傳 false
+function isPromoActive(){
+  const st=STORE_CONFIG.promoStart, en=STORE_CONFIG.promoEnd;
+  if(!st || !en) return false;
+  const today=getTaiwanDateStr();
+  return today>=st && today<=en;
+}
+
+// ③ 取得「現在真正要用」的外帶折扣數字
+//    特惠期間內 → 用 promoDiscount／不是特惠期間 → 用平常的 takeoutDiscount
+//    這個函式是全站唯一計算折扣的地方，結帳金額、按鈕文字都從這裡拿數字
+function getEffectiveTakeoutDiscount(){
+  if(isPromoActive() && STORE_CONFIG.promoDiscount) return STORE_CONFIG.promoDiscount;
+  return STORE_CONFIG.takeoutDiscount||0.9;
+}
+
+// ③-2 取得「現在真正要用」的外送折扣數字
+//    特惠期間內 → 用 promoDeliveryDiscount（跟外帶特惠分開設定的數字）／不是特惠期間 → 用平常的 deliveryDiscount
+function getEffectiveDeliveryDiscount(){
+  if(isPromoActive() && STORE_CONFIG.promoDeliveryDiscount) return STORE_CONFIG.promoDeliveryDiscount;
+  return STORE_CONFIG.deliveryDiscount||1.0;
+}
+
+// ④ 把折扣數字（0.85）轉成中文顯示文字（85折），給畫面上顯示用
+function discPercentText(d){
+  if(!d || d>=1) return '不打折';
+  const p=Math.round(d*100);
+  return (p%10===0 ? (p/10) : p) + '折';
+}
+
+function calcTotal(){
+  const s=calcSub();
+  if(opts.pickup==='takeout')  return Math.round(s*getEffectiveTakeoutDiscount());
+  if(opts.pickup==='delivery') return Math.round(s*getEffectiveDeliveryDiscount());
+  return s;
+}
 function updateBadge(){
   const t=Object.values(cart).reduce((a,b)=>typeof b==='object'?a+b.qty:a+b,0);
   const badge=document.getElementById('cart-badge');
@@ -3313,11 +3430,20 @@ function updateSummary(){
   const s=calcSub(),t=calcTotal(),qty=Object.values(cart).reduce((a,v)=>a+(typeof v==='object'?v.qty:v),0);
   document.getElementById('sum-qty').textContent=qty+' 項';
   document.getElementById('sum-sub').textContent='$'+s;
-  // 折扣列：外帶9折才顯示
+  // 折扣列：外帶或外送有打折才顯示
   const de = document.getElementById('sum-disc');
-  const showDisc = (opts.pickup === 'takeout' && s > 0);
+  const curDisc = opts.pickup === 'takeout' ? getEffectiveTakeoutDiscount()
+                : opts.pickup === 'delivery' ? getEffectiveDeliveryDiscount()
+                : 1;
+  const showDisc = ((opts.pickup === 'takeout' || opts.pickup === 'delivery') && s > 0 && curDisc < 1);
   de.classList.toggle('show', showDisc);
-  if(showDisc) document.getElementById('sum-disc-val').textContent = '-$' + (s - t);
+  if(showDisc){
+    document.getElementById('sum-disc-val').textContent = '-$' + (s - t);
+    const dl=de.querySelector('span');
+    if(dl) dl.textContent = opts.pickup === 'takeout'
+      ? `外帶自取 ${discPercentText(getEffectiveTakeoutDiscount())}`
+      : `外送 ${discPercentText(getEffectiveDeliveryDiscount())}`;
+  }
   document.getElementById('sum-total').textContent='$'+t;
   const bp=document.getElementById('bottom-price'); if(bp) bp.textContent='$'+t;
 }
@@ -3405,7 +3531,10 @@ function placeOrder(){
   }
   const items=buildItems(),s=calcSub(),t=calcTotal(),note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要',receipt=opts.receipt==='yes'?'需要':'不需要';
-  const pl={takeout:'外帶自取（9折）',delivery:'外送'}[opts.pickup];
+  const pl={
+    takeout: `外帶自取（${discPercentText(getEffectiveTakeoutDiscount())}）`,
+    delivery: getEffectiveDeliveryDiscount()<1 ? `外送（${discPercentText(getEffectiveDeliveryDiscount())}）` : '外送'
+  }[opts.pickup];
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
   const dp=getFullPhone();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
@@ -3417,7 +3546,8 @@ function placeOrder(){
   if(da) ch+=`<div>📍 地址：${da}</div>`;
   if(dp) ch+=`<div>📞 電話：${dp}</div>`;
   ch+='<br>'+items.map(i=>`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`+(i.notes?`<br>　<span style="color:#888;font-size:12px">└ ${i.notes}</span>`:'')).join('<br>');
-  if(opts.pickup==='takeout'&&s>0) ch+=`<br><span style="color:#c4390a;font-size:12px">小計$${s} × 9折 = $${t}</span>`;
+  if(opts.pickup==='takeout'&&s>0) ch+=`<br><span style="color:#c4390a;font-size:12px">小計$${s} × ${discPercentText(getEffectiveTakeoutDiscount())} = $${t}</span>`;
+  if(opts.pickup==='delivery'&&s>0&&getEffectiveDeliveryDiscount()<1) ch+=`<br><span style="color:#c4390a;font-size:12px">小計$${s} × ${discPercentText(getEffectiveDeliveryDiscount())} = $${t}</span>`;
   ch+=`<br><br>餐具：${cutlery}　收據：${receipt}`;
   if(tid) ch+=`<br>統一編號：${tid}`;
   if(note) ch+=`<br>備註：${note}`;
@@ -3432,11 +3562,13 @@ function submitOrder(){
   const items=buildItems(),s=calcSub(),t=calcTotal(),note=document.getElementById('order-note').value.trim();
   const cutlery=opts.cutlery==='yes'?'需要':'不需要',receipt=opts.receipt==='yes'?'需要':'不需要';
   const now=new Date(),timeStr=String(now.getHours()).padStart(2,'0')+':'+String(now.getMinutes()).padStart(2,'0');
-  const pl=opts.pickup==='takeout'?'外帶自取（9折）':'外送';
+  const pl=opts.pickup==='takeout'
+    ? `外帶自取（${discPercentText(getEffectiveTakeoutDiscount())}）`
+    : (getEffectiveDeliveryDiscount()<1 ? `外送（${discPercentText(getEffectiveDeliveryDiscount())}）` : '外送');
   const da=opts.pickup==='delivery'?document.getElementById('delivery-address').value.trim():'';
   const dp=getFullPhone();
   const tid=opts.receipt==='yes'?document.getElementById('receipt-tax-id').value.trim():'';
-  const tl=opts.pickup==='takeout'&&s!==t?`💰 合計：$${t}（原價 $${s}）`:`💰 合計：$${t}`;
+  const tl=(s!==t)?`💰 合計：$${t}（原價 $${s}）`:`💰 合計：$${t}`;
   const il=[]; items.forEach(i=>{ il.push(`${i.emoji} ${i.name} ×${i.qty}　$${i.price*i.qty}`); if(i.notes) il.push(`     └ ${i.notes}`); });
   const ptDisplaySub = getPickupTimeDisplay();
   const ptLabel = isReserveMode ? '📅 預約取餐時間' : (opts.pickup === 'delivery' ? '⏰ 預計送達時間' : '⏰ 預計取餐時間');
@@ -3736,15 +3868,23 @@ function getUpcomingClosureAnnouncements() {
   }
   return results;
 }
+// 公告單行資料相容處理：舊資料是純文字字串，新資料是 {text,show} 物件，統一轉成物件格式
+function normAnnounceLine(item){
+  if(typeof item === 'string') return { text: item, show: true };
+  return { text: item.text || '', show: item.show !== false };
+}
 (function renderAnnounceBar(){
   const bar           = document.getElementById('announce-bar');
   const closedBar      = document.getElementById('announce-closed-bar');       // ①公休整日預告（單行，多天用「、」串接）
   const hoursBar        = document.getElementById('announce-hours-bar');        // ②營業時間調整預告（標籤一次，每天各自一行對齊）
   const hoursBarContent = document.getElementById('announce-hours-bar-content');
-  const annLines = (STORE_CONFIG.announcementLines || []).filter(l => l !== '');
 
-  // 公告欄：固定顯示公告文字（支援多行）
-  bar.innerHTML = annLines.map(l => `<span>${esc(l)}</span>`).join('<br>');
+  // 公告欄：只顯示 show!==false 的行（隱藏功能：後台把某一行的開關關掉，那一行就不會出現）
+  // 陣列順序＝顯示順序（後台可拖曳「⠿」調整順序＝換位功能）
+  const annLines = (STORE_CONFIG.announcementLines || [])
+    .map(normAnnounceLine)
+    .filter(l => l.show !== false && l.text !== '');
+  bar.innerHTML = annLines.map(l => `<span>${esc(l.text)}</span>`).join('<br>');
 
   const list       = getUpcomingClosureAnnouncements();
   const closedList = list.filter(i => i.type === 'closed');
@@ -3776,10 +3916,20 @@ document.getElementById('delivery-hint-line2').textContent = STORE_CONFIG.delive
 if(STORE_CONFIG.takeoutLabel || STORE_CONFIG.deliveryLabel){
   const btns = document.querySelectorAll('.opt-toggle button[onclick*="selPickup"]');
   btns.forEach(btn => {
+    // 特惠期間：按鈕文字自動改成「外帶自取 85折」這種格式（顯示 promoDiscount）
+    // 不是特惠期間：照後台平常填的「外帶自取按鈕文字」顯示
     if(btn.getAttribute('onclick').includes("'takeout'") && STORE_CONFIG.takeoutLabel)
-      btn.textContent = STORE_CONFIG.takeoutLabel;
-    if(btn.getAttribute('onclick').includes("'delivery'") && STORE_CONFIG.deliveryLabel)
-      btn.textContent = STORE_CONFIG.deliveryLabel;
+      btn.textContent = isPromoActive()
+        ? `外帶自取 ${discPercentText(getEffectiveTakeoutDiscount())}`
+        : STORE_CONFIG.takeoutLabel;
+    // 外送按鈕：只要「現在生效的外送折扣」<1（不論是平常的外送折扣、還是特惠期間的 promoDiscount）
+    //           就自動改成「外送 85折」這種格式，不用手動同步文字；沒打折才照後台填的「外送按鈕文字」顯示
+    if(btn.getAttribute('onclick').includes("'delivery'") && STORE_CONFIG.deliveryLabel){
+      const dDisc = getEffectiveDeliveryDiscount();
+      btn.textContent = dDisc < 1
+        ? `外送 ${discPercentText(dDisc)}`
+        : STORE_CONFIG.deliveryLabel;
+    }
   });
 }
 
@@ -3905,6 +4055,11 @@ function admInitStore(){
   document.getElementById('f-takeoutLabel').value      = SC.takeoutLabel      || '外帶自取 9折';
   document.getElementById('f-deliveryLabel').value     = SC.deliveryLabel     || '外送';
   document.getElementById('f-takeoutDiscount').value   = SC.takeoutDiscount   || 0.9;
+  document.getElementById('f-deliveryDiscount').value  = SC.deliveryDiscount  || 1.0;
+  document.getElementById('f-promoStart').value    = SC.promoStart    || '';
+  document.getElementById('f-promoEnd').value      = SC.promoEnd      || '';
+  document.getElementById('f-promoDiscount').value = SC.promoDiscount || 0.85;
+  document.getElementById('f-promoDeliveryDiscount').value = SC.promoDeliveryDiscount || 0.85;
   // LINE 訊息文字欄位（只保留後台可改的欄位）
   document.getElementById('f-lineLabelPickupTime').value   = SC.lineLabelPickupTime   || '⏰ 預計取餐時間：';
   document.getElementById('f-lineLabelDeliveryTime').value = SC.lineLabelDeliveryTime || '⏰ 預計送達時間：';
@@ -3922,8 +4077,13 @@ function admInitStore(){
   admRenderWeeklySchedule();
 }
 function admReadStore(){
+  // 依畫面上目前的行順序存檔（拖曳排序後，DOM 順序就是新的顯示順序）
   STORE_CONFIG.announcementLines = [];
-  document.querySelectorAll('.adm-announce-line-input').forEach(inp=>STORE_CONFIG.announcementLines.push(inp.value));
+  document.querySelectorAll('#adm-announce-lines-wrap .announce-line-row').forEach(row=>{
+    const text = row.querySelector('.adm-announce-line-input').value;
+    const show = row.querySelector('.adm-announce-line-show').checked;
+    STORE_CONFIG.announcementLines.push({ text, show });
+  });
   STORE_CONFIG.defaultNote = document.getElementById('f-defaultNote').value;
   STORE_CONFIG.deliveryHintLine1 = document.getElementById('f-deliveryHintLine1').value;
   STORE_CONFIG.deliveryHintLine2 = document.getElementById('f-deliveryHintLine2').value;
@@ -3950,6 +4110,11 @@ function admReadStore(){
   STORE_CONFIG.takeoutLabel      = document.getElementById('f-takeoutLabel').value;
   STORE_CONFIG.deliveryLabel     = document.getElementById('f-deliveryLabel').value;
   STORE_CONFIG.takeoutDiscount   = parseFloat(document.getElementById('f-takeoutDiscount').value) || 0.9;
+  STORE_CONFIG.deliveryDiscount  = parseFloat(document.getElementById('f-deliveryDiscount').value) || 1.0;
+  STORE_CONFIG.promoStart    = document.getElementById('f-promoStart').value.trim();
+  STORE_CONFIG.promoEnd      = document.getElementById('f-promoEnd').value.trim();
+  STORE_CONFIG.promoDiscount = parseFloat(document.getElementById('f-promoDiscount').value) || 0.85;
+  STORE_CONFIG.promoDeliveryDiscount = parseFloat(document.getElementById('f-promoDeliveryDiscount').value) || 0.85;
   // LINE 訊息文字欄位（單行防呆：trim後存入）
   STORE_CONFIG.lineLabelPickupTime   = document.getElementById('f-lineLabelPickupTime').value.trim().replace(/\n/g,'');
   STORE_CONFIG.lineLabelDeliveryTime = document.getElementById('f-lineLabelDeliveryTime').value.trim().replace(/\n/g,'');
@@ -4314,10 +4479,26 @@ function admDelWeeklyHourRow(day, btn){
 
 function admAddAnnounceLine(v='', save=true){
   if(save) admReadStore();
+  const item = normAnnounceLine(v);
   const wrap=document.getElementById('adm-announce-lines-wrap');
-  const row=document.createElement('div'); row.className='popup-line-row';
-  row.innerHTML=`<input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="${esc(v)}"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button>`;
+  const row=document.createElement('div'); row.className='announce-line-row'; row.draggable=true;
+  row.innerHTML=`<span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="${esc(item.text)}"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" ${item.show?'checked':''}><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button>`;
+  admBindAnnounceDrag(row);
   wrap.appendChild(row);
+}
+
+// ── 公告列拖曳排序（換位功能）：抓住「⠿」拖到想要的順序放開即可，不用打字改順序 ──
+let admAnnounceDragRow = null;
+function admBindAnnounceDrag(row){
+  row.addEventListener('dragstart', ()=>{ admAnnounceDragRow = row; row.classList.add('dragging'); });
+  row.addEventListener('dragend',   ()=>{ row.classList.remove('dragging'); row.classList.remove('drag-over'); });
+  row.addEventListener('dragover', (e)=>{ e.preventDefault(); if(row!==admAnnounceDragRow) row.classList.add('drag-over'); });
+  row.addEventListener('dragleave', ()=>{ row.classList.remove('drag-over'); });
+  row.addEventListener('drop', (e)=>{
+    e.preventDefault(); row.classList.remove('drag-over');
+    if(!admAnnounceDragRow || admAnnounceDragRow===row) return;
+    row.parentElement.insertBefore(admAnnounceDragRow, row);
+  });
 }
 
 function admAddPopupLine(v='', save=true){
@@ -4765,6 +4946,12 @@ function admDownload(){
   takeoutLabel: ${js(SC2.takeoutLabel||'外帶自取 9折')},
   deliveryLabel: ${js(SC2.deliveryLabel||'外送')},
   takeoutDiscount: ${SC2.takeoutDiscount||0.9},   // 0.9=九折 / 0.85=八五折 / 1.0=不打折
+  deliveryDiscount: ${SC2.deliveryDiscount||1.0},  // 外送折扣，用法同 takeoutDiscount，預設 1.0=不打折
+  // ── 限時特惠折扣（只在區間內生效，期滿自動恢復上面的 takeoutDiscount/deliveryDiscount，免手動改回）──
+  promoStart: ${js(SC2.promoStart||'')},
+  promoEnd: ${js(SC2.promoEnd||'')},
+  promoDiscount: ${SC2.promoDiscount||0.85},          // 外帶特惠折扣
+  promoDeliveryDiscount: ${SC2.promoDeliveryDiscount||0.85},  // 外送特惠折扣
   lineNotifyHeader: ${js(SC2.lineNotifyHeader||'🍱 香品小食堂｜新訂單通知')},
   // ── LINE 訊息：取餐時間標籤（依模式不同，後台可修改）──
   lineLabelPickupTime:    ${js(SC2.lineLabelPickupTime||'⏰ 預計取餐時間：')},
