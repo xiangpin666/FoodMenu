@@ -425,7 +425,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
   <div class="announce-closed-bar" id="announce-closed-bar" style="display:none"></div>
   <div class="announce-hours-bar" id="announce-hours-bar" style="display: flex;">
     <span class="ahb-label">⚠️ 營業時間調整：</span>
-    <div class="ahb-content" id="announce-hours-bar-content"><div>8/21 (五) 16:00-翌日03:00 。</div></div>
+    <div class="ahb-content" id="announce-hours-bar-content"><div>8/23 (日) 17:00-翌日03:00 。</div></div>
   </div>
   <div id="menu-content"></div>
 
@@ -835,39 +835,46 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
 
         <div class="adm-label" style="margin-bottom:.5rem">① 重複公休（每週固定星期幾）</div>
-        <div id="adm-weekly-closed-chips" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.375rem"><button type="button" class="wk-chip " onclick="admSetDayClosed('mon', true)">週一 8/24</button><button type="button" class="wk-chip " onclick="admSetDayClosed('tue', true)">週二 8/25</button><button type="button" class="wk-chip " onclick="admSetDayClosed('wed', true)">週三 8/26</button><button type="button" class="wk-chip " onclick="admSetDayClosed('thu', true)">週四 8/27</button><button type="button" class="wk-chip " onclick="admSetDayClosed('fri', true)">週五 8/21</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sat', true)">週六 8/22</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sun', true)">週日 8/23</button></div>
+        <div id="adm-weekly-closed-chips" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.375rem"><button type="button" class="wk-chip " onclick="admSetDayClosed('mon', true)">週一 8/24</button><button type="button" class="wk-chip " onclick="admSetDayClosed('tue', true)">週二 8/25</button><button type="button" class="wk-chip " onclick="admSetDayClosed('wed', true)">週三 8/26</button><button type="button" class="wk-chip " onclick="admSetDayClosed('thu', true)">週四 8/27</button><button type="button" class="wk-chip " onclick="admSetDayClosed('fri', true)">週五 8/28</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sat', true)">週六 8/22</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sun', true)">週日 8/23</button></div>
         <div style="font-size:.7rem;color:#aaa;margin-bottom:.875rem">💡 點選星期幾＝切換該天固定公休／營業，與上方「⏰ 每週固定營業時間」共用同一份設定（改這裡，上面也會跟著變，反之亦然）</div>
 
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .875rem"></div>
 
         <div class="adm-label" style="margin-bottom:.5rem">② 單日特例（只影響特定一天）</div>
-        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex0">
+        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex2">
     <div class="closed-range-row-title">
       📅 單日特例
       <span style="margin-left:auto;display:flex;gap:.375rem">
-        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex0')" title="複製此列設定，新增下一天">⧉ 複製</button>
+        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex2')" title="複製此列設定，新增下一天">⧉ 複製</button>
         <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
       </span>
     </div>
     <div class="closed-range-fields">
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-21"></div>
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-24"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex0-type" class="de-type-radio" value="closed" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
+          <input type="radio" name="dex2-type" class="de-type-radio" value="closed" checked="" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
         </label>
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex0-type" class="de-type-radio" value="hours" checked="" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
+          <input type="radio" name="dex2-type" class="de-type-radio" value="hours" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
         </label>
       </div>
-      <div class="de-hours-wrap" data-uid="dex0" style="display:block">
+      <div class="de-hours-wrap" data-uid="dex2" style="display: block;">
     <div class="wk-hour-row de-hour-row" data-idx="0">
+      <input type="time" class="de-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex2', this)" title="刪除此時段">✕</button>
+    </div>
+  
+    <div class="wk-hour-row de-hour-row" data-idx="1">
       <input type="time" class="de-start-t bh-time-input" value="16:00">
       <span style="color:#999">～</span>
       <input type="time" class="de-end-t bh-time-input" value="03:00">
-      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex2', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex2')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
       <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
         <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
@@ -875,35 +882,42 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
         <option value="custom">✏️ 自行輸入備註</option>
       </select>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/21(五) 下午 16:00 營業，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
+      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="" style="width:100%;margin-bottom:0">
     </div>
-  </div><div class="closed-range-row date-exception-row" data-uid="dex1">
+  </div><div class="closed-range-row date-exception-row" data-uid="dex3">
     <div class="closed-range-row-title">
       📅 單日特例
       <span style="margin-left:auto;display:flex;gap:.375rem">
-        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex1')" title="複製此列設定，新增下一天">⧉ 複製</button>
+        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex3')" title="複製此列設定，新增下一天">⧉ 複製</button>
         <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
       </span>
     </div>
     <div class="closed-range-fields">
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-22"></div>
+      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-23"></div>
       <div class="closed-range-label" style="margin-top:.5rem">類型</div>
       <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex1-type" class="de-type-radio" value="closed" checked="" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
+          <input type="radio" name="dex3-type" class="de-type-radio" value="closed" checked="" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
         </label>
         <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex1-type" class="de-type-radio" value="hours" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
+          <input type="radio" name="dex3-type" class="de-type-radio" value="hours" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
         </label>
       </div>
-      <div class="de-hours-wrap" data-uid="dex1" style="display: block;">
+      <div class="de-hours-wrap" data-uid="dex3" style="display: block;">
     <div class="wk-hour-row de-hour-row" data-idx="0">
+      <input type="time" class="de-start-t bh-time-input" value="09:30">
+      <span style="color:#999">～</span>
+      <input type="time" class="de-end-t bh-time-input" value="14:00">
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex3', this)" title="刪除此時段">✕</button>
+    </div>
+  
+    <div class="wk-hour-row de-hour-row" data-idx="1">
       <input type="time" class="de-start-t bh-time-input" value="16:00">
       <span style="color:#999">～</span>
       <input type="time" class="de-end-t bh-time-input" value="03:00">
-      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex1', this)" title="刪除此時段">✕</button>
+      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex3', this)" title="刪除此時段">✕</button>
     </div>
-  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex1')">＋ 加時段</button></div>
+  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex3')">＋ 加時段</button></div>
       <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
       <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
         <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
@@ -2525,26 +2539,34 @@ const STORE_CONFIG = {
   // ── ②單日特例（只影響特定一天，不會每週重複，見上方說明）──
   dateExceptions: [
   {
-    "date": "2026-08-21",
+    "date": "2026-08-22",
     "type": "hours",
     "hours": [
       {
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
         "start": "16:00",
-        "end": "21:30"
+        "end": "19:00"
       }
     ],
-    "note": "8/21(五) 營業時間 16:00-21:30 ，造成不便敬請見諒。期待下次為您服務！☕️✨"
+    "note": "8/22(六) 營業時間至 19:00，造成不便敬請見諒。期待下次為您服務！☕️✨"
   },
   {
     "date": "2026-08-23",
     "type": "hours",
     "hours": [
       {
-        "start": "17:00",
-        "end": "03:00"
+        "start": "09:30",
+        "end": "14:00"
+      },
+      {
+        "start": "16:00",
+        "end": "21:30"
       }
     ],
-    "note": "8/23(日) 營業時間 17:00-03:00，造成不便敬請見諒。期待下次為您服務！☕️✨"
+    "note": "8/23(日) 營業時間至 21:30，造成不便敬請見諒。期待下次為您服務！☕️✨"
   }
 ],
   announcementLines: [
@@ -2742,7 +2764,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260821-01';
+const VER = '20260822-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
