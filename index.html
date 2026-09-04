@@ -421,7 +421,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
     </div>
   </div>
 
-  <div class="announce" id="announce-bar"><span>⏰營業時間：09:30-14:00｜16:00-凌晨03:00</span><br><span>🎉四週年限時優惠(8/21-8/31) ，🥡外帶自取 85折 /🛵 外送 95折</span></div>
+  <div class="announce" id="announce-bar"><span>⏰營業時間：10:00-13:30｜16:30-24:00</span><br><span>📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)</span></div>
   <div class="announce-closed-bar" id="announce-closed-bar" style="display:none"></div>
   <div class="announce-hours-bar" id="announce-hours-bar" style="display: none;">
     <span class="ahb-label">⚠️ 營業時間調整：</span>
@@ -438,10 +438,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 </div>
 
 <!-- 公休遮罩 -->
-<div class="closed-overlay open" id="closed-overlay">
+<div class="closed-overlay" id="closed-overlay">
   <div class="closed-icon">🔒</div>
   <div class="closed-title">目前為公休時間</div>
-  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size: 0.875rem; opacity: 0.7; margin-top: 0.5rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;">今日公休</span><span id="closed-range-note" style="font-size: 0.8125rem; opacity: 0.65; margin-top: 0.25rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;">9/01(二) 營業至 21:30，造成不便敬請見諒。期待下次為您服務！☕️✨</span></div>
+  <div class="closed-msg">暫不開放點餐，感謝您的光臨。<br>請於營業時段再來訂餐，謝謝！<br><span id="closed-range-hint" style="font-size: 0.875rem; opacity: 0.7; margin-top: 0.5rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;"></span><span id="closed-range-note" style="font-size: 0.8125rem; opacity: 0.65; margin-top: 0.25rem; display: block; white-space: normal; overflow: visible; text-overflow: clip; max-width: 90vw;"></span></div>
   <button class="closed-adm-btn" onclick="admOpenPw()" title="">⚙️</button>
 </div>
 
@@ -487,7 +487,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
           <span class="opt-label">🛍 取餐方式 <span style="color:#c4390a;font-weight:700;font-size:.75rem">*必填</span></span>
         </div>
         <div class="opt-toggle" style="margin-bottom:6px;width:100%">
-          <button class="sel" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
+          <button class="sel" id="takeout-pickup-btn" onclick="selPickup('takeout',this)" style="flex:1">外帶自取 9折</button>
           <button id="delivery-pickup-btn" onclick="selPickup('delivery',this)" style="flex: 1 1 0%;">外送</button>
         </div>
         <div class="delivery-hint" id="delivery-hint" style="margin-bottom:8px">
@@ -537,7 +537,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="reserve-wrap" id="reserve-wrap">
           <div class="reserve-date-label" style="margin-bottom:.375rem">📆 選擇取餐日期 <span style="font-size:.75rem;color:#888;font-weight:400">（僅受理3日內預約）</span></div>
           <div class="reserve-date-btns" id="reserve-date-btns"></div>
-          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400" id="reserve-hours-hint">（週一～日 09:30-14:00 ； 16:00-翌日03:00）</span></div>
+          <div class="reserve-time-label">⏰ 預約取餐時間 <span style="font-size:.75rem;color:#888;font-weight:400" id="reserve-hours-hint">（週一～日 10:00-13:30 ； 16:30-翌日00:00）</span></div>
           <div style="width:100%;overflow:hidden;box-sizing:border-box;">
           <input type="time" class="reserve-time-input" id="reserve-time-input" min="00:00" max="23:59" value="12:00" onchange="onReserveTimeChange(this)">
           </div>
@@ -589,7 +589,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="sum-disc-row" id="sum-disc"><span>外帶自取 9折</span><span id="sum-disc-val">-$33</span></div>
       <div class="summary-total"><span>合計</span><span id="sum-total">$0</span></div>
     </div>
-    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="opacity: 0.45; cursor: not-allowed;" disabled="">確認下單</button>
+    <button class="checkout-btn" id="checkout-main-btn" onclick="placeOrder()" style="">確認下單</button>
   </div>
 </div>
 
@@ -666,16 +666,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-mon">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('mon', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('mon', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('mon')">＋ 加時段（如：午休分段）</button></div>
@@ -689,16 +689,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-tue">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('tue', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('tue', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('tue')">＋ 加時段（如：午休分段）</button></div>
@@ -712,16 +712,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-wed">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('wed', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('wed', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('wed')">＋ 加時段（如：午休分段）</button></div>
@@ -735,16 +735,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-thu">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('thu', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('thu', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('thu')">＋ 加時段（如：午休分段）</button></div>
@@ -758,16 +758,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-fri">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('fri', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('fri', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('fri')">＋ 加時段（如：午休分段）</button></div>
@@ -781,16 +781,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-sat">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sat', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sat', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('sat')">＋ 加時段（如：午休分段）</button></div>
@@ -804,16 +804,16 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       </div>
       <div class="wk-day-body" id="wk-body-sun">
     <div class="wk-hour-row" data-idx="0">
-      <input type="time" class="wk-start-t bh-time-input" value="09:30">
+      <input type="time" class="wk-start-t bh-time-input" value="10:00">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="14:00">
+      <input type="time" class="wk-end-t bh-time-input" value="13:30">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sun', this)" title="刪除此時段">✕</button>
     </div>
   
     <div class="wk-hour-row" data-idx="1">
-      <input type="time" class="wk-start-t bh-time-input" value="16:00">
+      <input type="time" class="wk-start-t bh-time-input" value="16:30">
       <span style="color:#999">～</span>
-      <input type="time" class="wk-end-t bh-time-input" value="03:00">
+      <input type="time" class="wk-end-t bh-time-input" value="00:00">
       <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelWeeklyHourRow('sun', this)" title="刪除此時段">✕</button>
     </div>
   <button class="adm-add-hour-btn" style="margin:.25rem 0 0" onclick="admAddWeeklyHourRow('sun')">＋ 加時段（如：午休分段）</button></div>
@@ -823,7 +823,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <label class="adm-label">遮罩標題</label>
         <input class="adm-input" type="text" id="f-outsideHoursTitle" placeholder="目前非營業時間">
         <label class="adm-label">遮罩備註 <span class="sub">（留空 = 自動顯示營業時間文字）</span></label>
-        <input class="adm-input" type="text" id="f-outsideHoursNote" placeholder="留空則自動顯示「營業時間：週一～日 09:30-14:00 ； 16:00-翌日03:00」">
+        <input class="adm-input" type="text" id="f-outsideHoursNote" placeholder="留空則自動顯示「營業時間：週一～日 10:00-13:30 ； 16:30-24:00」">
       </div>
 
       <div class="adm-card">
@@ -835,56 +835,13 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         </div>
 
         <div class="adm-label" style="margin-bottom:.5rem">① 重複公休（每週固定星期幾）</div>
-        <div id="adm-weekly-closed-chips" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.375rem"><button type="button" class="wk-chip " onclick="admSetDayClosed('mon', true)">週一 9/7</button><button type="button" class="wk-chip " onclick="admSetDayClosed('tue', true)">週二 9/1</button><button type="button" class="wk-chip " onclick="admSetDayClosed('wed', true)">週三 9/2</button><button type="button" class="wk-chip " onclick="admSetDayClosed('thu', true)">週四 9/3</button><button type="button" class="wk-chip " onclick="admSetDayClosed('fri', true)">週五 9/4</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sat', true)">週六 9/5</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sun', true)">週日 9/6</button></div>
+        <div id="adm-weekly-closed-chips" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.375rem"><button type="button" class="wk-chip " onclick="admSetDayClosed('mon', true)">週一 9/7</button><button type="button" class="wk-chip " onclick="admSetDayClosed('tue', true)">週二 9/8</button><button type="button" class="wk-chip " onclick="admSetDayClosed('wed', true)">週三 9/9</button><button type="button" class="wk-chip " onclick="admSetDayClosed('thu', true)">週四 9/10</button><button type="button" class="wk-chip " onclick="admSetDayClosed('fri', true)">週五 9/4</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sat', true)">週六 9/5</button><button type="button" class="wk-chip " onclick="admSetDayClosed('sun', true)">週日 9/6</button></div>
         <div style="font-size:.7rem;color:#aaa;margin-bottom:.875rem">💡 點選星期幾＝切換該天固定公休／營業，與上方「⏰ 每週固定營業時間」共用同一份設定（改這裡，上面也會跟著變，反之亦然）</div>
 
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .875rem"></div>
 
         <div class="adm-label" style="margin-bottom:.5rem">② 單日特例（只影響特定一天）</div>
-        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"><div class="closed-range-row date-exception-row" data-uid="dex0">
-    <div class="closed-range-row-title">
-      📅 單日特例
-      <span style="margin-left:auto;display:flex;gap:.375rem">
-        <button class="adm-add-hour-btn" style="padding:.2rem .6rem" onclick="admCopyDateException('dex0')" title="複製此列設定，新增下一天">⧉ 複製</button>
-        <button class="adm-del-btn" onclick="this.closest('.closed-range-row').remove()" title="刪除此特例">✕</button>
-      </span>
-    </div>
-    <div class="closed-range-fields">
-      <div style="display:flex;align-items:center;gap:.5rem"><span class="closed-range-label" style="margin:0;white-space:nowrap">📆 日期</span><input type="date" class="de-date adm-input" style="flex:1;margin-bottom:0" value="2026-08-30"></div>
-      <div class="closed-range-label" style="margin-top:.5rem">類型</div>
-      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:.375rem">
-        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex0-type" class="de-type-radio" value="closed" checked="" onchange="admToggleDateExceptionType(this)"> 🔴 本日公休
-        </label>
-        <label style="display:flex;align-items:center;gap:.3rem;font-size:.8125rem;cursor:pointer">
-          <input type="radio" name="dex0-type" class="de-type-radio" value="hours" onchange="admToggleDateExceptionType(this)"> 🕐 當天營業時間調整
-        </label>
-      </div>
-      <div class="de-hours-wrap" data-uid="dex0" style="display: block;">
-    <div class="wk-hour-row de-hour-row" data-idx="0">
-      <input type="time" class="de-start-t bh-time-input" value="09:30">
-      <span style="color:#999">～</span>
-      <input type="time" class="de-end-t bh-time-input" value="14:00">
-      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
-    </div>
-  
-    <div class="wk-hour-row de-hour-row" data-idx="1">
-      <input type="time" class="de-start-t bh-time-input" value="16:00">
-      <span style="color:#999">～</span>
-      <input type="time" class="de-end-t bh-time-input" value="03:00">
-      <button class="adm-del-btn" style="width:1.75rem;height:1.75rem;flex-shrink:0" onclick="admDelExceptionHourRow('dex0', this)" title="刪除此時段">✕</button>
-    </div>
-  <button class="adm-add-hour-btn" style="margin:.25rem 0 .375rem" onclick="admAddExceptionHourRow('dex0')">＋ 加時段</button></div>
-      <div class="closed-range-label" style="margin-top:.375rem">📝 備註（選填，顯示於公休遮罩下方）</div>
-      <select class="adm-input de-note-tpl" style="width:100%;margin-bottom:.375rem;color:#666" onchange="admApplyNoteTemplate(this)">
-        <option value="">— 套用範本（套用後仍可自行修改文字）—</option>
-        <option value="hours">🕐 (該日期) 下午 XX:XX 營業，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
-        <option value="closed">🔴 (該日期) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨</option>
-        <option value="custom">✏️ 自行輸入備註</option>
-      </select>
-      <input type="text" class="adm-input de-note" placeholder="例：颱風備料延後" value="8/30(日) 公休一天，造成不便敬請見諒。期待下次為您服務！☕️✨" style="width:100%;margin-bottom:0">
-    </div>
-  </div></div>
+        <div id="adm-date-exceptions-wrap" style="display:flex;flex-direction:column;gap:.625rem;margin-bottom:.625rem"></div>
         <button class="adm-add-row-btn" onclick="admAddDateException()">＋ 新增單日特例</button>
       </div>
 
@@ -896,7 +853,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-tip">✏️ 填入頁面最頂部黃色條狀的公告文字，可新增第2、3、4行，多行會自動換行顯示。<br>
         每一行最左邊 <b>⠿</b> 可以按住拖曳，調整這行公告顯示的先後順序。<br>
         每一行最右邊的開關可以暫時把該行隱藏（文字還在、不用刪掉，只是先不顯示），要恢復再打開就好。</div>
-        <div id="adm-announce-lines-wrap"><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：09:30-14:00｜16:00-凌晨03:00"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show"><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="🎉四週年限時優惠(8/21-8/31) ，🥡外帶自取 85折 /🛵 外送 95折"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div id="adm-announce-lines-wrap"><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="⏰營業時間：10:00-13:30｜16:30-24:00"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="announce-line-row" draggable="true"><span class="drag-handle">⠿</span><input type="text" class="adm-input adm-announce-line-input" placeholder="第 N 行公告文字" value="📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)"><label class="sw sw-sm"><input type="checkbox" class="adm-announce-line-show" checked=""><span class="sw-slider"></span></label><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddAnnounceLine('')">＋ 新增一行</button>
       </div>
 
@@ -904,7 +861,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
       <div class="adm-card">
         <div class="adm-card-title">📬 進入頁面彈窗公告</div>
         <div class="adm-tip">✏️ 每行一個字串。<code>空白行</code>＝空一行。<strong>全部刪除</strong>＝不顯示彈窗。</div>
-        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🛵外送服務：09:30-14:00 ； 16:00-21:30，請先洽詢店家"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
+        <div id="adm-popup-lines-wrap"><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="🍱歡迎光臨【香品小食堂🍲】"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="堅持現點現做，完美滋味值得您耐心等待⏳"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value=""><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="💡貼心小提醒："><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div><div class="popup-line-row"><input type="text" class="adm-input adm-popup-line-input" placeholder="（空白行請留空）" value="量多請提前預約，為您保留美味並節省時間⏰"><button class="adm-del-btn" onclick="this.parentElement.remove()">✕</button></div></div>
         <button class="adm-add-row-btn" onclick="admAddPopupLine('')">＋ 新增一行</button>
       </div>
 
@@ -953,6 +910,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
         <div class="adm-tip">✏️ 以下文字直接顯示在點餐頁面，改完存檔即生效。</div>
 
         <div class="adm-card-title" style="margin-bottom:.25rem;font-size:.9rem">🥡 外帶自取</div>
+        <div class="adm-toggle-row" style="margin-bottom:.5rem">
+          <span class="adm-toggle-label">開放外帶自取 <span class="sub">（關閉後，點餐畫面不再顯示「外帶自取」選項）</span></span>
+          <label class="sw"><input type="checkbox" id="f-takeoutEnabled" checked="" onchange="admGuardPickupToggle('takeout', this)"><span class="sw-slider"></span></label>
+        </div>
         <label class="adm-label">按鈕文字 <span class="sub">（例：外帶自取 9折）</span></label>
         <input class="adm-input" type="text" id="f-takeoutLabel">
         <label class="adm-label">折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
@@ -960,6 +921,10 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 
         <div style="height:1px;background:#f0f0f0;margin:.75rem 0 .625rem"></div>
         <div class="adm-card-title" style="margin-bottom:.25rem;font-size:.9rem">🛵 外送</div>
+        <div class="adm-toggle-row" style="margin-bottom:.5rem">
+          <span class="adm-toggle-label">開放外送 <span class="sub">（關閉後，點餐畫面不再顯示「外送」選項）</span></span>
+          <label class="sw"><input type="checkbox" id="f-deliveryEnabled" checked="" onchange="admGuardPickupToggle('delivery', this)"><span class="sw-slider"></span></label>
+        </div>
         <label class="adm-label">按鈕文字 <span class="sub">（例：外送。有打折時按鈕自動改顯示「外送 9折」，此欄只在「不打折」時顯示）</span></label>
         <input class="adm-input" type="text" id="f-deliveryLabel">
         <label class="adm-label">折扣 <span class="sub">（0.9 = 九折 / 1.0 = 不打折 / 0.85 = 八五折）</span></label>
@@ -2301,7 +2266,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║      效果與公休日相同，不需另外設定 dateExceptions                  ║
 // ║    ⚠️ 所有時間皆為台灣時間（GMT+8）                                 ║
 // ║                                                                      ║
-// ║    本店目前設定：全週 09:30-14:00、16:00-翌日03:00（無固定公休日）  ║
+// ║    本店目前設定：全週 10:00-13:30、16:30-翌日00:00（無固定公休日）  ║
 // ║                                                                      ║
 // ║  dateExceptions  ← ②單日特例（只影響某一個特定日期，不會每週重複） ║
 // ║    每筆格式：                                                        ║
@@ -2335,7 +2300,7 @@ button{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 // ║  deliveryHintLine2 → 選「外送」後粉框第二行（紅字）                 ║
 // ║  outsideHoursTitle → 空班時段（非公休）遮罩標題文字                 ║
 // ║  outsideHoursNote  → 空班時段（非公休）遮罩備註文字                 ║
-// ║    留空 = 自動顯示「營業時間：09:30-14:00 ； 16:00-翌日03:00」      ║
+// ║    留空 = 自動顯示「營業時間：10:00-13:30 ； 16:30-翌日00:00」      ║
 // ║    有填 = 改顯示這行自訂文字，取代自動產生的營業時間文字            ║
 // ║    💡 建議留空：自動產生的文字會跟著 weeklySchedule 即時更新，       ║
 // ║       手動填死文字改時段容易忘記同步修改，導致資訊不一致            ║
@@ -2405,12 +2370,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2418,12 +2383,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2431,12 +2396,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2444,12 +2409,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2457,12 +2422,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2470,12 +2435,12 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   },
@@ -2483,46 +2448,26 @@ const STORE_CONFIG = {
     "closed": false,
     "hours": [
       {
-        "start": "09:30",
-        "end": "14:00"
+        "start": "10:00",
+        "end": "13:30"
       },
       {
-        "start": "16:00",
-        "end": "03:00"
+        "start": "16:30",
+        "end": "00:00"
       }
     ]
   }
 },
   // ── ②單日特例（只影響特定一天，不會每週重複，見上方說明）──
-  dateExceptions: [
-  {
-    "date": "2026-09-01",
-    "type": "hours",
-    "hours": [
-      {
-        "start": "09:30",
-        "end": "14:00"
-      },
-      {
-        "start": "16:00",
-        "end": "21:30"
-      }
-    ],
-    "note": "9/01(二) 營業至 21:30，造成不便敬請見諒。期待下次為您服務！☕️✨"
-  }
-],
+  dateExceptions: [],
   announcementLines: [
   {
-    "text": "⏰營業時間：09:30-14:00｜16:00-凌晨03:00",
+    "text": "⏰營業時間：10:00-13:30｜16:30-24:00",
     "show": true
   },
   {
-    "text": "📢外帶自取 9折，訂單滿600元、距離3公里內可外送(請先洽詢)",
+    "text": "📢Line官方訂餐，外帶自取 9折（❌目前暫無外送服務！）",
     "show": true
-  },
-  {
-    "text": "🎉四週年限時優惠(8/21-8/31) ，🥡外帶自取 85折 /🛵 外送 95折",
-    "show": false
   }
 ],
   popupLines: [
@@ -2530,8 +2475,7 @@ const STORE_CONFIG = {
   "堅持現點現做，完美滋味值得您耐心等待⏳",
   "",
   "💡貼心小提醒：",
-  "量多請提前預約，為您保留美味並節省時間⏰",
-  "🛵外送服務：09:30-14:00 ； 16:00-21:30，請先洽詢店家"
+  "量多請提前預約，為您保留美味並節省時間⏰"
 ],
   defaultNote: "例：口味調整、其他需求...",
   deliveryHintLine1: "🔺訂單滿600元、距離3公里內即可外送（請先洽詢店家）",
@@ -2553,6 +2497,9 @@ const STORE_CONFIG = {
   deliveryLabel: "外送",
   takeoutDiscount: 0.9,   // 0.9=九折 / 0.85=八五折 / 1.0=不打折
   deliveryDiscount: 1,  // 外送折扣，用法同 takeoutDiscount，預設 1.0=不打折
+  // ── 外帶／外送開關：關閉後，點餐頁自動隱藏該取餐方式按鈕（後台「🛵 外帶與外送設定」可切換）──
+  takeoutEnabled: true,
+  deliveryEnabled: false,
   // ── 限時特惠折扣（只在區間內生效，期滿自動恢復上面的 takeoutDiscount/deliveryDiscount，免手動改回）──
   promoStart: "2026-08-21",
   promoEnd: "2026-08-31",
@@ -2706,7 +2653,7 @@ const MENU_DATA = [
 // ║               改完後點【💾 存檔】→ 下載 HTML → 上傳 GitHub          ║
 // ╚══════════════════════════════════════════════════════════════════════╝
 const LIFF_ID = '2009693763-bOg2whDg';
-const VER = '20260901-02';
+const VER = '20260904-01';
 const GITHUB_RAW_URL = 'https://raw.githubusercontent.com/xiangpin666/FoodMenu/main/index.html';
 const ADM_PW = '233009';
 
@@ -2952,6 +2899,7 @@ function openCart(){
   updateSummary();
   // 每次開啟購物車：重新檢查外送服務時間狀態
   _lastDeliveryAllowed = null; // 強制重新比對，避免快取狀態未更新
+  applyPickupAvailability();
   checkDeliveryAvailability();
   // 每次開啟購物車：依目前模式刷新取餐時段或預約日期
   if (isReserveMode) {
@@ -3015,6 +2963,14 @@ function selOpt(key,val,btn){
   btn.classList.add('sel');
   if(key==='receipt'){ document.getElementById('receipt-tax-row').classList.toggle('show',val==='yes'); if(val!=='yes') document.getElementById('receipt-tax-id').classList.remove('error'); }
   updateSummary();
+}
+// ── 後台「開放外帶自取／開放外送」開關：防止兩個都關閉（否則點餐頁會沒有任何取餐方式可選）──
+function admGuardPickupToggle(which, cb){
+  const other = document.getElementById(which === 'takeout' ? 'f-deliveryEnabled' : 'f-takeoutEnabled');
+  if (!cb.checked && other && !other.checked) {
+    cb.checked = true;
+    alert('⚠️ 外帶自取／外送不能同時關閉，至少要保留一種取餐方式。');
+  }
 }
 function selPickup(val, btn){
   if (val === 'delivery' && !isDeliveryTimeAllowed()) {
@@ -3719,8 +3675,8 @@ function checkDeliveryAvailability() {
       note.style.display = '';
       note.textContent = `🛵 外送服務時間 ${formatDeliveryHoursText()}，目前非外送時段，僅能選擇外帶自取`;
     }
-    // 若客人正好選在「外送」，時間一到自動切回外帶自取
-    if (opts.pickup === 'delivery') {
+    // 若客人正好選在「外送」，時間一到自動切回外帶自取（僅在外帶自取仍開放時才自動切換）
+    if (opts.pickup === 'delivery' && STORE_CONFIG.takeoutEnabled !== false) {
       const takeoutBtn = document.querySelector('.opt-toggle button[onclick*="selPickup(\'takeout\'"]');
       if (takeoutBtn) selPickup('takeout', takeoutBtn);
       alert(`⚠️ 外送服務時間為 ${formatDeliveryHoursText()}，目前非外送時段，已自動切換為外帶自取。`);
@@ -3728,6 +3684,45 @@ function checkDeliveryAvailability() {
   }
 }
 setInterval(checkDeliveryAvailability, 1000);
+
+// ════════════════════════════════════════════════════════════════
+//  🛍 依後台「開放外帶自取／開放外送」開關，決定點餐頁要顯示哪些取餐方式
+//  ────────────────────────────────────────────────────────────
+//  關閉的選項會直接從畫面隱藏（不只是變灰無法點），若只剩一種可選，
+//  自動幫客人選定該種，不需要客人再手動點一次
+// ════════════════════════════════════════════════════════════════
+function applyPickupAvailability(){
+  const takeoutBtn  = document.getElementById('takeout-pickup-btn');
+  const deliveryBtn = document.getElementById('delivery-pickup-btn');
+  if (!takeoutBtn || !deliveryBtn) return;
+
+  const takeoutOn  = STORE_CONFIG.takeoutEnabled  !== false;
+  const deliveryOn = STORE_CONFIG.deliveryEnabled !== false;
+  // 防呆：若設定檔誤將兩者都設為 false，視同都開放，避免點餐頁完全無法下單
+  const bothOff = !takeoutOn && !deliveryOn;
+  const showTakeout  = bothOff || takeoutOn;
+  const showDelivery = bothOff || deliveryOn;
+
+  takeoutBtn.style.display  = showTakeout  ? '' : 'none';
+  deliveryBtn.style.display = showDelivery ? '' : 'none';
+
+  if (showTakeout && !showDelivery) {
+    // 只開放外帶自取：隱藏外送按鈕，並自動選定外帶自取
+    selPickup('takeout', takeoutBtn);
+  } else if (showDelivery && !showTakeout) {
+    // 只開放外送：隱藏外帶自取按鈕，並自動選定外送
+    if (isDeliveryTimeAllowed()) {
+      selPickup('delivery', deliveryBtn);
+    } else {
+      // 目前非外送服務時段、外帶自取又被關閉：仍先選定外送畫面狀態，
+      // 由 checkDeliveryAvailability() 顯示「非外送時段」提示
+      opts.pickup = 'delivery';
+      deliveryBtn.classList.add('sel');
+      document.getElementById('delivery-hint').classList.add('show');
+      document.getElementById('delivery-fields').classList.add('show');
+    }
+  }
+}
 
 // ── 判斷「現在」是否為公休／非營業時間 ──
 // isOutsideBusinessHours() 已經整合了固定公休、單日特例（公休/時間調整）、
@@ -3808,6 +3803,7 @@ function isClosedOnSubmit() {
 
 // 初始化
 renderTabs(); renderMenu();
+applyPickupAvailability();
 checkDeliveryAvailability();
 // ── 依 STORE_CONFIG.weeklySchedule 更新預約取餐時間提示文字 ──
 (function renderReserveHoursHint(){
@@ -4020,6 +4016,8 @@ function admInitStore(){
   document.getElementById('f-deliveryLabel').value     = SC.deliveryLabel     || '外送';
   document.getElementById('f-takeoutDiscount').value   = SC.takeoutDiscount   || 0.9;
   document.getElementById('f-deliveryDiscount').value  = SC.deliveryDiscount  || 1.0;
+  document.getElementById('f-takeoutEnabled').checked  = SC.takeoutEnabled  !== false;
+  document.getElementById('f-deliveryEnabled').checked = SC.deliveryEnabled !== false;
   document.getElementById('f-promoStart').value    = SC.promoStart    || '';
   document.getElementById('f-promoEnd').value      = SC.promoEnd      || '';
   document.getElementById('f-promoDiscount').value = SC.promoDiscount || 0.85;
@@ -4075,6 +4073,13 @@ function admReadStore(){
   STORE_CONFIG.deliveryLabel     = document.getElementById('f-deliveryLabel').value;
   STORE_CONFIG.takeoutDiscount   = parseFloat(document.getElementById('f-takeoutDiscount').value) || 0.9;
   STORE_CONFIG.deliveryDiscount  = parseFloat(document.getElementById('f-deliveryDiscount').value) || 1.0;
+  STORE_CONFIG.takeoutEnabled    = document.getElementById('f-takeoutEnabled').checked;
+  STORE_CONFIG.deliveryEnabled   = document.getElementById('f-deliveryEnabled').checked;
+  if (!STORE_CONFIG.takeoutEnabled && !STORE_CONFIG.deliveryEnabled) {
+    // 防呆：兩者都關閉時強制保留外帶自取，避免點餐頁完全無法下單
+    STORE_CONFIG.takeoutEnabled = true;
+    document.getElementById('f-takeoutEnabled').checked = true;
+  }
   STORE_CONFIG.promoStart    = document.getElementById('f-promoStart').value.trim();
   STORE_CONFIG.promoEnd      = document.getElementById('f-promoEnd').value.trim();
   STORE_CONFIG.promoDiscount = parseFloat(document.getElementById('f-promoDiscount').value) || 0.85;
@@ -4134,7 +4139,7 @@ function admReadStore(){
 // e = { date:"YYYY-MM-DD", type:"closed"|"hours", hours:[{start,end}...], note } 或 undefined（新增空白列，預設今天）
 let admDateExceptionSeq = 0;
 // 切換到「當天營業時間調整」但尚未填過時段時，預設帶入這兩段（基本設定）
-const DEX_DEFAULT_HOURS = [{start:'09:30',end:'14:00'},{start:'16:00',end:'03:00'}];
+const DEX_DEFAULT_HOURS = [{start:'10:00',end:'13:30'},{start:'16:30',end:'00:00'}];
 function admAddDateException(e, save=true){
   if(save) admReadStore();
   const wrap = document.getElementById('adm-date-exceptions-wrap');
@@ -4911,6 +4916,9 @@ function admDownload(){
   deliveryLabel: ${js(SC2.deliveryLabel||'外送')},
   takeoutDiscount: ${SC2.takeoutDiscount||0.9},   // 0.9=九折 / 0.85=八五折 / 1.0=不打折
   deliveryDiscount: ${SC2.deliveryDiscount||1.0},  // 外送折扣，用法同 takeoutDiscount，預設 1.0=不打折
+  // ── 外帶／外送開關：關閉後，點餐頁自動隱藏該取餐方式按鈕（後台「🛵 外帶與外送設定」可切換）──
+  takeoutEnabled: ${SC2.takeoutEnabled !== false},
+  deliveryEnabled: ${SC2.deliveryEnabled !== false},
   // ── 限時特惠折扣（只在區間內生效，期滿自動恢復上面的 takeoutDiscount/deliveryDiscount，免手動改回）──
   promoStart: ${js(SC2.promoStart||'')},
   promoEnd: ${js(SC2.promoEnd||'')},
