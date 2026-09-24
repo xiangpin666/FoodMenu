@@ -3557,14 +3557,22 @@ function submitOrder(){
   ml.push('─────────────',...il,'',`📦 共 ${items.reduce((s,i)=>s+i.qty,0)} 項`,tl,'─────────────',`🥢 免洗餐具：${cutlery}`,`🧾 收據：${receipt}`);
   if(tid) ml.push(`🏢 統一編號：${tid}`);
   ml.push(`💬 備註：${note||'無'}`);
-  // ── 底部提醒（今日非第一時段 / 預約訂單）：備註後空一行再顯示 ──
+  // ── 底部提醒（今日非第一時段 / 預約訂單）：改為「獨立第二則」LINE 訊息 ──
   // 今日取餐選第2、第3個時段或「其他時間」時，一律加上與預約訂單相同的提醒文字
   // （若「其他時間」有另外設定 lineTodayCustomNote，則優先使用該設定）
+  let reminderNote = '';
   if (isReserveMode && SC.lineReserveNote) {
-    ml.push('', SC.lineReserveNote);
+    reminderNote = SC.lineReserveNote;
   } else if (!isReserveMode && !pickupIsFirstSlot) {
-    const bottomNote = (pickupIsCustom && SC.lineTodayCustomNote) ? SC.lineTodayCustomNote : SC.lineReserveNote;
-    if (bottomNote) ml.push('', bottomNote);
+    reminderNote = (pickupIsCustom && SC.lineTodayCustomNote) ? SC.lineTodayCustomNote : SC.lineReserveNote;
+  }
+  const lineMessages = [{type:'text', text: ml.join('\n')}];
+  if (reminderNote) {
+    // 第二則自帶日期／時間，單獨看到通知預覽時也能知道是哪一單
+    const reminderHead = isReserveMode
+      ? `📅 預約單｜${ptDisplaySub} 取餐`
+      : `⏰ 取餐時間｜${ptDisplaySub}`;
+    lineMessages.push({type:'text', text: reminderHead + '\n' + reminderNote});
   }
   // 重置所有狀態
   cart={}; pickupTime=''; pickupIsCustom=false; pickupIsFirstSlot=true;
@@ -3581,7 +3589,7 @@ function submitOrder(){
   updateBadge(); updateBottomBar(); closeCart();
   ['order-note','delivery-address','delivery-phone','receipt-tax-id'].forEach(id=>{ document.getElementById(id).value=''; });
   if(!liff.isInClient()){ alert('請於 LINE App 內開啟'); return; }
-  liff.sendMessages([{type:'text',text:ml.join('\n')}]).then(()=>liff.closeWindow()).catch(e=>{ console.error(e); alert('訊息傳送失敗，請重試。'); });
+  liff.sendMessages(lineMessages).then(()=>liff.closeWindow()).catch(e=>{ console.error(e); alert('訊息傳送失敗，請重試。'); });
 }
 
 // ════════════════════════════════════════════════════════════════
